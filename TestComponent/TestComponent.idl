@@ -15,5 +15,6 @@ namespace TestComponent
     {
         static void TestCallee(ITests callee);
         static UInt32 TestCaller(TestHandler caller);
+        static void TestSelf();
     }
 }

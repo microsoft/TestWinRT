@@ -97,7 +97,6 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\Tests.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="TestRunner.h" />
   </ItemGroup>

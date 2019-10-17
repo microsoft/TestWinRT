@@ -9,6 +9,7 @@ namespace winrt::TestComponent::implementation
 
         static void TestCallee(ITests const& callee);
         static uint32_t TestCaller(TestHandler const& caller);
+        static void TestSelf();
     };
 }
 

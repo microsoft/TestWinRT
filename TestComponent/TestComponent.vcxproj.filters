@@ -17,7 +17,6 @@
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="TestRunner.h" />
-    <ClInclude Include="..\Tests.h" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="TestComponent.idl" />
