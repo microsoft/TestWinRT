@@ -23,7 +23,14 @@ namespace TestComponent
         UInt16[] ArrayParams_UInt16(UInt16[] a, ref UInt16[] b, out UInt16[] c);
         UInt32[] ArrayParams_UInt32(UInt32[] a, ref UInt32[] b, out UInt32[] c);
         UInt64[] ArrayParams_UInt64(UInt64[] a, ref UInt64[] b, out UInt64[] c);
-    }
+        Int16[] ArrayParams_Int16(Int16[] a, ref Int16[] b, out Int16[] c);
+        Int32[] ArrayParams_Int32(Int32[] a, ref Int32[] b, out Int32[] c);
+        Int64[] ArrayParams_Int64(Int64[] a, ref Int64[] b, out Int64[] c);
+        Single[] ArrayParams_Single(Single[] a, ref Single[] b, out Single[] c);
+        Double[] ArrayParams_Double(Double[] a, ref Double[] b, out Double[] c);
+        Char[] ArrayParams_Char(Char[] a, ref Char[] b, out Char[] c);
+        String[] ArrayParams_String(String[] a, ref String[] b, out String[] c);
+}
 
     delegate void TestHandler(ITests tests);
 

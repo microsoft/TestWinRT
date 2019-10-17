@@ -11,7 +11,7 @@ namespace winrt::TestComponent::implementation
     private:
 
         uint32_t m_counter{};
-        const uint32_t m_total{ 18 };
+        const uint32_t m_total{ 25 };
 
     public:
 
@@ -131,6 +131,62 @@ namespace winrt::TestComponent::implementation
             c = com_array<uint64_t>(a.begin(), a.end());
             return com_array<uint64_t>(a.begin(), a.end());
         }
+        auto ArrayParams_Int16(array_view<int16_t const> a, array_view<int16_t> b, com_array<int16_t>& c)
+        {
+            TEST_REQUIRE(L"ArrayParams_Int16", a.size() == b.size());
+            TEST_REQUIRE(L"ArrayParams_Int16", c.size() == 0);
+            std::copy(a.begin(), a.end(), b.begin());
+            c = com_array<int16_t>(a.begin(), a.end());
+            return com_array<int16_t>(a.begin(), a.end());
+        }
+        auto ArrayParams_Int32(array_view<int32_t const> a, array_view<int32_t> b, com_array<int32_t>& c)
+        {
+            TEST_REQUIRE(L"ArrayParams_Int32", a.size() == b.size());
+            TEST_REQUIRE(L"ArrayParams_Int32", c.size() == 0);
+            std::copy(a.begin(), a.end(), b.begin());
+            c = com_array<int32_t>(a.begin(), a.end());
+            return com_array<int32_t>(a.begin(), a.end());
+        }
+        auto ArrayParams_Int64(array_view<int64_t const> a, array_view<int64_t> b, com_array<int64_t>& c)
+        {
+            TEST_REQUIRE(L"ArrayParams_Int64", a.size() == b.size());
+            TEST_REQUIRE(L"ArrayParams_Int64", c.size() == 0);
+            std::copy(a.begin(), a.end(), b.begin());
+            c = com_array<int64_t>(a.begin(), a.end());
+            return com_array<int64_t>(a.begin(), a.end());
+        }
+        auto ArrayParams_Single(array_view<float const> a, array_view<float> b, com_array<float>& c)
+        {
+            TEST_REQUIRE(L"ArrayParams_Single", a.size() == b.size());
+            TEST_REQUIRE(L"ArrayParams_Single", c.size() == 0);
+            std::copy(a.begin(), a.end(), b.begin());
+            c = com_array<float>(a.begin(), a.end());
+            return com_array<float>(a.begin(), a.end());
+        }
+        auto ArrayParams_Double(array_view<double const> a, array_view<double> b, com_array<double>& c)
+        {
+            TEST_REQUIRE(L"ArrayParams_Double", a.size() == b.size());
+            TEST_REQUIRE(L"ArrayParams_Double", c.size() == 0);
+            std::copy(a.begin(), a.end(), b.begin());
+            c = com_array<double>(a.begin(), a.end());
+            return com_array<double>(a.begin(), a.end());
+        }
+        auto ArrayParams_Char(array_view<char16_t const> a, array_view<char16_t> b, com_array<char16_t>& c)
+        {
+            TEST_REQUIRE(L"ArrayParams_Char", a.size() == b.size());
+            TEST_REQUIRE(L"ArrayParams_Char", c.size() == 0);
+            std::copy(a.begin(), a.end(), b.begin());
+            c = com_array<char16_t>(a.begin(), a.end());
+            return com_array<char16_t>(a.begin(), a.end());
+        }
+        auto ArrayParams_String(array_view<hstring const> a, array_view<hstring> b, com_array<hstring>& c)
+        {
+            TEST_REQUIRE(L"ArrayParams_String", a.size() == b.size());
+            TEST_REQUIRE(L"ArrayParams_String", c.size() == 0);
+            std::copy(a.begin(), a.end(), b.begin());
+            c = com_array<hstring>(a.begin(), a.end());
+            return com_array<hstring>(a.begin(), a.end());
+        }
     };
 
     template <typename T>
@@ -249,6 +305,55 @@ namespace winrt::TestComponent::implementation
             com_array<uint64_t> c;
             com_array<uint64_t> d = tests.ArrayParams_UInt64(a, b, c);
             TEST_REQUIRE(L"ArrayParams_UInt64", a == b && a == c && c == d);
+        }
+        {
+            std::array<int16_t, 3> a{ 1,2,3 };
+            std::array<int16_t, 3> b;
+            com_array<int16_t> c;
+            com_array<int16_t> d = tests.ArrayParams_Int16(a, b, c);
+            TEST_REQUIRE(L"ArrayParams_Int16", a == b && a == c && c == d);
+        }
+        {
+            std::array<int32_t, 3> a{ 1,2,3 };
+            std::array<int32_t, 3> b;
+            com_array<int32_t> c;
+            com_array<int32_t> d = tests.ArrayParams_Int32(a, b, c);
+            TEST_REQUIRE(L"ArrayParams_Int32", a == b && a == c && c == d);
+        }
+        {
+            std::array<int64_t, 3> a{ 1,2,3 };
+            std::array<int64_t, 3> b;
+            com_array<int64_t> c;
+            com_array<int64_t> d = tests.ArrayParams_Int64(a, b, c);
+            TEST_REQUIRE(L"ArrayParams_Int64", a == b && a == c && c == d);
+        }
+        {
+            std::array<float, 3> a{ 1.0f,2.0f,3.0f };
+            std::array<float, 3> b;
+            com_array<float> c;
+            com_array<float> d = tests.ArrayParams_Single(a, b, c);
+            TEST_REQUIRE(L"ArrayParams_Single", a == b && a == c && c == d);
+        }
+        {
+            std::array<double, 3> a{ 1.0,2.0,3.0 };
+            std::array<double, 3> b;
+            com_array<double> c;
+            com_array<double> d = tests.ArrayParams_Double(a, b, c);
+            TEST_REQUIRE(L"ArrayParams_Double", a == b && a == c && c == d);
+        }
+        {
+            std::array<char16_t, 3> a{ L'a',L'b',L'c' };
+            std::array<char16_t, 3> b;
+            com_array<char16_t> c;
+            com_array<char16_t> d = tests.ArrayParams_Char(a, b, c);
+            TEST_REQUIRE(L"ArrayParams_Char", a == b && a == c && c == d);
+        }
+        {
+            std::array<hstring, 3> a{ L"apples",L"oranges",L"pears" };
+            std::array<hstring, 3> b;
+            com_array<hstring> c;
+            com_array<hstring> d = tests.ArrayParams_String(a, b, c);
+            TEST_REQUIRE(L"ArrayParams_String", a == b && a == c && c == d);
         }
     }
 
