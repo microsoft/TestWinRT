@@ -1,0 +1,19 @@
+
+namespace TestComponent
+{
+    interface ITests
+    {
+        void T1_Simple();
+
+        Boolean T2_Bool(Boolean a, out Boolean b);
+        UInt8 T3_UInt8(UInt8 a, out UInt8 b);
+    }
+
+    delegate void TestHandler(ITests tests);
+
+    runtimeclass TestRunner
+    {
+        static void TestCallee(ITests callee);
+        static UInt32 TestCaller(TestHandler caller);
+    }
+}
