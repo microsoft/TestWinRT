@@ -1,0 +1,30 @@
+
+namespace TestComponent
+{
+    interface ITests
+    {
+        void Simple();
+
+        Boolean Params_Bool(Boolean a, out Boolean b);
+        UInt8 Params_UInt8(UInt8 a, out UInt8 b);
+        UInt16 Params_UInt16(UInt16 a, out UInt16 b);
+        UInt32 Params_UInt32(UInt32 a, out UInt32 b);
+        UInt64 Params_UInt64(UInt64 a, out UInt64 b);
+        Int16 Params_Int16(Int16 a, out Int16 b);
+        Int32 Params_Int32(Int32 a, out Int32 b);
+        Int64 Params_Int64(Int64 a, out Int64 b);
+        Single Params_Single(Single a, out Single b);
+        Double Params_Double(Double a, out Double b);
+        Char Params_Char(Char a, out Char b);
+        String Params_String(String a, out String b);
+}
+
+    delegate void TestHandler(ITests tests);
+
+    runtimeclass TestRunner
+    {
+        static void TestCallee(ITests callee);
+        static UInt32 TestCaller(TestHandler caller);
+        static void TestSelf();
+    }
+}
