@@ -11,7 +11,7 @@ namespace winrt::TestComponent::implementation
     private:
 
         uint32_t m_counter{};
-        const uint32_t m_total{ 13 };
+        const uint32_t m_total{ 18 };
 
     public:
 
@@ -28,67 +28,116 @@ namespace winrt::TestComponent::implementation
         void Simple()
         {
         }
-        bool Params_Bool(bool a, bool& b)
+
+        auto Params_Bool(bool a, bool& b)
         {
             b = a;
             return a;
         }
-        uint8_t Params_UInt8(uint8_t a, uint8_t& b)
+        auto Params_UInt8(uint8_t a, uint8_t& b)
         {
             b = a;
             return a;
         }
-        uint16_t Params_UInt16(uint16_t a, uint16_t& b)
+        auto Params_UInt16(uint16_t a, uint16_t& b)
         {
             b = a;
             return a;
         }
-        uint32_t Params_UInt32(uint32_t a, uint32_t& b)
+        auto Params_UInt32(uint32_t a, uint32_t& b)
         {
             b = a;
             return a;
         }
-        uint64_t Params_UInt64(uint64_t a, uint64_t& b)
+        auto Params_UInt64(uint64_t a, uint64_t& b)
         {
             b = a;
             return a;
         }
-        int16_t Params_Int16(int16_t a, int16_t& b)
+        auto Params_Int16(int16_t a, int16_t& b)
         {
             b = a;
             return a;
         }
-        int32_t Params_Int32(int32_t a, int32_t& b)
+        auto Params_Int32(int32_t a, int32_t& b)
         {
             b = a;
             return a;
         }
-        int64_t Params_Int64(int64_t a, int64_t& b)
+        auto Params_Int64(int64_t a, int64_t& b)
         {
             b = a;
             return a;
         }
-        float Params_Single(float a, float& b)
+        auto Params_Single(float a, float& b)
         {
             b = a;
             return a;
         }
-        double Params_Double(double a, double& b)
+        auto Params_Double(double a, double& b)
         {
             b = a;
             return a;
         }
-        char16_t Params_Char(char16_t a, char16_t& b)
+        auto Params_Char(char16_t a, char16_t& b)
         {
             b = a;
             return a;
         }
-        hstring Params_String(hstring const& a, hstring& b)
+        auto Params_String(hstring const& a, hstring& b)
         {
             b = a;
             return a;
+        }
+
+        auto ArrayParams_Bool(array_view<bool const> a, array_view<bool> b, com_array<bool>& c)
+        {
+            TEST_REQUIRE(L"ArrayParams_Bool", a.size() == b.size());
+            TEST_REQUIRE(L"ArrayParams_Bool", c.size() == 0);
+            std::copy(a.begin(), a.end(), b.begin());
+            c = com_array<bool>(a.begin(), a.end());
+            return com_array<bool>(a.begin(), a.end());
+        }
+
+        auto ArrayParams_UInt8(array_view<uint8_t const> a, array_view<uint8_t> b, com_array<uint8_t>& c)
+        {
+            TEST_REQUIRE(L"ArrayParams_UInt8", a.size() == b.size());
+            TEST_REQUIRE(L"ArrayParams_UInt8", c.size() == 0);
+            std::copy(a.begin(), a.end(), b.begin());
+            c = com_array<uint8_t>(a.begin(), a.end());
+            return com_array<uint8_t>(a.begin(), a.end());
+        }
+        auto ArrayParams_UInt16(array_view<uint16_t const> a, array_view<uint16_t> b, com_array<uint16_t>& c)
+        {
+            TEST_REQUIRE(L"ArrayParams_UInt16", a.size() == b.size());
+            TEST_REQUIRE(L"ArrayParams_UInt16", c.size() == 0);
+            std::copy(a.begin(), a.end(), b.begin());
+            c = com_array<uint16_t>(a.begin(), a.end());
+            return com_array<uint16_t>(a.begin(), a.end());
+        }
+        auto ArrayParams_UInt32(array_view<uint32_t const> a, array_view<uint32_t> b, com_array<uint32_t>& c)
+        {
+            TEST_REQUIRE(L"ArrayParams_UInt32", a.size() == b.size());
+            TEST_REQUIRE(L"ArrayParams_UInt32", c.size() == 0);
+            std::copy(a.begin(), a.end(), b.begin());
+            c = com_array<uint32_t>(a.begin(), a.end());
+            return com_array<uint32_t>(a.begin(), a.end());
+        }
+        auto ArrayParams_UInt64(array_view<uint64_t const> a, array_view<uint64_t> b, com_array<uint64_t>& c)
+        {
+            TEST_REQUIRE(L"ArrayParams_UInt64", a.size() == b.size());
+            TEST_REQUIRE(L"ArrayParams_UInt64", c.size() == 0);
+            std::copy(a.begin(), a.end(), b.begin());
+            c = com_array<uint64_t>(a.begin(), a.end());
+            return com_array<uint64_t>(a.begin(), a.end());
         }
     };
+
+    template <typename T>
+    bool operator==(std::array<T, 3> const& left, com_array<T> const& right)
+    {
+        return std::equal(left.begin(), left.end(), right.begin(), right.end());
+    }
 
     void RunTests(ITests const& tests)
     {
@@ -164,6 +213,42 @@ namespace winrt::TestComponent::implementation
             hstring b;
             hstring c = tests.Params_String(a, b);
             TEST_REQUIRE(L"Params_String", a == b && a == c);
+        }
+
+        {
+            std::array<bool, 3> a{ true,false,true };
+            std::array<bool, 3> b;
+            com_array<bool> c;
+            com_array<bool> d = tests.ArrayParams_Bool(a, b, c);
+            TEST_REQUIRE(L"ArrayParams_Bool", a == b && a == c && c == d);
+        }
+        {
+            std::array<uint8_t, 3> a{ 1,2,3 };
+            std::array<uint8_t, 3> b;
+            com_array<uint8_t> c;
+            com_array<uint8_t> d = tests.ArrayParams_UInt8(a, b, c);
+            TEST_REQUIRE(L"ArrayParams_UInt8", a == b && a == c && c == d);
+        }
+        {
+            std::array<uint16_t, 3> a{ 1,2,3 };
+            std::array<uint16_t, 3> b;
+            com_array<uint16_t> c;
+            com_array<uint16_t> d = tests.ArrayParams_UInt16(a, b, c);
+            TEST_REQUIRE(L"ArrayParams_UInt16", a == b && a == c && c == d);
+        }
+        {
+            std::array<uint32_t, 3> a{ 1,2,3 };
+            std::array<uint32_t, 3> b;
+            com_array<uint32_t> c;
+            com_array<uint32_t> d = tests.ArrayParams_UInt32(a, b, c);
+            TEST_REQUIRE(L"ArrayParams_UInt32", a == b && a == c && c == d);
+        }
+        {
+            std::array<uint64_t, 3> a{ 1,2,3 };
+            std::array<uint64_t, 3> b;
+            com_array<uint64_t> c;
+            com_array<uint64_t> d = tests.ArrayParams_UInt64(a, b, c);
+            TEST_REQUIRE(L"ArrayParams_UInt64", a == b && a == c && c == d);
         }
     }
 
