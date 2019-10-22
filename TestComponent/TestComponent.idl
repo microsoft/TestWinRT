@@ -5,6 +5,8 @@ namespace TestComponent
     {
         void Simple();
 
+        // Test implementations must make a deep copy of their inputs to provide to their outputs.
+
         Boolean Params_Bool(Boolean a, out Boolean b);
         UInt8 Params_UInt8(UInt8 a, out UInt8 b);
         UInt16 Params_UInt16(UInt16 a, out UInt16 b);
@@ -30,14 +32,26 @@ namespace TestComponent
         Double[] ArrayParams_Double(Double[] a, ref Double[] b, out Double[] c);
         Char[] ArrayParams_Char(Char[] a, ref Char[] b, out Char[] c);
         String[] ArrayParams_String(String[] a, ref String[] b, out String[] c);
-}
+
+        Windows.Foundation.Collections.IIterable<String> CollectionParams_Iterable(Windows.Foundation.Collections.IIterable<String> a, out Windows.Foundation.Collections.IIterable<String> b);
+        Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<String, String> > CollectionParams_IterablePair(Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<String, String> > a, out Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<String, String> > b);
+        Windows.Foundation.Collections.IMap<String, String> CollectionParams_Map(Windows.Foundation.Collections.IMap<String, String> a, out Windows.Foundation.Collections.IMap<String, String> b);
+        Windows.Foundation.Collections.IMapView<String, String> CollectionParams_MapView(Windows.Foundation.Collections.IMapView<String, String> a, out Windows.Foundation.Collections.IMapView<String, String> b);
+        Windows.Foundation.Collections.IVector<String> CollectionParams_Vector(Windows.Foundation.Collections.IVector<String> a, out Windows.Foundation.Collections.IVector<String> b);
+        Windows.Foundation.Collections.IVectorView<String> CollectionParams_VectorView(Windows.Foundation.Collections.IVectorView<String> a, out Windows.Foundation.Collections.IVectorView<String> b);
+    }
 
     delegate void TestHandler(ITests tests);
 
     runtimeclass TestRunner
     {
+        // Throws an exception if ITests is not implemented correctly by the calling language projection.
         static void TestCallee(ITests callee);
+
+        // Returns 100 (percent) if the calling language projection faithfully covered all tests.
         static UInt32 TestCaller(TestHandler caller);
+
+        // Test C++/WinRT as both caller and callee.
         static void TestSelf();
     }
 }
