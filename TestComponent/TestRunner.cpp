@@ -6,12 +6,14 @@
 
 namespace winrt::TestComponent::implementation
 {
+    using namespace Windows::Foundation::Collections;
+
     struct Tests : implements<Tests, ITests>
     {
     private:
 
         uint32_t m_counter{};
-        const uint32_t m_total{ 25 };
+        const uint32_t m_total{ 31 };
 
     public:
 
@@ -187,12 +189,71 @@ namespace winrt::TestComponent::implementation
             c = com_array<hstring>(a.begin(), a.end());
             return com_array<hstring>(a.begin(), a.end());
         }
+
+        auto CollectionParams_Iterable(IIterable<hstring> const& a, IIterable<hstring>& b)
+        {
+            b = single_threaded_vector(std::vector<hstring>{ begin(a), end(a) });
+            return b;
+        }
+        auto CollectionParams_IterablePair(IIterable<IKeyValuePair<hstring, hstring>> const& a, IIterable<IKeyValuePair<hstring, hstring>>& b)
+        {
+            std::map<hstring, hstring> copy;
+
+            for (auto&& pair : a)
+            {
+                copy[pair.Key()] = pair.Value();
+            }
+
+            b = single_threaded_map(std::move(copy));
+            return b;
+        }
+        auto CollectionParams_Map(IMap<hstring, hstring> const& a, IMap<hstring, hstring>& b)
+        {
+            std::map<hstring, hstring> copy;
+
+            for (auto&& pair : a)
+            {
+                copy[pair.Key()] = pair.Value();
+            }
+
+            b = single_threaded_map(std::move(copy));
+            return b;
+        }
+        auto CollectionParams_MapView(IMapView<hstring, hstring> const& a, IMapView<hstring, hstring>& b)
+        {
+            std::map<hstring, hstring> copy;
+
+            for (auto&& pair : a)
+            {
+                copy[pair.Key()] = pair.Value();
+            }
+
+            b = single_threaded_map(std::move(copy)).GetView();
+            return b;
+        }
+        auto CollectionParams_Vector(IVector<hstring> const& a, IVector<hstring>& b)
+        {
+            b = single_threaded_vector(std::vector<hstring>{ begin(a), end(a) });
+            return b;
+        }
+
+        auto CollectionParams_VectorView(IVectorView<hstring> const& a, IVectorView<hstring>& b)
+        {
+            b = single_threaded_vector(std::vector<hstring>{ begin(a), end(a) }).GetView();
+            return b;
+        }
+
     };
 
     template <typename T>
     bool operator==(std::array<T, 3> const& left, com_array<T> const& right)
     {
         return std::equal(left.begin(), left.end(), right.begin(), right.end());
+    }
+
+    bool pair_equal(IKeyValuePair<hstring, hstring> const& left, IKeyValuePair<hstring, hstring> const& right)
+    {
+        return left.Key() == right.Key() && left.Value() == right.Value();
     }
 
     void RunTests(ITests const& tests)
@@ -355,6 +416,57 @@ namespace winrt::TestComponent::implementation
             com_array<hstring> d = tests.ArrayParams_String(a, b, c);
             TEST_REQUIRE(L"ArrayParams_String", a == b && a == c && c == d);
         }
+
+        {
+            IIterable<hstring> a = single_threaded_vector<hstring>({ L"apples",L"oranges",L"pears" });
+            IIterable<hstring> b;
+            IIterable<hstring> c = tests.CollectionParams_Iterable(a, b);
+            TEST_REQUIRE(L"CollectionParams_Iterable", a != b && a != c);
+            TEST_REQUIRE(L"CollectionParams_Iterable", std::equal(begin(a), end(a), begin(b), end(b)));
+            TEST_REQUIRE(L"CollectionParams_Iterable", std::equal(begin(a), end(a), begin(c), end(c)));
+        }
+        {
+            IIterable<IKeyValuePair<hstring, hstring>> a = single_threaded_map<hstring, hstring>(std::map<hstring,hstring>{ {L"apples", L"1"},{L"oranges",L"2"},{L"pears",L"3"} });
+            IIterable<IKeyValuePair<hstring, hstring>> b;
+            IIterable<IKeyValuePair<hstring, hstring>> c = tests.CollectionParams_IterablePair(a, b);
+            TEST_REQUIRE(L"CollectionParams_IterablePair", a != b && a != c);
+            TEST_REQUIRE(L"CollectionParams_IterablePair", std::equal(begin(a), end(a), begin(b), end(b), pair_equal));
+            TEST_REQUIRE(L"CollectionParams_IterablePair", std::equal(begin(a), end(a), begin(c), end(c), pair_equal));
+        }
+        {
+            IMap<hstring, hstring> a = single_threaded_map<hstring, hstring>(std::map<hstring, hstring>{ {L"apples", L"1"}, { L"oranges",L"2" }, { L"pears",L"3" } });
+            IMap<hstring, hstring> b;
+            IMap<hstring, hstring> c = tests.CollectionParams_Map(a, b);
+            TEST_REQUIRE(L"CollectionParams_Map", a != b && a != c);
+            TEST_REQUIRE(L"CollectionParams_Map", std::equal(begin(a), end(a), begin(b), end(b), pair_equal));
+            TEST_REQUIRE(L"CollectionParams_Map", std::equal(begin(a), end(a), begin(c), end(c), pair_equal));
+        }
+        {
+            IMapView<hstring, hstring> a = single_threaded_map<hstring, hstring>(std::map<hstring, hstring>{ {L"apples", L"1"}, { L"oranges",L"2" }, { L"pears",L"3" } }).GetView();
+            IMapView<hstring, hstring> b;
+            IMapView<hstring, hstring> c = tests.CollectionParams_MapView(a, b);
+            TEST_REQUIRE(L"CollectionParams_MapView", a != b && a != c);
+            TEST_REQUIRE(L"CollectionParams_MapView", std::equal(begin(a), end(a), begin(b), end(b), pair_equal));
+            TEST_REQUIRE(L"CollectionParams_MapView", std::equal(begin(a), end(a), begin(c), end(c), pair_equal));
+        }
+        {
+            IVector<hstring> a = single_threaded_vector<hstring>({ L"apples",L"oranges",L"pears" });
+            IVector<hstring> b;
+            IVector<hstring> c = tests.CollectionParams_Vector(a, b);
+            TEST_REQUIRE(L"CollectionParams_Vector", a != b && a != c);
+            TEST_REQUIRE(L"CollectionParams_Vector", std::equal(begin(a), end(a), begin(b), end(b)));
+            TEST_REQUIRE(L"CollectionParams_Vector", std::equal(begin(a), end(a), begin(c), end(c)));
+        }
+
+        {
+            IVectorView<hstring> a = single_threaded_vector<hstring>({ L"apples",L"oranges",L"pears" }).GetView();
+            IVectorView<hstring> b;
+            IVectorView<hstring> c = tests.CollectionParams_VectorView(a, b);
+            TEST_REQUIRE(L"CollectionParams_VectorView", a != b && a != c);
+            TEST_REQUIRE(L"CollectionParams_VectorView", std::equal(begin(a), end(a), begin(b), end(b)));
+            TEST_REQUIRE(L"CollectionParams_VectorView", std::equal(begin(a), end(a), begin(c), end(c)));
+        }
+
     }
 
     void TestRunner::TestCallee(ITests const& tests)
