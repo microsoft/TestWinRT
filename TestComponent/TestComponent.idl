@@ -39,6 +39,11 @@ namespace TestComponent
         Windows.Foundation.Collections.IMapView<String, String> CollectionParams_MapView(Windows.Foundation.Collections.IMapView<String, String> a, out Windows.Foundation.Collections.IMapView<String, String> b);
         Windows.Foundation.Collections.IVector<String> CollectionParams_Vector(Windows.Foundation.Collections.IVector<String> a, out Windows.Foundation.Collections.IVector<String> b);
         Windows.Foundation.Collections.IVectorView<String> CollectionParams_VectorView(Windows.Foundation.Collections.IVectorView<String> a, out Windows.Foundation.Collections.IVectorView<String> b);
+
+        Windows.Foundation.IAsyncAction Async_Action(Windows.Foundation.IAsyncAction suspend, Boolean fail);
+        Windows.Foundation.IAsyncActionWithProgress<Int32> Async_ActionWithProgress(Windows.Foundation.IAsyncAction suspend, Boolean fail, Int32 progress);
+        Windows.Foundation.IAsyncOperation<Int32> Async_Operation(Windows.Foundation.IAsyncAction suspend, Boolean fail, Int32 result);
+        Windows.Foundation.IAsyncOperationWithProgress<Int32, Int32> Async_OperationWithProgress(Windows.Foundation.IAsyncAction suspend, Boolean fail, Int32 result, Int32 progress);
     }
 
     delegate void TestHandler(ITests tests);

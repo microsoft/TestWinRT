@@ -6,6 +6,7 @@
 
 namespace winrt::TestComponent::implementation
 {
+    using namespace Windows::Foundation;
     using namespace Windows::Foundation::Collections;
 
     struct Tests : implements<Tests, ITests>
@@ -13,7 +14,7 @@ namespace winrt::TestComponent::implementation
     private:
 
         uint32_t m_counter{};
-        const uint32_t m_total{ 31 };
+        const uint32_t m_total{ 43 };
 
     public:
 
@@ -243,6 +244,50 @@ namespace winrt::TestComponent::implementation
             return b;
         }
 
+        IAsyncAction Async_Action(IAsyncAction suspend, bool fail)
+        {
+            co_await suspend;
+
+            if (fail)
+            {
+                throw hresult_invalid_argument(L"test");
+            }
+        }
+        IAsyncActionWithProgress<int32_t> Async_ActionWithProgress(IAsyncAction suspend, bool fail, int32_t progress)
+        {
+            co_await suspend;
+            auto callback = co_await get_progress_token();
+            callback(progress);
+
+            if (fail)
+            {
+                throw hresult_invalid_argument(L"test");
+            }
+        }
+        IAsyncOperation<int32_t> Async_Operation(IAsyncAction suspend, bool fail, int32_t result)
+        {
+            co_await suspend;
+
+            if (fail)
+            {
+                throw hresult_invalid_argument(L"test");
+            }
+
+            co_return result;
+        }
+        IAsyncOperationWithProgress<int32_t, int32_t> Async_OperationWithProgress(IAsyncAction suspend, bool fail, int32_t result, int32_t progress)
+        {
+            co_await suspend;
+            auto callback = co_await get_progress_token();
+            callback(progress);
+
+            if (fail)
+            {
+                throw hresult_invalid_argument(L"test");
+            }
+
+            co_return result;
+        }
     };
 
     template <typename T>
@@ -254,6 +299,21 @@ namespace winrt::TestComponent::implementation
     bool pair_equal(IKeyValuePair<hstring, hstring> const& left, IKeyValuePair<hstring, hstring> const& right)
     {
         return left.Key() == right.Key() && left.Value() == right.Value();
+    }
+
+    IAsyncAction SignalAsync(HANDLE event)
+    {
+        co_await resume_on_signal(event);
+    }
+
+    IAsyncAction NoAsync()
+    {
+        co_return;
+    }
+
+    auto auto_event()
+    {
+        return handle{ CreateEvent(nullptr, false, false, nullptr) };
     }
 
     void RunTests(ITests const& tests)
@@ -467,6 +527,137 @@ namespace winrt::TestComponent::implementation
             TEST_REQUIRE(L"CollectionParams_VectorView", std::equal(begin(a), end(a), begin(c), end(c)));
         }
 
+        {
+            TEST_REQUIRE(L"Async_Action", tests.Async_Action(NoAsync(), false).Status() == AsyncStatus::Completed);
+        }
+        {
+            auto signal = auto_event();
+            auto async = tests.Async_Action(SignalAsync(signal.get()), false);
+            TEST_REQUIRE(L"Async_Action", async.Status() == AsyncStatus::Started);
+            SetEvent(signal.get());
+            async.get();
+        }
+        {
+            auto signal = auto_event();
+            auto async = tests.Async_Action(SignalAsync(signal.get()), true);
+            TEST_REQUIRE(L"Async_Action", async.Status() == AsyncStatus::Started);
+            SetEvent(signal.get());
+            try
+            {
+                async.get();
+                TEST_REQUIRE(L"Async_Action", false);
+            }
+            catch (hresult_invalid_argument const& e)
+            {
+                TEST_REQUIRE(L"Async_Action", e.message() == L"test");
+            }
+        }
+
+        {
+            TEST_REQUIRE(L"Async_ActionWithProgress", tests.Async_ActionWithProgress(NoAsync(), false, 321).Status() == AsyncStatus::Completed);
+        }
+        {
+            auto signal = auto_event();
+            auto async = tests.Async_ActionWithProgress(SignalAsync(signal.get()), false, 321);
+            TEST_REQUIRE(L"Async_ActionWithProgress", async.Status() == AsyncStatus::Started);
+            int32_t progress{};
+            async.Progress([&](auto&&, int32_t args)
+                {
+                    progress = args;
+                });
+            SetEvent(signal.get());
+            async.get();
+            TEST_REQUIRE(L"Async_ActionWithProgress", progress == 321);
+        }
+        {
+            auto signal = auto_event();
+            auto async = tests.Async_ActionWithProgress(SignalAsync(signal.get()), true, 321);
+            TEST_REQUIRE(L"Async_ActionWithProgress", async.Status() == AsyncStatus::Started);
+            int32_t progress{};
+            async.Progress([&](auto&&, int32_t args)
+                {
+                    progress = args;
+                });
+            SetEvent(signal.get());
+            try
+            {
+                async.get();
+                TEST_REQUIRE(L"Async_ActionWithProgress", false);
+            }
+            catch (hresult_invalid_argument const& e)
+            {
+                TEST_REQUIRE(L"Async_ActionWithProgress", e.message() == L"test");
+            }
+            TEST_REQUIRE(L"Async_ActionWithProgress", progress == 321);
+        }
+
+        {
+            auto async = tests.Async_Operation(NoAsync(), false, 123);
+            TEST_REQUIRE(L"Async_Operation", async.Status() == AsyncStatus::Completed);
+            TEST_REQUIRE(L"Async_Operation", async.get() == 123);
+        }
+        {
+            auto signal = auto_event();
+            auto async = tests.Async_Operation(SignalAsync(signal.get()), false, 123);
+            TEST_REQUIRE(L"Async_Operation", async.Status() == AsyncStatus::Started);
+            SetEvent(signal.get());
+            TEST_REQUIRE(L"Async_Operation", async.get() == 123);
+        }
+        {
+            auto signal = auto_event();
+            auto async = tests.Async_Operation(SignalAsync(signal.get()), true, 123);
+            TEST_REQUIRE(L"Async_Operation", async.Status() == AsyncStatus::Started);
+            SetEvent(signal.get());
+            try
+            {
+                async.get();
+                TEST_REQUIRE(L"Async_Operation", false);
+            }
+            catch (hresult_invalid_argument const& e)
+            {
+                TEST_REQUIRE(L"Async_Operation", e.message() == L"test");
+            }
+        }
+
+        {
+            auto async = tests.Async_OperationWithProgress(NoAsync(), false, 123, 321);
+            TEST_REQUIRE(L"Async_OperationWithProgress", async.Status() == AsyncStatus::Completed);
+            TEST_REQUIRE(L"Async_OperationWithProgress", async.get() == 123);
+        }
+        {
+            auto signal = auto_event();
+            auto async = tests.Async_OperationWithProgress(SignalAsync(signal.get()), false, 123, 321);
+            TEST_REQUIRE(L"Async_OperationWithProgress", async.Status() == AsyncStatus::Started);
+            int32_t progress{};
+            async.Progress([&](auto&&, int32_t args)
+                {
+                    progress = args;
+                });
+            SetEvent(signal.get());
+            TEST_REQUIRE(L"Async_OperationWithProgress", async.get() == 123);
+            TEST_REQUIRE(L"Async_OperationWithProgress", progress == 321);
+        }
+        {
+            auto signal = auto_event();
+            auto async = tests.Async_OperationWithProgress(SignalAsync(signal.get()), true, 123, 321);
+            TEST_REQUIRE(L"Async_OperationWithProgress", async.Status() == AsyncStatus::Started);
+            int32_t progress{};
+            async.Progress([&](auto&&, int32_t args)
+                {
+                    progress = args;
+                });
+            SetEvent(signal.get());
+            try
+            {
+                async.get();
+                TEST_REQUIRE(L"Async_OperationWithProgress", false);
+            }
+            catch (hresult_invalid_argument const& e)
+            {
+                TEST_REQUIRE(L"Async_OperationWithProgress", e.message() == L"test");
+            }
+            TEST_REQUIRE(L"Async_OperationWithProgress", progress == 321);
+        }
     }
 
     void TestRunner::TestCallee(ITests const& tests)
