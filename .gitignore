@@ -4,3 +4,4 @@ Release
 packages
 Generated Files
 *.user
+*.winmd
