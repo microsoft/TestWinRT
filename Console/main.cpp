@@ -7,7 +7,6 @@ int main()
 {
     try
     {
-        init_apartment();
         TestRunner::TestSelf();
         puts("Test passed!");
     }
