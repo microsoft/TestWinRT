@@ -1,6 +1,34 @@
 
 namespace TestComponent
 {
+    struct Struct_Blittable
+    {
+        Boolean A;
+        UInt8 B;
+        UInt16 C;
+        UInt32 D;
+        UInt64 E;
+        Int16 F;
+        Int32 G;
+        Int64 H;
+        Single I;
+        Double J;
+        Char K;
+        Guid L;
+    };
+
+    struct Struct_NonBlittable
+    {
+        String A;
+        Windows.Foundation.IReference<Int64> B;
+    };
+
+    struct Struct_Nested
+    {
+        Struct_Blittable Blittable;
+        Struct_NonBlittable NonBlittable;
+    };
+
     interface ITests
     {
         void Simple();
@@ -19,6 +47,9 @@ namespace TestComponent
         Double Params_Double(Double a, out Double b);
         Char Params_Char(Char a, out Char b);
         String Params_String(String a, out String b);
+        Struct_Blittable Params_Struct_Blittable(Struct_Blittable a, out Struct_Blittable b);
+        Struct_NonBlittable Params_Struct_NonBlittable(Struct_NonBlittable a, out Struct_NonBlittable b);
+        Struct_Nested Params_Struct_Nested(Struct_Nested a, out Struct_Nested b);
 
         Boolean[] ArrayParams_Bool(Boolean[] a, ref Boolean[] b, out Boolean[] c);
         UInt8[] ArrayParams_UInt8(UInt8[] a, ref UInt8[] b, out UInt8[] c);

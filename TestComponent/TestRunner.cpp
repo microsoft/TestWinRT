@@ -14,7 +14,7 @@ namespace winrt::TestComponent::implementation
     private:
 
         uint32_t m_counter{};
-        const uint32_t m_total{ 43 };
+        const uint32_t m_total{ 46 };
 
     public:
 
@@ -89,6 +89,27 @@ namespace winrt::TestComponent::implementation
         }
         auto Params_String(hstring const& a, hstring& b)
         {
+            TEST_REQUIRE(L"Params_String", b.empty());
+            b = a;
+            return a;
+        }
+
+        auto Params_Struct_Blittable(Struct_Blittable const& a, Struct_Blittable& b)
+        {
+            b = a;
+            return a;
+        }
+
+        auto Params_Struct_NonBlittable(Struct_NonBlittable const& a, Struct_NonBlittable& b)
+        {
+            TEST_REQUIRE(L"Params_Struct_NonBlittable", b == Struct_NonBlittable{});
+            b = a;
+            return a;
+        }
+
+        auto Params_Struct_Nested(Struct_Nested const& a, Struct_Nested& b)
+        {
+            TEST_REQUIRE(L"Params_Struct_Nested", b == Struct_Nested{});
             b = a;
             return a;
         }
@@ -390,6 +411,24 @@ namespace winrt::TestComponent::implementation
             hstring b;
             hstring c = tests.Params_String(a, b);
             TEST_REQUIRE(L"Params_String", a == b && a == c);
+        }
+        {
+            Struct_Blittable a{ false, 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'X', guid_of<ITests>() };
+            Struct_Blittable b;
+            Struct_Blittable c = tests.Params_Struct_Blittable(a, b);
+            TEST_REQUIRE(L"Params_Struct_Blittable", a == b && a == c);
+        }
+        {
+            Struct_NonBlittable a{ L"WinRT", 1234 };
+            Struct_NonBlittable b;
+            Struct_NonBlittable c = tests.Params_Struct_NonBlittable(a, b);
+            TEST_REQUIRE(L"Params_Struct_NonBlittable", a == b && a == c);
+        }
+        {
+            Struct_Nested a{ { false, 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'X', guid_of<ITests>() }, { L"WinRT", 1234 } };
+            Struct_Nested b;
+            Struct_Nested c = tests.Params_Struct_Nested(a, b);
+            TEST_REQUIRE(L"Params_Struct_Nested", a == b && a == c);
         }
 
         {
