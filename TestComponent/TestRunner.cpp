@@ -8,11 +8,26 @@ using namespace Windows::Foundation::Collections;
 
 #define TEST_REQUIRE_N(type, number, expression) { if (!(expression)) throw hresult_invalid_argument(type + to_hstring(number)); }
 
-#define TEST_REQUIRE(expression, message) { if (!(expression)) throw hresult_invalid_argument(message); }
+#define TEST_REQUIRE(message, expression) { if (!(expression)) throw hresult_invalid_argument(message); }
 
 bool pair_equal(IKeyValuePair<hstring, hstring> const& left, IKeyValuePair<hstring, hstring> const& right)
 {
     return left.Key() == right.Key() && left.Value() == right.Value();
+}
+
+IAsyncAction SignalAsync(HANDLE event)
+{
+    co_await resume_on_signal(event);
+}
+
+IAsyncAction NoAsync()
+{
+    co_return;
+}
+
+auto auto_event()
+{
+    return handle{ CreateEvent(nullptr, false, false, nullptr) };
 }
 
 namespace winrt::TestComponent::implementation
@@ -22,7 +37,7 @@ namespace winrt::TestComponent::implementation
     private:
 
         uint32_t m_counter{};
-        const uint32_t m_total{ 47 };
+        const uint32_t m_total{ 89 };
 
     public:
 
@@ -321,180 +336,201 @@ namespace winrt::TestComponent::implementation
 
             co_return result;
         }
+
+        void Async1Call(Async1Handler const& handler)
+        {
+            {
+                TEST_REQUIRE(L"Async1", handler(NoAsync(), false).Status() == AsyncStatus::Completed);
+            }
+            {
+                auto signal = auto_event();
+                auto async = handler(SignalAsync(signal.get()), false);
+                TEST_REQUIRE(L"Async1", async.Status() == AsyncStatus::Started);
+                SetEvent(signal.get());
+                async.get();
+            }
+            {
+                auto signal = auto_event();
+                auto async = handler(SignalAsync(signal.get()), true);
+                TEST_REQUIRE(L"Async1", async.Status() == AsyncStatus::Started);
+                SetEvent(signal.get());
+                try
+                {
+                    async.get();
+                    TEST_REQUIRE(L"Async1", false);
+                }
+                catch (hresult_invalid_argument const& e)
+                {
+                    TEST_REQUIRE(L"Async1", e.message() == L"test");
+                }
+            }
+        }
+        void Async2Call(Async2Handler const& handler)
+        {
+            {
+                TEST_REQUIRE(L"Async2", handler(NoAsync(), false, 321).Status() == AsyncStatus::Completed);
+            }
+            {
+                auto signal = auto_event();
+                auto async = handler(SignalAsync(signal.get()), false, 321);
+                TEST_REQUIRE(L"Async2", async.Status() == AsyncStatus::Started);
+                int32_t progress{};
+                async.Progress([&](auto&&, int32_t args)
+                    {
+                        progress = args;
+                    });
+                SetEvent(signal.get());
+                async.get();
+                TEST_REQUIRE(L"Async2", progress == 321);
+            }
+            {
+                auto signal = auto_event();
+                auto async = handler(SignalAsync(signal.get()), true, 321);
+                TEST_REQUIRE(L"Async2", async.Status() == AsyncStatus::Started);
+                int32_t progress{};
+                async.Progress([&](auto&&, int32_t args)
+                    {
+                        progress = args;
+                    });
+                SetEvent(signal.get());
+                try
+                {
+                    async.get();
+                    TEST_REQUIRE(L"Async2", false);
+                }
+                catch (hresult_invalid_argument const& e)
+                {
+                    TEST_REQUIRE(L"Async2", e.message() == L"test");
+                }
+                TEST_REQUIRE(L"Async2", progress == 321);
+            }
+        }
+        void Async3Call(Async3Handler const& handler)
+        {
+            {
+                auto async = handler(NoAsync(), false, 123);
+                TEST_REQUIRE(L"Async3", async.Status() == AsyncStatus::Completed);
+                TEST_REQUIRE(L"Async3", async.get() == 123);
+            }
+            {
+                auto signal = auto_event();
+                auto async = handler(SignalAsync(signal.get()), false, 123);
+                TEST_REQUIRE(L"Async3", async.Status() == AsyncStatus::Started);
+                SetEvent(signal.get());
+                TEST_REQUIRE(L"Async3", async.get() == 123);
+            }
+            {
+                auto signal = auto_event();
+                auto async = handler(SignalAsync(signal.get()), true, 123);
+                TEST_REQUIRE(L"Async3", async.Status() == AsyncStatus::Started);
+                SetEvent(signal.get());
+                try
+                {
+                    async.get();
+                    TEST_REQUIRE(L"Async3", false);
+                }
+                catch (hresult_invalid_argument const& e)
+                {
+                    TEST_REQUIRE(L"Async3", e.message() == L"test");
+                }
+            }
+        }
+        void Async4Call(Async4Handler const& handler)
+        {
+            {
+                auto async = handler(NoAsync(), false, 123, 321);
+                TEST_REQUIRE(L"Async4", async.Status() == AsyncStatus::Completed);
+                TEST_REQUIRE(L"Async4", async.get() == 123);
+            }
+            {
+                auto signal = auto_event();
+                auto async = handler(SignalAsync(signal.get()), false, 123, 321);
+                TEST_REQUIRE(L"Async4", async.Status() == AsyncStatus::Started);
+                int32_t progress{};
+                async.Progress([&](auto&&, int32_t args)
+                    {
+                        progress = args;
+                    });
+                SetEvent(signal.get());
+                TEST_REQUIRE(L"Async4", async.get() == 123);
+                TEST_REQUIRE(L"Async4", progress == 321);
+            }
+            {
+                auto signal = auto_event();
+                auto async = handler(SignalAsync(signal.get()), true, 123, 321);
+                TEST_REQUIRE(L"Async4", async.Status() == AsyncStatus::Started);
+                int32_t progress{};
+                async.Progress([&](auto&&, int32_t args)
+                    {
+                        progress = args;
+                    });
+                SetEvent(signal.get());
+                try
+                {
+                    async.get();
+                    TEST_REQUIRE(L"Async4", false);
+                }
+                catch (hresult_invalid_argument const& e)
+                {
+                    TEST_REQUIRE(L"Async4", e.message() == L"test");
+                }
+                TEST_REQUIRE(L"Async4", progress == 321);
+            }
+        }
     };
-
-    IAsyncAction SignalAsync(HANDLE event)
-    {
-        co_await resume_on_signal(event);
-    }
-
-    IAsyncAction NoAsync()
-    {
-        co_return;
-    }
-
-    auto auto_event()
-    {
-        return handle{ CreateEvent(nullptr, false, false, nullptr) };
-    }
 
     void RunTests(ITests const& tests)
     {
         tests.Simple();
 
-#define TEST_GEN(number, type) \
-    tests.Param ## number ## Call([&](type const& a, type& b) { return tests.Param ## number(a, b); });
+#define TEST_GEN(type, number) \
+    tests.type ## number ## Call([&](auto&&... args) { return tests.type ## number(args...); });
 
-        TEST_GEN(1, bool);
-        TEST_GEN(2, uint8_t);
-        TEST_GEN(3, uint16_t);
-        TEST_GEN(4, uint32_t);
-        TEST_GEN(5, uint64_t);
-        TEST_GEN(6, int16_t);
-        TEST_GEN(7, int32_t);
-        TEST_GEN(8, int64_t);
-        TEST_GEN(9, float);
-        TEST_GEN(10, double);
-        TEST_GEN(11, char16_t);
-        TEST_GEN(12, hstring);
-        TEST_GEN(13, Blittable);
-        TEST_GEN(14, NonBlittable);
-        TEST_GEN(15, Nested);
+        TEST_GEN(Param, 1);
+        TEST_GEN(Param, 2);
+        TEST_GEN(Param, 3);
+        TEST_GEN(Param, 4);
+        TEST_GEN(Param, 5);
+        TEST_GEN(Param, 6);
+        TEST_GEN(Param, 7);
+        TEST_GEN(Param, 8);
+        TEST_GEN(Param, 9);
+        TEST_GEN(Param, 10);
+        TEST_GEN(Param, 11);
+        TEST_GEN(Param, 12);
+        TEST_GEN(Param, 13);
+        TEST_GEN(Param, 14);
+        TEST_GEN(Param, 15);
+
+        TEST_GEN(Array, 1);
+        TEST_GEN(Array, 2);
+        TEST_GEN(Array, 3);
+        TEST_GEN(Array, 4);
+        TEST_GEN(Array, 5);
+        TEST_GEN(Array, 6);
+        TEST_GEN(Array, 7);
+        TEST_GEN(Array, 8);
+        TEST_GEN(Array, 9);
+        TEST_GEN(Array, 10);
+        TEST_GEN(Array, 11);
+        TEST_GEN(Array, 12);
+        TEST_GEN(Array, 13);
+        TEST_GEN(Array, 14);
+        TEST_GEN(Array, 15);
+
+        TEST_GEN(Collection, 1);
+        TEST_GEN(Collection, 2);
+        TEST_GEN(Collection, 3);
+        TEST_GEN(Collection, 4);
+        TEST_GEN(Collection, 5);
+        TEST_GEN(Collection, 6);
+
+        TEST_GEN(Async, 1);
+        TEST_GEN(Async, 2);
+        TEST_GEN(Async, 3);
+        TEST_GEN(Async, 4);
 
 #undef TEST_GEN
-
-
-        //{
-        //    TEST_REQUIRE(L"Async1", tests.Async1(NoAsync(), false).Status() == AsyncStatus::Completed);
-        //}
-        //{
-        //    auto signal = auto_event();
-        //    auto async = tests.Async1(SignalAsync(signal.get()), false);
-        //    TEST_REQUIRE(L"Async1", async.Status() == AsyncStatus::Started);
-        //    SetEvent(signal.get());
-        //    async.get();
-        //}
-        //{
-        //    auto signal = auto_event();
-        //    auto async = tests.Async1(SignalAsync(signal.get()), true);
-        //    TEST_REQUIRE(L"Async1", async.Status() == AsyncStatus::Started);
-        //    SetEvent(signal.get());
-        //    try
-        //    {
-        //        async.get();
-        //        TEST_REQUIRE(L"Async1", false);
-        //    }
-        //    catch (hresult_invalid_argument const& e)
-        //    {
-        //        TEST_REQUIRE(L"Async1", e.message() == L"test");
-        //    }
-        //}
-
-        //{
-        //    TEST_REQUIRE(L"Async2", tests.Async2(NoAsync(), false, 321).Status() == AsyncStatus::Completed);
-        //}
-        //{
-        //    auto signal = auto_event();
-        //    auto async = tests.Async2(SignalAsync(signal.get()), false, 321);
-        //    TEST_REQUIRE(L"Async2", async.Status() == AsyncStatus::Started);
-        //    int32_t progress{};
-        //    async.Progress([&](auto&&, int32_t args)
-        //        {
-        //            progress = args;
-        //        });
-        //    SetEvent(signal.get());
-        //    async.get();
-        //    TEST_REQUIRE(L"Async2", progress == 321);
-        //}
-        //{
-        //    auto signal = auto_event();
-        //    auto async = tests.Async2(SignalAsync(signal.get()), true, 321);
-        //    TEST_REQUIRE(L"Async2", async.Status() == AsyncStatus::Started);
-        //    int32_t progress{};
-        //    async.Progress([&](auto&&, int32_t args)
-        //        {
-        //            progress = args;
-        //        });
-        //    SetEvent(signal.get());
-        //    try
-        //    {
-        //        async.get();
-        //        TEST_REQUIRE(L"Async2", false);
-        //    }
-        //    catch (hresult_invalid_argument const& e)
-        //    {
-        //        TEST_REQUIRE(L"Async2", e.message() == L"test");
-        //    }
-        //    TEST_REQUIRE(L"Async2", progress == 321);
-        //}
-
-        //{
-        //    auto async = tests.Async3(NoAsync(), false, 123);
-        //    TEST_REQUIRE(L"Async3", async.Status() == AsyncStatus::Completed);
-        //    TEST_REQUIRE(L"Async3", async.get() == 123);
-        //}
-        //{
-        //    auto signal = auto_event();
-        //    auto async = tests.Async3(SignalAsync(signal.get()), false, 123);
-        //    TEST_REQUIRE(L"Async3", async.Status() == AsyncStatus::Started);
-        //    SetEvent(signal.get());
-        //    TEST_REQUIRE(L"Async3", async.get() == 123);
-        //}
-        //{
-        //    auto signal = auto_event();
-        //    auto async = tests.Async3(SignalAsync(signal.get()), true, 123);
-        //    TEST_REQUIRE(L"Async3", async.Status() == AsyncStatus::Started);
-        //    SetEvent(signal.get());
-        //    try
-        //    {
-        //        async.get();
-        //        TEST_REQUIRE(L"Async3", false);
-        //    }
-        //    catch (hresult_invalid_argument const& e)
-        //    {
-        //        TEST_REQUIRE(L"Async3", e.message() == L"test");
-        //    }
-        //}
-
-        //{
-        //    auto async = tests.Async4(NoAsync(), false, 123, 321);
-        //    TEST_REQUIRE(L"Async4", async.Status() == AsyncStatus::Completed);
-        //    TEST_REQUIRE(L"Async4", async.get() == 123);
-        //}
-        //{
-        //    auto signal = auto_event();
-        //    auto async = tests.Async4(SignalAsync(signal.get()), false, 123, 321);
-        //    TEST_REQUIRE(L"Async4", async.Status() == AsyncStatus::Started);
-        //    int32_t progress{};
-        //    async.Progress([&](auto&&, int32_t args)
-        //        {
-        //            progress = args;
-        //        });
-        //    SetEvent(signal.get());
-        //    TEST_REQUIRE(L"Async4", async.get() == 123);
-        //    TEST_REQUIRE(L"Async4", progress == 321);
-        //}
-        //{
-        //    auto signal = auto_event();
-        //    auto async = tests.Async4(SignalAsync(signal.get()), true, 123, 321);
-        //    TEST_REQUIRE(L"Async4", async.Status() == AsyncStatus::Started);
-        //    int32_t progress{};
-        //    async.Progress([&](auto&&, int32_t args)
-        //        {
-        //            progress = args;
-        //        });
-        //    SetEvent(signal.get());
-        //    try
-        //    {
-        //        async.get();
-        //        TEST_REQUIRE(L"Async4", false);
-        //    }
-        //    catch (hresult_invalid_argument const& e)
-        //    {
-        //        TEST_REQUIRE(L"Async4", e.message() == L"test");
-        //    }
-        //    TEST_REQUIRE(L"Async4", progress == 321);
-        //}
     }
 
     void TestRunner::TestProducer(ITests const& tests)
@@ -518,15 +554,15 @@ namespace winrt::TestComponent::implementation
                 RunTests(tests);
             });
 
-        TEST_REQUIRE(percentage == 100, L"Test cover is " + to_hstring(percentage) + L"%");
+        TEST_REQUIRE(L"Test cover is " + to_hstring(percentage) + L"%", percentage == 100);
         percentage = TestRunner::TestConsumer([](auto&&) {});
-        TEST_REQUIRE(percentage == 0, L"TestSelf");
+        TEST_REQUIRE(L"TestSelf", percentage == 0);
 
         percentage = TestRunner::TestConsumer([](ITests const& tests)
             {
                 tests.Simple();
             });
 
-        TEST_REQUIRE(percentage > 0 && percentage < 100, L"TestSelf");
+        TEST_REQUIRE(L"TestSelf", percentage > 0 && percentage < 100);
     }
 }

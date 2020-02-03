@@ -68,6 +68,11 @@ namespace TestComponent
     delegate Windows.Foundation.Collections.IVector<String> Collection5Handler(Windows.Foundation.Collections.IVector<String> a, out Windows.Foundation.Collections.IVector<String> b);
     delegate Windows.Foundation.Collections.IVectorView<String> Collection6Handler(Windows.Foundation.Collections.IVectorView<String> a, out Windows.Foundation.Collections.IVectorView<String> b);
 
+    delegate Windows.Foundation.IAsyncAction Async1Handler(Windows.Foundation.IAsyncAction suspend, Boolean fail);
+    delegate Windows.Foundation.IAsyncActionWithProgress<Int32> Async2Handler(Windows.Foundation.IAsyncAction suspend, Boolean fail, Int32 progress);
+    delegate Windows.Foundation.IAsyncOperation<Int32> Async3Handler(Windows.Foundation.IAsyncAction suspend, Boolean fail, Int32 result);
+    delegate Windows.Foundation.IAsyncOperationWithProgress<Int32, Int32> Async4Handler(Windows.Foundation.IAsyncAction suspend, Boolean fail, Int32 result, Int32 progress);
+
     interface ITests
     {
         void Simple();
@@ -154,6 +159,11 @@ namespace TestComponent
         Windows.Foundation.IAsyncActionWithProgress<Int32> Async2(Windows.Foundation.IAsyncAction suspend, Boolean fail, Int32 progress);
         Windows.Foundation.IAsyncOperation<Int32> Async3(Windows.Foundation.IAsyncAction suspend, Boolean fail, Int32 result);
         Windows.Foundation.IAsyncOperationWithProgress<Int32, Int32> Async4(Windows.Foundation.IAsyncAction suspend, Boolean fail, Int32 result, Int32 progress);
+
+        void Async1Call(Async1Handler handler);
+        void Async2Call(Async2Handler handler);
+        void Async3Call(Async3Handler handler);
+        void Async4Call(Async4Handler handler);
     }
 
     delegate void TestHandler(ITests tests);
