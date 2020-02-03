@@ -46,8 +46,11 @@ namespace winrt::TestComponent::implementation
             ++m_counter;
         }
 
-        uint32_t Percentage() const
+        uint32_t Percentage()
         {
+            // We don't want calls to the Percentage property perturbing the results.
+            --m_counter;
+
             return m_counter * 100 / m_total;
         }
 
@@ -540,9 +543,9 @@ namespace winrt::TestComponent::implementation
 
     uint32_t TestRunner::TestConsumer(TestHandler const& caller)
     {
-        auto tests = make_self<Tests>();
-        caller(*tests);
-        return tests->Percentage();
+        auto tests = make<Tests>();
+        caller(tests);
+        return tests.Percentage();
     }
 
     void TestRunner::TestSelf()
@@ -564,5 +567,10 @@ namespace winrt::TestComponent::implementation
             });
 
         TEST_REQUIRE(L"TestSelf", percentage > 0 && percentage < 100);
+    }
+
+    ITests TestRunner::MakeTests()
+    {
+        return make<Tests>();
     }
 }
