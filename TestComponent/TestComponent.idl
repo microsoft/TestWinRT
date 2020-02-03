@@ -1,7 +1,7 @@
 
 namespace TestComponent
 {
-    struct Struct_Blittable
+    struct Blittable
     {
         Boolean A;
         UInt8 B;
@@ -17,68 +17,69 @@ namespace TestComponent
         Guid L;
     };
 
-    struct Struct_NonBlittable
+    struct NonBlittable
     {
         String A;
         Windows.Foundation.IReference<Int64> B;
     };
 
-    struct Struct_Nested
+    struct Nested
     {
-        Struct_Blittable Blittable;
-        Struct_NonBlittable NonBlittable;
+        Blittable Blittable;
+        NonBlittable NonBlittable;
     };
 
-    delegate Boolean Delegate_Params_Bool(Boolean a, out Boolean b);
+    delegate Boolean Param1Handler(Boolean a, out Boolean b);
 
     interface ITests
     {
         void Simple();
 
-        // Test implementations must make a deep copy of their inputs to provide to their outputs.
+        Boolean Param1(Boolean a, out Boolean b);
+        void Param1Call(Param1Handler handler);
 
-        Boolean Params_Bool(Boolean a, out Boolean b);
-        void Call_Params_Bool(Delegate_Params_Bool handler);
+        UInt8 Param2(UInt8 a, out UInt8 b);
+        UInt16 Param3(UInt16 a, out UInt16 b);
+        UInt32 Param4(UInt32 a, out UInt32 b);
+        UInt64 Param5(UInt64 a, out UInt64 b);
+        Int16 Param6(Int16 a, out Int16 b);
+        Int32 Param7(Int32 a, out Int32 b);
+        Int64 Param8(Int64 a, out Int64 b);
+        Single Param9(Single a, out Single b);
+        Double Param10(Double a, out Double b);
+        Char Param11(Char a, out Char b);
+        String Param12(String a, out String b);
+        Blittable Param13(Blittable a, out Blittable b);
+        NonBlittable Param14(NonBlittable a, out NonBlittable b);
+        Nested Param15(Nested a, out Nested b);
 
-        UInt8 Params_UInt8(UInt8 a, out UInt8 b);
-        UInt16 Params_UInt16(UInt16 a, out UInt16 b);
-        UInt32 Params_UInt32(UInt32 a, out UInt32 b);
-        UInt64 Params_UInt64(UInt64 a, out UInt64 b);
-        Int16 Params_Int16(Int16 a, out Int16 b);
-        Int32 Params_Int32(Int32 a, out Int32 b);
-        Int64 Params_Int64(Int64 a, out Int64 b);
-        Single Params_Single(Single a, out Single b);
-        Double Params_Double(Double a, out Double b);
-        Char Params_Char(Char a, out Char b);
-        String Params_String(String a, out String b);
-        Struct_Blittable Params_Struct_Blittable(Struct_Blittable a, out Struct_Blittable b);
-        Struct_NonBlittable Params_Struct_NonBlittable(Struct_NonBlittable a, out Struct_NonBlittable b);
-        Struct_Nested Params_Struct_Nested(Struct_Nested a, out Struct_Nested b);
+        Boolean[] Array1(Boolean[] a, ref Boolean[] b, out Boolean[] c);
+        UInt8[] Array2(UInt8[] a, ref UInt8[] b, out UInt8[] c);
+        UInt16[] Array3(UInt16[] a, ref UInt16[] b, out UInt16[] c);
+        UInt32[] Array4(UInt32[] a, ref UInt32[] b, out UInt32[] c);
+        UInt64[] Array5(UInt64[] a, ref UInt64[] b, out UInt64[] c);
+        Int16[] Array6(Int16[] a, ref Int16[] b, out Int16[] c);
+        Int32[] Array7(Int32[] a, ref Int32[] b, out Int32[] c);
+        Int64[] Array8(Int64[] a, ref Int64[] b, out Int64[] c);
+        Single[] Array9(Single[] a, ref Single[] b, out Single[] c);
+        Double[] Array10(Double[] a, ref Double[] b, out Double[] c);
+        Char[] Array11(Char[] a, ref Char[] b, out Char[] c);
+        String[] Array12(String[] a, ref String[] b, out String[] c);
+        Blittable[] Array13(Blittable[] a, ref Blittable[] b, out Blittable[] c);
+        NonBlittable[] Array14(NonBlittable[] a, ref NonBlittable[] b, out NonBlittable[] c);
+        Nested[] Array15(Nested[] a, ref Nested[] b, out Nested[] c);
 
-        Boolean[] ArrayParams_Bool(Boolean[] a, ref Boolean[] b, out Boolean[] c);
-        UInt8[] ArrayParams_UInt8(UInt8[] a, ref UInt8[] b, out UInt8[] c);
-        UInt16[] ArrayParams_UInt16(UInt16[] a, ref UInt16[] b, out UInt16[] c);
-        UInt32[] ArrayParams_UInt32(UInt32[] a, ref UInt32[] b, out UInt32[] c);
-        UInt64[] ArrayParams_UInt64(UInt64[] a, ref UInt64[] b, out UInt64[] c);
-        Int16[] ArrayParams_Int16(Int16[] a, ref Int16[] b, out Int16[] c);
-        Int32[] ArrayParams_Int32(Int32[] a, ref Int32[] b, out Int32[] c);
-        Int64[] ArrayParams_Int64(Int64[] a, ref Int64[] b, out Int64[] c);
-        Single[] ArrayParams_Single(Single[] a, ref Single[] b, out Single[] c);
-        Double[] ArrayParams_Double(Double[] a, ref Double[] b, out Double[] c);
-        Char[] ArrayParams_Char(Char[] a, ref Char[] b, out Char[] c);
-        String[] ArrayParams_String(String[] a, ref String[] b, out String[] c);
+        Windows.Foundation.Collections.IIterable<String> Collection1(Windows.Foundation.Collections.IIterable<String> a, out Windows.Foundation.Collections.IIterable<String> b);
+        Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<String, String> > Collection2(Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<String, String> > a, out Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<String, String> > b);
+        Windows.Foundation.Collections.IMap<String, String> Collection3(Windows.Foundation.Collections.IMap<String, String> a, out Windows.Foundation.Collections.IMap<String, String> b);
+        Windows.Foundation.Collections.IMapView<String, String> Collection4(Windows.Foundation.Collections.IMapView<String, String> a, out Windows.Foundation.Collections.IMapView<String, String> b);
+        Windows.Foundation.Collections.IVector<String> Collection5(Windows.Foundation.Collections.IVector<String> a, out Windows.Foundation.Collections.IVector<String> b);
+        Windows.Foundation.Collections.IVectorView<String> Collection6(Windows.Foundation.Collections.IVectorView<String> a, out Windows.Foundation.Collections.IVectorView<String> b);
 
-        Windows.Foundation.Collections.IIterable<String> CollectionParams_Iterable(Windows.Foundation.Collections.IIterable<String> a, out Windows.Foundation.Collections.IIterable<String> b);
-        Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<String, String> > CollectionParams_IterablePair(Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<String, String> > a, out Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<String, String> > b);
-        Windows.Foundation.Collections.IMap<String, String> CollectionParams_Map(Windows.Foundation.Collections.IMap<String, String> a, out Windows.Foundation.Collections.IMap<String, String> b);
-        Windows.Foundation.Collections.IMapView<String, String> CollectionParams_MapView(Windows.Foundation.Collections.IMapView<String, String> a, out Windows.Foundation.Collections.IMapView<String, String> b);
-        Windows.Foundation.Collections.IVector<String> CollectionParams_Vector(Windows.Foundation.Collections.IVector<String> a, out Windows.Foundation.Collections.IVector<String> b);
-        Windows.Foundation.Collections.IVectorView<String> CollectionParams_VectorView(Windows.Foundation.Collections.IVectorView<String> a, out Windows.Foundation.Collections.IVectorView<String> b);
-
-        Windows.Foundation.IAsyncAction Async_Action(Windows.Foundation.IAsyncAction suspend, Boolean fail);
-        Windows.Foundation.IAsyncActionWithProgress<Int32> Async_ActionWithProgress(Windows.Foundation.IAsyncAction suspend, Boolean fail, Int32 progress);
-        Windows.Foundation.IAsyncOperation<Int32> Async_Operation(Windows.Foundation.IAsyncAction suspend, Boolean fail, Int32 result);
-        Windows.Foundation.IAsyncOperationWithProgress<Int32, Int32> Async_OperationWithProgress(Windows.Foundation.IAsyncAction suspend, Boolean fail, Int32 result, Int32 progress);
+        Windows.Foundation.IAsyncAction Async1(Windows.Foundation.IAsyncAction suspend, Boolean fail);
+        Windows.Foundation.IAsyncActionWithProgress<Int32> Async2(Windows.Foundation.IAsyncAction suspend, Boolean fail, Int32 progress);
+        Windows.Foundation.IAsyncOperation<Int32> Async3(Windows.Foundation.IAsyncAction suspend, Boolean fail, Int32 result);
+        Windows.Foundation.IAsyncOperationWithProgress<Int32, Int32> Async4(Windows.Foundation.IAsyncAction suspend, Boolean fail, Int32 result, Int32 progress);
     }
 
     delegate void TestHandler(ITests tests);
