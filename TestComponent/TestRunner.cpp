@@ -14,7 +14,7 @@ namespace winrt::TestComponent::implementation
     private:
 
         uint32_t m_counter{};
-        const uint32_t m_total{ 46 };
+        const uint32_t m_total{ 47 };
 
     public:
 
@@ -37,6 +37,14 @@ namespace winrt::TestComponent::implementation
             b = a;
             return a;
         }
+        void Call_Params_Bool(Delegate_Params_Bool const& handler)
+        {
+            bool const a = true;
+            bool b;
+            bool c = handler(true, b);
+            TEST_REQUIRE(L"Params_Bool", b && c);
+        }
+
         auto Params_UInt8(uint8_t a, uint8_t& b)
         {
             b = a;
@@ -340,11 +348,12 @@ namespace winrt::TestComponent::implementation
     void RunTests(ITests const& tests)
     {
         tests.Simple();
+
         {
-            bool const a = true;
-            bool b;
-            bool c = tests.Params_Bool(true, b);
-            TEST_REQUIRE(L"Params_Bool", b && c);
+            tests.Call_Params_Bool([&](bool a, bool& b)
+                {
+                    return tests.Params_Bool(a, b);
+                });
         }
         {
             uint8_t a = 123;

@@ -29,6 +29,8 @@ namespace TestComponent
         Struct_NonBlittable NonBlittable;
     };
 
+    delegate Boolean Delegate_Params_Bool(Boolean a, out Boolean b);
+
     interface ITests
     {
         void Simple();
@@ -36,6 +38,8 @@ namespace TestComponent
         // Test implementations must make a deep copy of their inputs to provide to their outputs.
 
         Boolean Params_Bool(Boolean a, out Boolean b);
+        void Call_Params_Bool(Delegate_Params_Bool handler);
+
         UInt8 Params_UInt8(UInt8 a, out UInt8 b);
         UInt16 Params_UInt16(UInt16 a, out UInt16 b);
         UInt32 Params_UInt32(UInt32 a, out UInt32 b);
