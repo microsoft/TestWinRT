@@ -86,11 +86,11 @@ namespace TestComponent
 
     runtimeclass TestRunner
     {
-        // Throws an exception if ITests is not implemented correctly by the calling language projection.
-        static void TestCallee(ITests callee);
+        // Throws an exception if ITests is not implemented correctly.
+        static void TestProducer(ITests callee);
 
         // Returns 100 (percent) if the calling language projection faithfully covered all tests.
-        static UInt32 TestCaller(TestHandler caller);
+        static UInt32 TestConsumer(TestHandler caller);
 
         // Test C++/WinRT as both caller and callee.
         static void TestSelf();

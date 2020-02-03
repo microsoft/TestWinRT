@@ -732,12 +732,12 @@ namespace winrt::TestComponent::implementation
         }
     }
 
-    void TestRunner::TestCallee(ITests const& tests)
+    void TestRunner::TestProducer(ITests const& tests)
     {
         RunTests(tests);
     }
 
-    uint32_t TestRunner::TestCaller(TestHandler const& caller)
+    uint32_t TestRunner::TestConsumer(TestHandler const& caller)
     {
         auto tests = make_self<Tests>();
         caller(*tests);
@@ -746,18 +746,18 @@ namespace winrt::TestComponent::implementation
 
     void TestRunner::TestSelf()
     {
-        TestRunner::TestCallee(make<Tests>());
+        TestRunner::TestProducer(make<Tests>());
 
-        uint32_t percentage = TestRunner::TestCaller([](ITests const& tests)
+        uint32_t percentage = TestRunner::TestConsumer([](ITests const& tests)
             {
                 RunTests(tests);
             });
 
         TEST_REQUIRE(L"Test cover is " + to_hstring(percentage) + L"%", percentage == 100);
-        percentage = TestRunner::TestCaller([](auto&&) {});
+        percentage = TestRunner::TestConsumer([](auto&&) {});
         TEST_REQUIRE(L"TestSelf", percentage == 0);
 
-        percentage = TestRunner::TestCaller([](ITests const& tests)
+        percentage = TestRunner::TestConsumer([](ITests const& tests)
             {
                 tests.Simple();
             });
