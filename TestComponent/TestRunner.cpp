@@ -262,94 +262,27 @@ auto Array ## number(array_view<type const> a, array_view<type> b, com_array<typ
     {
         tests.Simple();
 
-        tests.Param1Call([&](bool a, bool& b) { return tests.Param1(a, b); });
+#define TEST_GEN(number, type) \
+    tests.Param ## number ## Call([&](type const& a, type& b) { return tests.Param ## number(a, b); });
 
-        {
-        }
-        //{
-        //    uint8_t a = 123;
-        //    uint8_t b;
-        //    uint8_t c = tests.Param2(a, b);
-        //    TEST_REQUIRE(L"Param2", a == b && a == c);
-        //}
-        //{
-        //    uint16_t a = 123;
-        //    uint16_t b;
-        //    uint16_t c = tests.Param3(a, b);
-        //    TEST_REQUIRE(L"Param3", a == b && a == c);
-        //}
-        //{
-        //    uint32_t a = 123;
-        //    uint32_t b;
-        //    uint32_t c = tests.Param4(a, b);
-        //    TEST_REQUIRE(L"Param4", a == b && a == c);
-        //}
-        //{
-        //    uint64_t a = 123;
-        //    uint64_t b;
-        //    uint64_t c = tests.Param5(a, b);
-        //    TEST_REQUIRE(L"Param5", a == b && a == c);
-        //}
-        //{
-        //    int16_t a = 123;
-        //    int16_t b;
-        //    int16_t c = tests.Param6(a, b);
-        //    TEST_REQUIRE(L"Param6", a == b && a == c);
-        //}
-        //{
-        //    int32_t a = 123;
-        //    int32_t b;
-        //    int32_t c = tests.Param7(a, b);
-        //    TEST_REQUIRE(L"Param7", a == b && a == c);
-        //}
-        //{
-        //    int64_t a = 123;
-        //    int64_t b;
-        //    int64_t c = tests.Param8(a, b);
-        //    TEST_REQUIRE(L"Param8", a == b && a == c);
-        //}
-        //{
-        //    float a = 12.3f;
-        //    float b;
-        //    float c = tests.Param9(a, b);
-        //    TEST_REQUIRE(L"Param9", a == b && a == c);
-        //}
-        //{
-        //    double a = 12.3;
-        //    double b;
-        //    double c = tests.Param10(a, b);
-        //    TEST_REQUIRE(L"Param10", a == b && a == c);
-        //}
-        //{
-        //    char16_t a = L'W';
-        //    char16_t b;
-        //    char16_t c = tests.Param11(a, b);
-        //    TEST_REQUIRE(L"Param11", a == b && a == c);
-        //}
-        //{
-        //    hstring a = L"WinRT";
-        //    hstring b;
-        //    hstring c = tests.Param12(a, b);
-        //    TEST_REQUIRE(L"Param12", a == b && a == c);
-        //}
-        //{
-        //    Blittable a{ false, 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'X', guid_of<ITests>() };
-        //    Blittable b;
-        //    Blittable c = tests.Param13(a, b);
-        //    TEST_REQUIRE(L"Param13", a == b && a == c);
-        //}
-        //{
-        //    NonBlittable a{ L"WinRT", 1234 };
-        //    NonBlittable b;
-        //    NonBlittable c = tests.Param14(a, b);
-        //    TEST_REQUIRE(L"Param14", a == b && a == c);
-        //}
-        //{
-        //    Nested a{ { false, 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'X', guid_of<ITests>() }, { L"WinRT", 1234 } };
-        //    Nested b;
-        //    Nested c = tests.Param15(a, b);
-        //    TEST_REQUIRE(L"Param15", a == b && a == c);
-        //}
+        TEST_GEN(1, bool);
+        TEST_GEN(2, uint8_t);
+        TEST_GEN(3, uint16_t);
+        TEST_GEN(4, uint32_t);
+        TEST_GEN(5, uint64_t);
+        TEST_GEN(6, int16_t);
+        TEST_GEN(7, int32_t);
+        TEST_GEN(8, int64_t);
+        TEST_GEN(9, float);
+        TEST_GEN(10, double);
+        TEST_GEN(11, char16_t);
+        TEST_GEN(12, hstring);
+        TEST_GEN(13, Blittable);
+        TEST_GEN(14, NonBlittable);
+        TEST_GEN(15, Nested);
+
+#undef TEST_GEN
+
 
         //{
         //    std::array<bool, 3> a{ true,false,true };
