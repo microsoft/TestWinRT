@@ -112,14 +112,14 @@ namespace winrt::TestComponent::implementation
 #undef TEST_GEN
 
 #define TEST_GEN(number, type) \
-auto Array ## number(array_view<type const> a, array_view<type> b, com_array<type>& c) \
-{ \
-    TEST_REQUIRE_N(L"Array", number, a.size() == b.size()); \
-    TEST_REQUIRE_N(L"Array", number, c.size() == 0); \
-    std::copy(a.begin(), a.end(), b.begin()); \
-    c = com_array<type>(a.begin(), a.end()); \
-    return com_array<type>(a.begin(), a.end()); \
-}
+    auto Array ## number(array_view<type const> a, array_view<type> b, com_array<type>& c) \
+    { \
+        TEST_REQUIRE_N(L"Array", number, a.size() == b.size()); \
+        TEST_REQUIRE_N(L"Array", number, c.size() == 0); \
+        std::copy(a.begin(), a.end(), b.begin()); \
+        c = com_array<type>(a.begin(), a.end()); \
+        return com_array<type>(a.begin(), a.end()); \
+    }
 
         TEST_GEN(1, bool);
         TEST_GEN(2, uint8_t);
@@ -222,6 +222,61 @@ auto Array ## number(array_view<type const> a, array_view<type> b, com_array<typ
             return b;
         }
 
+        void Collection1Call(Collection1Handler const& handler)
+        {
+            IIterable<hstring> a = single_threaded_vector<hstring>({ L"apples",L"oranges",L"pears" });
+            IIterable<hstring> b;
+            IIterable<hstring> c = handler(a, b);
+            TEST_REQUIRE_N(L"Collection", 1, a != b && a != c);
+            TEST_REQUIRE_N(L"Collection", 1, std::equal(begin(a), end(a), begin(b), end(b)));
+            TEST_REQUIRE_N(L"Collection", 1, std::equal(begin(a), end(a), begin(c), end(c)));
+        }
+        void Collection2Call(Collection2Handler const& handler)
+        {
+            IIterable<IKeyValuePair<hstring, hstring>> a = single_threaded_map<hstring, hstring>(std::map<hstring, hstring>{ {L"apples", L"1"}, { L"oranges",L"2" }, { L"pears",L"3" } });
+            IIterable<IKeyValuePair<hstring, hstring>> b;
+            IIterable<IKeyValuePair<hstring, hstring>> c = handler(a, b);
+            TEST_REQUIRE_N(L"Collection", 2, a != b && a != c);
+            TEST_REQUIRE_N(L"Collection", 2, std::equal(begin(a), end(a), begin(b), end(b), pair_equal));
+            TEST_REQUIRE_N(L"Collection", 2, std::equal(begin(a), end(a), begin(c), end(c), pair_equal));
+        }
+        void Collection3Call(Collection3Handler const& handler)
+        {
+            IMap<hstring, hstring> a = single_threaded_map<hstring, hstring>(std::map<hstring, hstring>{ {L"apples", L"1"}, { L"oranges",L"2" }, { L"pears",L"3" } });
+            IMap<hstring, hstring> b;
+            IMap<hstring, hstring> c = handler(a, b);
+            TEST_REQUIRE_N(L"Collection", 3, a != b && a != c);
+            TEST_REQUIRE_N(L"Collection", 3, std::equal(begin(a), end(a), begin(b), end(b), pair_equal));
+            TEST_REQUIRE_N(L"Collection", 3, std::equal(begin(a), end(a), begin(c), end(c), pair_equal));
+        }
+        void Collection4Call(Collection4Handler const& handler)
+        {
+            IMapView<hstring, hstring> a = single_threaded_map<hstring, hstring>(std::map<hstring, hstring>{ {L"apples", L"1"}, { L"oranges",L"2" }, { L"pears",L"3" } }).GetView();
+            IMapView<hstring, hstring> b;
+            IMapView<hstring, hstring> c = handler(a, b);
+            TEST_REQUIRE_N(L"Collection", 4, a != b && a != c);
+            TEST_REQUIRE_N(L"Collection", 4, std::equal(begin(a), end(a), begin(b), end(b), pair_equal));
+            TEST_REQUIRE_N(L"Collection", 4, std::equal(begin(a), end(a), begin(c), end(c), pair_equal));
+        }
+        void Collection5Call(Collection5Handler const& handler)
+        {
+            IVector<hstring> a = single_threaded_vector<hstring>({ L"apples",L"oranges",L"pears" });
+            IVector<hstring> b;
+            IVector<hstring> c = handler(a, b);
+            TEST_REQUIRE_N(L"Collection", 5, a != b && a != c);
+            TEST_REQUIRE_N(L"Collection", 5, std::equal(begin(a), end(a), begin(b), end(b)));
+            TEST_REQUIRE_N(L"Collection", 5, std::equal(begin(a), end(a), begin(c), end(c)));
+        }
+        void Collection6Call(Collection6Handler const& handler)
+        {
+            IVectorView<hstring> a = single_threaded_vector<hstring>({ L"apples",L"oranges",L"pears" }).GetView();
+            IVectorView<hstring> b;
+            IVectorView<hstring> c = handler(a, b);
+            TEST_REQUIRE_N(L"Collection", 6, a != b && a != c);
+            TEST_REQUIRE_N(L"Collection", 6, std::equal(begin(a), end(a), begin(b), end(b)));
+            TEST_REQUIRE_N(L"Collection", 6, std::equal(begin(a), end(a), begin(c), end(c)));
+        }
+
         IAsyncAction Async1(IAsyncAction suspend, bool fail)
         {
             co_await suspend;
@@ -308,55 +363,6 @@ auto Array ## number(array_view<type const> a, array_view<type> b, com_array<typ
 
 #undef TEST_GEN
 
-        //{
-        //    IIterable<hstring> a = single_threaded_vector<hstring>({ L"apples",L"oranges",L"pears" });
-        //    IIterable<hstring> b;
-        //    IIterable<hstring> c = tests.Collection1(a, b);
-        //    TEST_REQUIRE(L"Collection1", a != b && a != c);
-        //    TEST_REQUIRE(L"Collection1", std::equal(begin(a), end(a), begin(b), end(b)));
-        //    TEST_REQUIRE(L"Collection1", std::equal(begin(a), end(a), begin(c), end(c)));
-        //}
-        //{
-        //    IIterable<IKeyValuePair<hstring, hstring>> a = single_threaded_map<hstring, hstring>(std::map<hstring,hstring>{ {L"apples", L"1"},{L"oranges",L"2"},{L"pears",L"3"} });
-        //    IIterable<IKeyValuePair<hstring, hstring>> b;
-        //    IIterable<IKeyValuePair<hstring, hstring>> c = tests.Collection2(a, b);
-        //    TEST_REQUIRE(L"Collection2", a != b && a != c);
-        //    TEST_REQUIRE(L"Collection2", std::equal(begin(a), end(a), begin(b), end(b), pair_equal));
-        //    TEST_REQUIRE(L"Collection2", std::equal(begin(a), end(a), begin(c), end(c), pair_equal));
-        //}
-        //{
-        //    IMap<hstring, hstring> a = single_threaded_map<hstring, hstring>(std::map<hstring, hstring>{ {L"apples", L"1"}, { L"oranges",L"2" }, { L"pears",L"3" } });
-        //    IMap<hstring, hstring> b;
-        //    IMap<hstring, hstring> c = tests.Collection3(a, b);
-        //    TEST_REQUIRE(L"Collection3", a != b && a != c);
-        //    TEST_REQUIRE(L"Collection3", std::equal(begin(a), end(a), begin(b), end(b), pair_equal));
-        //    TEST_REQUIRE(L"Collection3", std::equal(begin(a), end(a), begin(c), end(c), pair_equal));
-        //}
-        //{
-        //    IMapView<hstring, hstring> a = single_threaded_map<hstring, hstring>(std::map<hstring, hstring>{ {L"apples", L"1"}, { L"oranges",L"2" }, { L"pears",L"3" } }).GetView();
-        //    IMapView<hstring, hstring> b;
-        //    IMapView<hstring, hstring> c = tests.Collection4(a, b);
-        //    TEST_REQUIRE(L"Collection4", a != b && a != c);
-        //    TEST_REQUIRE(L"Collection4", std::equal(begin(a), end(a), begin(b), end(b), pair_equal));
-        //    TEST_REQUIRE(L"Collection4", std::equal(begin(a), end(a), begin(c), end(c), pair_equal));
-        //}
-        //{
-        //    IVector<hstring> a = single_threaded_vector<hstring>({ L"apples",L"oranges",L"pears" });
-        //    IVector<hstring> b;
-        //    IVector<hstring> c = tests.Collection5(a, b);
-        //    TEST_REQUIRE(L"Collection5", a != b && a != c);
-        //    TEST_REQUIRE(L"Collection5", std::equal(begin(a), end(a), begin(b), end(b)));
-        //    TEST_REQUIRE(L"Collection5", std::equal(begin(a), end(a), begin(c), end(c)));
-        //}
-
-        //{
-        //    IVectorView<hstring> a = single_threaded_vector<hstring>({ L"apples",L"oranges",L"pears" }).GetView();
-        //    IVectorView<hstring> b;
-        //    IVectorView<hstring> c = tests.Collection6(a, b);
-        //    TEST_REQUIRE(L"Collection6", a != b && a != c);
-        //    TEST_REQUIRE(L"Collection6", std::equal(begin(a), end(a), begin(b), end(b)));
-        //    TEST_REQUIRE(L"Collection6", std::equal(begin(a), end(a), begin(c), end(c)));
-        //}
 
         //{
         //    TEST_REQUIRE(L"Async1", tests.Async1(NoAsync(), false).Status() == AsyncStatus::Completed);

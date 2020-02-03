@@ -61,6 +61,13 @@ namespace TestComponent
     delegate NonBlittable[] Array14Handler(NonBlittable[] a, ref NonBlittable[] b, out NonBlittable[] c);
     delegate Nested[] Array15Handler(Nested[] a, ref Nested[] b, out Nested[] c);
 
+    delegate Windows.Foundation.Collections.IIterable<String> Collection1Handler(Windows.Foundation.Collections.IIterable<String> a, out Windows.Foundation.Collections.IIterable<String> b);
+    delegate Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<String, String> > Collection2Handler(Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<String, String> > a, out Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<String, String> > b);
+    delegate Windows.Foundation.Collections.IMap<String, String> Collection3Handler(Windows.Foundation.Collections.IMap<String, String> a, out Windows.Foundation.Collections.IMap<String, String> b);
+    delegate Windows.Foundation.Collections.IMapView<String, String> Collection4Handler(Windows.Foundation.Collections.IMapView<String, String> a, out Windows.Foundation.Collections.IMapView<String, String> b);
+    delegate Windows.Foundation.Collections.IVector<String> Collection5Handler(Windows.Foundation.Collections.IVector<String> a, out Windows.Foundation.Collections.IVector<String> b);
+    delegate Windows.Foundation.Collections.IVectorView<String> Collection6Handler(Windows.Foundation.Collections.IVectorView<String> a, out Windows.Foundation.Collections.IVectorView<String> b);
+
     interface ITests
     {
         void Simple();
@@ -129,13 +136,19 @@ namespace TestComponent
         void Array14Call(Array14Handler handler);
         void Array15Call(Array15Handler handler);
 
-
         Windows.Foundation.Collections.IIterable<String> Collection1(Windows.Foundation.Collections.IIterable<String> a, out Windows.Foundation.Collections.IIterable<String> b);
         Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<String, String> > Collection2(Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<String, String> > a, out Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<String, String> > b);
         Windows.Foundation.Collections.IMap<String, String> Collection3(Windows.Foundation.Collections.IMap<String, String> a, out Windows.Foundation.Collections.IMap<String, String> b);
         Windows.Foundation.Collections.IMapView<String, String> Collection4(Windows.Foundation.Collections.IMapView<String, String> a, out Windows.Foundation.Collections.IMapView<String, String> b);
         Windows.Foundation.Collections.IVector<String> Collection5(Windows.Foundation.Collections.IVector<String> a, out Windows.Foundation.Collections.IVector<String> b);
         Windows.Foundation.Collections.IVectorView<String> Collection6(Windows.Foundation.Collections.IVectorView<String> a, out Windows.Foundation.Collections.IVectorView<String> b);
+
+        void Collection1Call(Collection1Handler handler);
+        void Collection2Call(Collection2Handler handler);
+        void Collection3Call(Collection3Handler handler);
+        void Collection4Call(Collection4Handler handler);
+        void Collection5Call(Collection5Handler handler);
+        void Collection6Call(Collection6Handler handler);
 
         Windows.Foundation.IAsyncAction Async1(Windows.Foundation.IAsyncAction suspend, Boolean fail);
         Windows.Foundation.IAsyncActionWithProgress<Int32> Async2(Windows.Foundation.IAsyncAction suspend, Boolean fail, Int32 progress);
