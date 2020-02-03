@@ -157,7 +157,7 @@ namespace winrt::TestComponent::implementation
 #define TEST_GEN(number, type, value) \
     void Array ## number ## Call(Array ## number ## Handler const& handler) \
     { \
-        std::array<type, 3> a value; \
+        std::array<type, 3> a { value }; \
         std::array<type, 3> b; \
         com_array<type> c; \
         com_array<type> d = handler(a, b, c); \
@@ -166,21 +166,21 @@ namespace winrt::TestComponent::implementation
         TEST_REQUIRE_N(L"Array", number, std::equal(a.begin(), a.end(), d.begin(), d.end())); \
     }
 
-        TEST_GEN(1, bool, ({ true, false, true }));
-        TEST_GEN(2, uint8_t, ({ 1, 2, 3 }));
-        TEST_GEN(3, uint16_t, ({ 4, 5, 7 }));
-        TEST_GEN(4, uint32_t, ({ 7, 8, 9 }));
-        TEST_GEN(5, uint64_t, ({ 1, 2, 3 }));
-        TEST_GEN(6, int16_t, ({ 4, 5, 7 }));
-        TEST_GEN(7, int32_t, ({ 7, 8, 9 }));
-        TEST_GEN(8, int64_t, ({ 1, 2, 3 }));
-        TEST_GEN(9, float, ({ 1.0f, 2.0f, 3.0f }));
-        TEST_GEN(10, double, ({ 4.0f, 5.0f, 6.0f }));
-        TEST_GEN(11, char16_t, ({ L'W', L'i', L'n' }));
-        TEST_GEN(12, hstring, ({ L"C++", L"C#", L"Rust" }));
-        TEST_GEN(13, Blittable, ({ Blittable{ false, 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'X', guid_of<ITests>() }, Blittable{ true, 10, 20, 30, 40, -50, -60, -70, 80.0f, 90.0, L'Y', guid_of<IStringable>() }, Blittable{ false, 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'Z', guid_of<IInspectable>() } }));
-        TEST_GEN(14, NonBlittable, ({ NonBlittable{ L"First", 123 }, NonBlittable{ L"Second", 456 }, NonBlittable{ L"Third", 789 } }));
-        TEST_GEN(15, Nested, ({ Nested{ { false, 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'X', guid_of<ITests>() }, { L"First", 123 } }, Nested{ { true, 10, 20, 30, 40, -50, -60, -70, 80.0f, 90.0, L'Y', guid_of<IStringable>() }, { L"Second", 456 } }, Nested{ { false, 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'Z', guid_of<IInspectable>() }, { L"Third", 789 } } }));
+        TEST_GEN(1, bool, (true, false, true));
+        TEST_GEN(2, uint8_t, (1, 2, 3));
+        TEST_GEN(3, uint16_t, (4, 5, 7));
+        TEST_GEN(4, uint32_t, (7, 8, 9));
+        TEST_GEN(5, uint64_t, (1, 2, 3));
+        TEST_GEN(6, int16_t, (4, 5, 7));
+        TEST_GEN(7, int32_t, (7, 8, 9));
+        TEST_GEN(8, int64_t, (1, 2, 3));
+        TEST_GEN(9, float, (1.0f, 2.0f, 3.0f));
+        TEST_GEN(10, double, (4.0f, 5.0f, 6.0f));
+        TEST_GEN(11, char16_t, (L'W', L'i', L'n'));
+        TEST_GEN(12, hstring, (L"C++", L"C#", L"Rust"));
+        TEST_GEN(13, Blittable, (Blittable{ false, 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'X', guid_of<ITests>() }, Blittable{ true, 10, 20, 30, 40, -50, -60, -70, 80.0f, 90.0, L'Y', guid_of<IStringable>() }, Blittable{ false, 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'Z', guid_of<IInspectable>() }));
+        TEST_GEN(14, NonBlittable, (NonBlittable{ L"First", 123 }, NonBlittable{ L"Second", 456 }, NonBlittable{ L"Third", 789 }));
+        TEST_GEN(15, Nested, (Nested{ { false, 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'X', guid_of<ITests>() }, { L"First", 123 } }, Nested{ { true, 10, 20, 30, 40, -50, -60, -70, 80.0f, 90.0, L'Y', guid_of<IStringable>() }, { L"Second", 456 } }, Nested{ { false, 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'Z', guid_of<IInspectable>() }, { L"Third", 789 } }));
 
 #undef TEST_GEN
 
