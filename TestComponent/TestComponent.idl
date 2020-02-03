@@ -75,6 +75,7 @@ namespace TestComponent
 
     interface ITests
     {
+        UInt32 Percentage{ get; };
         void Simple();
 
         Boolean Param1(Boolean a, out Boolean b);
@@ -178,5 +179,8 @@ namespace TestComponent
 
         // Test C++/WinRT as both caller and callee.
         static void TestSelf();
+
+        // Returns an implementation of ITests for independently driven testing.
+        static ITests MakeTests();
     }
 }

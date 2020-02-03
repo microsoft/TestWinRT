@@ -10,6 +10,7 @@ namespace winrt::TestComponent::implementation
         static void TestProducer(ITests const& callee);
         static uint32_t TestConsumer(TestHandler const& caller);
         static void TestSelf();
+        static ITests MakeTests();
     };
 }
 
