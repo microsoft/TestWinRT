@@ -30,14 +30,26 @@ namespace TestComponent
     };
 
     delegate Boolean Param1Handler(Boolean a, out Boolean b);
+    delegate UInt8 Param2Handler(UInt8 a, out UInt8 b);
+    delegate UInt16 Param3Handler(UInt16 a, out UInt16 b);
+    delegate UInt32 Param4Handler(UInt32 a, out UInt32 b);
+    delegate UInt64 Param5Handler(UInt64 a, out UInt64 b);
+    delegate Int16 Param6Handler(Int16 a, out Int16 b);
+    delegate Int32 Param7Handler(Int32 a, out Int32 b);
+    delegate Int64 Param8Handler(Int64 a, out Int64 b);
+    delegate Single Param9Handler(Single a, out Single b);
+    delegate Double Param10Handler(Double a, out Double b);
+    delegate Char Param11Handler(Char a, out Char b);
+    delegate String Param12Handler(String a, out String b);
+    delegate Blittable Param13Handler(Blittable a, out Blittable b);
+    delegate NonBlittable Param14Handler(NonBlittable a, out NonBlittable b);
+    delegate Nested Param15Handler(Nested a, out Nested b);
 
     interface ITests
     {
         void Simple();
 
         Boolean Param1(Boolean a, out Boolean b);
-        void Param1Call(Param1Handler handler);
-
         UInt8 Param2(UInt8 a, out UInt8 b);
         UInt16 Param3(UInt16 a, out UInt16 b);
         UInt32 Param4(UInt32 a, out UInt32 b);
@@ -52,6 +64,22 @@ namespace TestComponent
         Blittable Param13(Blittable a, out Blittable b);
         NonBlittable Param14(NonBlittable a, out NonBlittable b);
         Nested Param15(Nested a, out Nested b);
+
+        void Param1Call(Param1Handler handler);
+        void Param2Call(Param2Handler handler);
+        void Param3Call(Param3Handler handler);
+        void Param4Call(Param4Handler handler);
+        void Param5Call(Param5Handler handler);
+        void Param6Call(Param6Handler handler);
+        void Param7Call(Param7Handler handler);
+        void Param8Call(Param8Handler handler);
+        void Param9Call(Param9Handler handler);
+        void Param10Call(Param10Handler handler);
+        void Param11Call(Param11Handler handler);
+        void Param12Call(Param12Handler handler);
+        void Param13Call(Param13Handler handler);
+        void Param14Call(Param14Handler handler);
+        void Param15Call(Param15Handler handler);
 
         Boolean[] Array1(Boolean[] a, ref Boolean[] b, out Boolean[] c);
         UInt8[] Array2(UInt8[] a, ref UInt8[] b, out UInt8[] c);
