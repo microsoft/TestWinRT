@@ -7,8 +7,8 @@ namespace winrt::TestComponent::implementation
     {
         TestRunner() = default;
 
-        static void TestCallee(ITests const& callee);
-        static uint32_t TestCaller(TestHandler const& caller);
+        static void TestProducer(ITests const& callee);
+        static uint32_t TestConsumer(TestHandler const& caller);
         static void TestSelf();
     };
 }
