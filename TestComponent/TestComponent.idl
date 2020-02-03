@@ -45,6 +45,22 @@ namespace TestComponent
     delegate NonBlittable Param14Handler(NonBlittable a, out NonBlittable b);
     delegate Nested Param15Handler(Nested a, out Nested b);
 
+    delegate Boolean[] Array1Handler(Boolean[] a, ref Boolean[] b, out Boolean[] c);
+    delegate UInt8[] Array2Handler(UInt8[] a, ref UInt8[] b, out UInt8[] c);
+    delegate UInt16[] Array3Handler(UInt16[] a, ref UInt16[] b, out UInt16[] c);
+    delegate UInt32[] Array4Handler(UInt32[] a, ref UInt32[] b, out UInt32[] c);
+    delegate UInt64[] Array5Handler(UInt64[] a, ref UInt64[] b, out UInt64[] c);
+    delegate Int16[] Array6Handler(Int16[] a, ref Int16[] b, out Int16[] c);
+    delegate Int32[] Array7Handler(Int32[] a, ref Int32[] b, out Int32[] c);
+    delegate Int64[] Array8Handler(Int64[] a, ref Int64[] b, out Int64[] c);
+    delegate Single[] Array9Handler(Single[] a, ref Single[] b, out Single[] c);
+    delegate Double[] Array10Handler(Double[] a, ref Double[] b, out Double[] c);
+    delegate Char[] Array11Handler(Char[] a, ref Char[] b, out Char[] c);
+    delegate String[] Array12Handler(String[] a, ref String[] b, out String[] c);
+    delegate Blittable[] Array13Handler(Blittable[] a, ref Blittable[] b, out Blittable[] c);
+    delegate NonBlittable[] Array14Handler(NonBlittable[] a, ref NonBlittable[] b, out NonBlittable[] c);
+    delegate Nested[] Array15Handler(Nested[] a, ref Nested[] b, out Nested[] c);
+
     interface ITests
     {
         void Simple();
@@ -96,6 +112,23 @@ namespace TestComponent
         Blittable[] Array13(Blittable[] a, ref Blittable[] b, out Blittable[] c);
         NonBlittable[] Array14(NonBlittable[] a, ref NonBlittable[] b, out NonBlittable[] c);
         Nested[] Array15(Nested[] a, ref Nested[] b, out Nested[] c);
+
+        void Array1Call(Array1Handler handler);
+        void Array2Call(Array2Handler handler);
+        void Array3Call(Array3Handler handler);
+        void Array4Call(Array4Handler handler);
+        void Array5Call(Array5Handler handler);
+        void Array6Call(Array6Handler handler);
+        void Array7Call(Array7Handler handler);
+        void Array8Call(Array8Handler handler);
+        void Array9Call(Array9Handler handler);
+        void Array10Call(Array10Handler handler);
+        void Array11Call(Array11Handler handler);
+        void Array12Call(Array12Handler handler);
+        void Array13Call(Array13Handler handler);
+        void Array14Call(Array14Handler handler);
+        void Array15Call(Array15Handler handler);
+
 
         Windows.Foundation.Collections.IIterable<String> Collection1(Windows.Foundation.Collections.IIterable<String> a, out Windows.Foundation.Collections.IIterable<String> b);
         Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<String, String> > Collection2(Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<String, String> > a, out Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<String, String> > b);
