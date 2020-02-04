@@ -10,11 +10,6 @@ using namespace Windows::Foundation::Collections;
 
 #define TEST_REQUIRE(message, expression) { if (!(expression)) throw hresult_invalid_argument(message); }
 
-bool pair_equal(IKeyValuePair<hstring, hstring> const& left, IKeyValuePair<hstring, hstring> const& right)
-{
-    return left.Key() == right.Key() && left.Value() == right.Value();
-}
-
 IAsyncAction SignalAsync(HANDLE event)
 {
     co_await resume_on_signal(event);
@@ -76,7 +71,6 @@ namespace winrt::TestComponent::implementation
         TEST_GEN(9, float);
         TEST_GEN(10, double);
         TEST_GEN(11, char16_t);
-        TEST_GEN(13, Blittable);
 
 #undef TEST_GEN
 
@@ -88,16 +82,24 @@ namespace winrt::TestComponent::implementation
             b = a;
             return a;
         }
-        auto Param14(NonBlittable const& a, NonBlittable& b)
+        auto Param13(Blittable const& a, Blittable const& b, Blittable& c)
         {
-            TEST_REQUIRE_N(L"Param", 14, b == NonBlittable{});
-            b = a;
+            TEST_REQUIRE_N(L"Param", 13, a == b);
+            c = a;
             return a;
         }
-        auto Param15(Nested const& a, Nested& b)
+        auto Param14(NonBlittable const& a, NonBlittable const& b, NonBlittable& c)
         {
-            TEST_REQUIRE_N(L"Param", 15, b == Nested{});
-            b = a;
+            TEST_REQUIRE_N(L"Param", 14, a == b);
+            TEST_REQUIRE_N(L"Param", 14, c == NonBlittable{});
+            c = a;
+            return a;
+        }
+        auto Param15(Nested const& a, Nested const& b, Nested& c)
+        {
+            TEST_REQUIRE_N(L"Param", 14, a == b);
+            TEST_REQUIRE_N(L"Param", 15, c == Nested{});
+            c = a;
             return a;
         }
 
@@ -123,6 +125,18 @@ namespace winrt::TestComponent::implementation
         TEST_GEN(11, char16_t, L'W');
         // TODO: do these also need non-blittable out param testing?
         TEST_GEN(12, hstring, L"WinRT");
+
+#undef TEST_GEN
+
+#define TEST_GEN(number, type, value) \
+    void Param ## number ## Call(Param ## number ## Handler const& handler) \
+    { \
+        type const a = value; \
+        type b; \
+        type c = handler(a, a, b); \
+        TEST_REQUIRE_N(L"Param", number, a == b && a == c); \
+    }
+
         TEST_GEN(13, Blittable, (Blittable{ false, 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'X', guid_of<ITests>() }));
         TEST_GEN(14, NonBlittable, (NonBlittable{ L"WinRT", 1234 }));
         TEST_GEN(15, Nested, (Nested{ { false, 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'X', guid_of<ITests>() }, { L"WinRT", 1234 } }));
@@ -255,8 +269,8 @@ namespace winrt::TestComponent::implementation
             IIterable<IKeyValuePair<hstring, hstring>> b;
             IIterable<IKeyValuePair<hstring, hstring>> c = handler(a, b);
             TEST_REQUIRE_N(L"Collection", 2, a != b && a != c);
-            TEST_REQUIRE_N(L"Collection", 2, std::equal(begin(a), end(a), begin(b), end(b), pair_equal));
-            TEST_REQUIRE_N(L"Collection", 2, std::equal(begin(a), end(a), begin(c), end(c), pair_equal));
+            TEST_REQUIRE_N(L"Collection", 2, std::equal(begin(a), end(a), begin(b), end(b)));
+            TEST_REQUIRE_N(L"Collection", 2, std::equal(begin(a), end(a), begin(c), end(c)));
         }
         void Collection3Call(Collection3Handler const& handler)
         {
@@ -264,8 +278,8 @@ namespace winrt::TestComponent::implementation
             IMap<hstring, hstring> b;
             IMap<hstring, hstring> c = handler(a, b);
             TEST_REQUIRE_N(L"Collection", 3, a != b && a != c);
-            TEST_REQUIRE_N(L"Collection", 3, std::equal(begin(a), end(a), begin(b), end(b), pair_equal));
-            TEST_REQUIRE_N(L"Collection", 3, std::equal(begin(a), end(a), begin(c), end(c), pair_equal));
+            TEST_REQUIRE_N(L"Collection", 3, std::equal(begin(a), end(a), begin(b), end(b)));
+            TEST_REQUIRE_N(L"Collection", 3, std::equal(begin(a), end(a), begin(c), end(c)));
         }
         void Collection4Call(Collection4Handler const& handler)
         {
@@ -273,8 +287,8 @@ namespace winrt::TestComponent::implementation
             IMapView<hstring, hstring> b;
             IMapView<hstring, hstring> c = handler(a, b);
             TEST_REQUIRE_N(L"Collection", 4, a != b && a != c);
-            TEST_REQUIRE_N(L"Collection", 4, std::equal(begin(a), end(a), begin(b), end(b), pair_equal));
-            TEST_REQUIRE_N(L"Collection", 4, std::equal(begin(a), end(a), begin(c), end(c), pair_equal));
+            TEST_REQUIRE_N(L"Collection", 4, std::equal(begin(a), end(a), begin(b), end(b)));
+            TEST_REQUIRE_N(L"Collection", 4, std::equal(begin(a), end(a), begin(c), end(c)));
         }
         void Collection5Call(Collection5Handler const& handler)
         {
