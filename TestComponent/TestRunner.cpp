@@ -10,11 +10,6 @@ using namespace Windows::Foundation::Collections;
 
 #define TEST_REQUIRE(message, expression) { if (!(expression)) throw hresult_invalid_argument(message); }
 
-bool pair_equal(IKeyValuePair<hstring, hstring> const& left, IKeyValuePair<hstring, hstring> const& right)
-{
-    return left.Key() == right.Key() && left.Value() == right.Value();
-}
-
 IAsyncAction SignalAsync(HANDLE event)
 {
     co_await resume_on_signal(event);
@@ -274,8 +269,8 @@ namespace winrt::TestComponent::implementation
             IIterable<IKeyValuePair<hstring, hstring>> b;
             IIterable<IKeyValuePair<hstring, hstring>> c = handler(a, b);
             TEST_REQUIRE_N(L"Collection", 2, a != b && a != c);
-            TEST_REQUIRE_N(L"Collection", 2, std::equal(begin(a), end(a), begin(b), end(b), pair_equal));
-            TEST_REQUIRE_N(L"Collection", 2, std::equal(begin(a), end(a), begin(c), end(c), pair_equal));
+            TEST_REQUIRE_N(L"Collection", 2, std::equal(begin(a), end(a), begin(b), end(b)));
+            TEST_REQUIRE_N(L"Collection", 2, std::equal(begin(a), end(a), begin(c), end(c)));
         }
         void Collection3Call(Collection3Handler const& handler)
         {
@@ -283,8 +278,8 @@ namespace winrt::TestComponent::implementation
             IMap<hstring, hstring> b;
             IMap<hstring, hstring> c = handler(a, b);
             TEST_REQUIRE_N(L"Collection", 3, a != b && a != c);
-            TEST_REQUIRE_N(L"Collection", 3, std::equal(begin(a), end(a), begin(b), end(b), pair_equal));
-            TEST_REQUIRE_N(L"Collection", 3, std::equal(begin(a), end(a), begin(c), end(c), pair_equal));
+            TEST_REQUIRE_N(L"Collection", 3, std::equal(begin(a), end(a), begin(b), end(b)));
+            TEST_REQUIRE_N(L"Collection", 3, std::equal(begin(a), end(a), begin(c), end(c)));
         }
         void Collection4Call(Collection4Handler const& handler)
         {
@@ -292,8 +287,8 @@ namespace winrt::TestComponent::implementation
             IMapView<hstring, hstring> b;
             IMapView<hstring, hstring> c = handler(a, b);
             TEST_REQUIRE_N(L"Collection", 4, a != b && a != c);
-            TEST_REQUIRE_N(L"Collection", 4, std::equal(begin(a), end(a), begin(b), end(b), pair_equal));
-            TEST_REQUIRE_N(L"Collection", 4, std::equal(begin(a), end(a), begin(c), end(c), pair_equal));
+            TEST_REQUIRE_N(L"Collection", 4, std::equal(begin(a), end(a), begin(b), end(b)));
+            TEST_REQUIRE_N(L"Collection", 4, std::equal(begin(a), end(a), begin(c), end(c)));
         }
         void Collection5Call(Collection5Handler const& handler)
         {
