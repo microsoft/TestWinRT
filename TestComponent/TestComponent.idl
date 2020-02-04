@@ -41,9 +41,9 @@ namespace TestComponent
     delegate Double Param10Handler(Double a, out Double b);
     delegate Char Param11Handler(Char a, out Char b);
     delegate String Param12Handler(String a, out String b);
-    delegate Blittable Param13Handler(Blittable a, out Blittable b);
-    delegate NonBlittable Param14Handler(NonBlittable a, out NonBlittable b);
-    delegate Nested Param15Handler(Nested a, out Nested b);
+    delegate Blittable Param13Handler(Blittable a, ref const Blittable b, out Blittable c);
+    delegate NonBlittable Param14Handler(NonBlittable a, ref const NonBlittable b, out NonBlittable c);
+    delegate Nested Param15Handler(Nested a, ref const Nested b, out Nested c);
 
     delegate Boolean[] Array1Handler(Boolean[] a, ref Boolean[] b, out Boolean[] c);
     delegate UInt8[] Array2Handler(UInt8[] a, ref UInt8[] b, out UInt8[] c);
@@ -90,9 +90,9 @@ namespace TestComponent
         Double Param10(Double a, out Double b);
         Char Param11(Char a, out Char b);
         String Param12(String a, out String b);
-        Blittable Param13(Blittable a, out Blittable b);
-        NonBlittable Param14(NonBlittable a, out NonBlittable b);
-        Nested Param15(Nested a, out Nested b);
+        Blittable Param13(Blittable a, ref const Blittable b, out Blittable c);
+        NonBlittable Param14(NonBlittable a, ref const NonBlittable b, out NonBlittable c);
+        Nested Param15(Nested a, ref const Nested b, out Nested c);
 
         void Param1Call(Param1Handler handler);
         void Param2Call(Param2Handler handler);

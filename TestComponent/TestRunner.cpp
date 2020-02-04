@@ -76,7 +76,6 @@ namespace winrt::TestComponent::implementation
         TEST_GEN(9, float);
         TEST_GEN(10, double);
         TEST_GEN(11, char16_t);
-        TEST_GEN(13, Blittable);
 
 #undef TEST_GEN
 
@@ -88,16 +87,24 @@ namespace winrt::TestComponent::implementation
             b = a;
             return a;
         }
-        auto Param14(NonBlittable const& a, NonBlittable& b)
+        auto Param13(Blittable const& a, Blittable const& b, Blittable& c)
         {
-            TEST_REQUIRE_N(L"Param", 14, b == NonBlittable{});
-            b = a;
+            TEST_REQUIRE_N(L"Param", 13, a == b);
+            c = a;
             return a;
         }
-        auto Param15(Nested const& a, Nested& b)
+        auto Param14(NonBlittable const& a, NonBlittable const& b, NonBlittable& c)
         {
-            TEST_REQUIRE_N(L"Param", 15, b == Nested{});
-            b = a;
+            TEST_REQUIRE_N(L"Param", 14, a == b);
+            TEST_REQUIRE_N(L"Param", 14, c == NonBlittable{});
+            c = a;
+            return a;
+        }
+        auto Param15(Nested const& a, Nested const& b, Nested& c)
+        {
+            TEST_REQUIRE_N(L"Param", 14, a == b);
+            TEST_REQUIRE_N(L"Param", 15, c == Nested{});
+            c = a;
             return a;
         }
 
@@ -123,6 +130,18 @@ namespace winrt::TestComponent::implementation
         TEST_GEN(11, char16_t, L'W');
         // TODO: do these also need non-blittable out param testing?
         TEST_GEN(12, hstring, L"WinRT");
+
+#undef TEST_GEN
+
+#define TEST_GEN(number, type, value) \
+    void Param ## number ## Call(Param ## number ## Handler const& handler) \
+    { \
+        type const a = value; \
+        type b; \
+        type c = handler(a, a, b); \
+        TEST_REQUIRE_N(L"Param", number, a == b && a == c); \
+    }
+
         TEST_GEN(13, Blittable, (Blittable{ false, 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'X', guid_of<ITests>() }));
         TEST_GEN(14, NonBlittable, (NonBlittable{ L"WinRT", 1234 }));
         TEST_GEN(15, Nested, (Nested{ { false, 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'X', guid_of<ITests>() }, { L"WinRT", 1234 } }));
