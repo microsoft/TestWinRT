@@ -32,7 +32,7 @@ namespace winrt::TestComponent::implementation
     private:
 
         uint32_t m_counter{};
-        const uint32_t m_total{ 95 };
+        const uint32_t m_total{ 97 };
         event<EventHandler<int32_t>> m_event1;
         event<TypedEventHandler<ITests, int32_t>> m_event2;
 
@@ -581,6 +581,42 @@ namespace winrt::TestComponent::implementation
         TEST_GEN(Async, 4);
 
 #undef TEST_GEN
+
+        {
+            int32_t counter = 0;
+
+            auto token = tests.Event1([&](IInspectable const& sender, int32_t args)
+                {
+                    TEST_REQUIRE(L"Event1", sender == tests);
+                    TEST_REQUIRE(L"Event1", args == 123);
+                    TEST_REQUIRE(L"Event1", counter == 0);
+                    ++counter;
+                });
+
+            tests.Event1Call(123);
+            TEST_REQUIRE(L"Event1", counter == 1);
+            tests.Event1(token);
+            tests.Event1Call(456);
+            TEST_REQUIRE(L"Event1", counter == 1);
+        }
+
+        {
+            int32_t counter = 0;
+
+            auto token = tests.Event2([&](ITests const& sender, int32_t args)
+                {
+                    TEST_REQUIRE(L"Event2", sender == tests);
+                    TEST_REQUIRE(L"Event2", args == 123);
+                    TEST_REQUIRE(L"Event2", counter == 0);
+                    ++counter;
+                });
+
+            tests.Event2Call(123);
+            TEST_REQUIRE(L"Event2", counter == 1);
+            tests.Event2(token);
+            tests.Event2Call(456);
+            TEST_REQUIRE(L"Event2", counter == 1);
+        }
     }
 
     void TestRunner::TestProducer(ITests const& tests)
