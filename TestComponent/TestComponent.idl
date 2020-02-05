@@ -3,24 +3,24 @@ namespace TestComponent
 {
     struct Blittable
     {
-        Boolean A;
-        UInt8 B;
-        UInt16 C;
-        UInt32 D;
-        UInt64 E;
-        Int16 F;
-        Int32 G;
-        Int64 H;
-        Single I;
-        Double J;
-        Char K;
-        Guid L;
+        UInt8 A;
+        UInt16 B;
+        UInt32 C;
+        UInt64 D;
+        Int16 E;
+        Int32 F;
+        Int64 G;
+        Single H;
+        Double I;
+        Char J;
+        Guid K;
     };
 
     struct NonBlittable
     {
-        String A;
-        Windows.Foundation.IReference<Int64> B;
+        Boolean A;
+        String B;
+        Windows.Foundation.IReference<Int64> C;
     };
 
     struct Nested

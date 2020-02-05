@@ -139,9 +139,9 @@ namespace winrt::TestComponent::implementation
         TEST_REQUIRE_N(L"Param", number, a == b && a == c); \
     }
 
-        TEST_GEN(13, Blittable, (Blittable{ false, 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'X', guid_of<ITests>() }));
-        TEST_GEN(14, NonBlittable, (NonBlittable{ L"WinRT", 1234 }));
-        TEST_GEN(15, Nested, (Nested{ { false, 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'X', guid_of<ITests>() }, { L"WinRT", 1234 } }));
+        TEST_GEN(13, Blittable, (Blittable{ 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'X', guid_of<ITests>() }));
+        TEST_GEN(14, NonBlittable, (NonBlittable{ false, L"WinRT", 1234 }));
+        TEST_GEN(15, Nested, (Nested{ { 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'X', guid_of<ITests>() }, { true, L"WinRT", 1234 } }));
 
 #undef TEST_GEN
 
@@ -197,9 +197,9 @@ namespace winrt::TestComponent::implementation
         TEST_GEN(10, double, (4.0f, 5.0f, 6.0f));
         TEST_GEN(11, char16_t, (L'W', L'i', L'n'));
         TEST_GEN(12, hstring, (L"C++", L"C#", L"Rust"));
-        TEST_GEN(13, Blittable, (Blittable{ false, 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'X', guid_of<ITests>() }, Blittable{ true, 10, 20, 30, 40, -50, -60, -70, 80.0f, 90.0, L'Y', guid_of<IStringable>() }, Blittable{ false, 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'Z', guid_of<IInspectable>() }));
-        TEST_GEN(14, NonBlittable, (NonBlittable{ L"First", 123 }, NonBlittable{ L"Second", 456 }, NonBlittable{ L"Third", 789 }));
-        TEST_GEN(15, Nested, (Nested{ { false, 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'X', guid_of<ITests>() }, { L"First", 123 } }, Nested{ { true, 10, 20, 30, 40, -50, -60, -70, 80.0f, 90.0, L'Y', guid_of<IStringable>() }, { L"Second", 456 } }, Nested{ { false, 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'Z', guid_of<IInspectable>() }, { L"Third", 789 } }));
+        TEST_GEN(13, Blittable, (Blittable{ 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'X', guid_of<ITests>() }, Blittable{ 10, 20, 30, 40, -50, -60, -70, 80.0f, 90.0, L'Y', guid_of<IStringable>() }, Blittable{ 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'Z', guid_of<IInspectable>() }));
+        TEST_GEN(14, NonBlittable, (NonBlittable{ false, L"First", 123 }, NonBlittable{ true, L"Second", 456 }, NonBlittable{ false, L"Third", 789 }));
+        TEST_GEN(15, Nested, (Nested{ { 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'X', guid_of<ITests>() }, { false, L"First", 123 } }, Nested{ { 10, 20, 30, 40, -50, -60, -70, 80.0f, 90.0, L'Y', guid_of<IStringable>() }, { true, L"Second", 456 } }, Nested{ { 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, L'Z', guid_of<IInspectable>() }, { false, L"Third", 789 } }));
 
 #undef TEST_GEN
 
