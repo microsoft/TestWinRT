@@ -32,7 +32,9 @@ namespace winrt::TestComponent::implementation
     private:
 
         uint32_t m_counter{};
-        const uint32_t m_total{ 89 };
+        const uint32_t m_total{ 95 };
+        event<EventHandler<int32_t>> m_event1;
+        event<TypedEventHandler<ITests, int32_t>> m_event2;
 
     public:
 
@@ -494,6 +496,37 @@ namespace winrt::TestComponent::implementation
                 TEST_REQUIRE(L"Async4", progress == 321);
             }
         }
+
+        event_token Event1(EventHandler<int32_t> const& handler)
+        {
+            return m_event1.add(handler);
+        }
+
+        void Event1(event_token token) noexcept
+        {
+            m_event1.remove(token);
+        }
+
+        event_token Event2(TypedEventHandler<ITests, int32_t> const& handler)
+        {
+            return m_event2.add(handler);
+        }
+
+        void Event2(event_token token)
+        {
+            m_event2.remove(token);
+        }
+
+        void Event1Call(int32_t value)
+        {
+            m_event1(*this, value);
+        }
+
+        void Event2Call(int32_t value)
+        {
+            m_event2(*this, value);
+        }
+
     };
 
     void RunTests(ITests const& tests)

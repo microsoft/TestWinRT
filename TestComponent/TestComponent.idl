@@ -165,6 +165,13 @@ namespace TestComponent
         void Async2Call(Async2Handler handler);
         void Async3Call(Async3Handler handler);
         void Async4Call(Async4Handler handler);
+
+        event Windows.Foundation.EventHandler<Int32> Event1;
+        event Windows.Foundation.TypedEventHandler<ITests, Int32> Event2;
+
+        void Event1Call(Int32 value);
+        void Event2Call(Int32 value);
+
     }
 
     delegate void TestHandler(ITests tests);
