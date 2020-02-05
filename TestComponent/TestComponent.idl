@@ -171,7 +171,6 @@ namespace TestComponent
 
         void Event1Call(Int32 value);
         void Event2Call(Int32 value);
-
     }
 
     delegate void TestHandler(ITests tests);
