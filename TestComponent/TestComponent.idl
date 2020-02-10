@@ -1,6 +1,11 @@
 
 namespace TestComponent
 {
+    // All language projections must deal with blittable vs. non-blittable structs somehow. In C++/WinRT, only structs
+    // containing String or IReference<T> are non-blittable since they result in structs that are not trivially destructible.
+    // In C#/WinRT, structs containing Boolean and Char are also non-blittable according to the following doc:
+    // https://docs.microsoft.com/en-us/dotnet/framework/interop/blittable-and-non-blittable-types
+
     struct Blittable
     {
         UInt8 A;
@@ -12,15 +17,15 @@ namespace TestComponent
         Int64 G;
         Single H;
         Double I;
-        Char J;
-        Guid K;
+        Guid J;
     };
 
     struct NonBlittable
     {
         Boolean A;
-        String B;
-        Windows.Foundation.IReference<Int64> C;
+        Char B;
+        String C;
+        Windows.Foundation.IReference<Int64> D;
     };
 
     struct Nested
