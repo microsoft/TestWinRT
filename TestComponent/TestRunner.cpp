@@ -55,12 +55,16 @@ namespace winrt::TestComponent::implementation
         {
         }
 
+        template<size_t number, typename type>
+        auto Param(type const& a, type& b)
+        {
+            b = a; 
+            return a; 
+        }
+
 #define TEST_GEN(number, type) \
     auto Param ## number(type const& a, type & b) \
-    { \
-        b = a; \
-        return a; \
-    }
+        { return Param<number, type>(a, b); }
 
         TEST_GEN(1, bool);
         TEST_GEN(2, uint8_t);
@@ -105,14 +109,17 @@ namespace winrt::TestComponent::implementation
             return a;
         }
 
-#define TEST_GEN(number, type, value) \
+        template<size_t number, typename type, typename ParamHandler>
+        void ParamPrimitiveCall(type const a, ParamHandler const& handler)
+        {
+            type b;
+            type c = handler(a, b);
+            TEST_REQUIRE_N(L"Param", number, a == b && a == c);
+        }
+
+#define TEST_GEN(number, type, ...) \
     void Param ## number ## Call(Param ## number ## Handler const& handler) \
-    { \
-        type const a = value; \
-        type b; \
-        type c = handler(a, b); \
-        TEST_REQUIRE_N(L"Param", number, a == b && a == c); \
-    }
+        { ParamPrimitiveCall<number, type>({ __VA_ARGS__ }, handler); }
 
         TEST_GEN(1, bool, true);
         TEST_GEN(2, uint8_t, 1);
@@ -130,30 +137,37 @@ namespace winrt::TestComponent::implementation
 
 #undef TEST_GEN
 
-#define TEST_GEN(number, type, value) \
-    void Param ## number ## Call(Param ## number ## Handler const& handler) \
-    { \
-        type const a = value; \
-        type b; \
-        type c = handler(a, a, b); \
-        TEST_REQUIRE_N(L"Param", number, a == b && a == c); \
-    }
+        template<size_t number, typename type, typename ParamHandler>
+        void ParamStructCall(type const a, ParamHandler const& handler)
+        {
+            type b;
+            type c = handler(a, a, b);
+            TEST_REQUIRE_N(L"Param", number, a == b && a == c);
+        }
 
-        TEST_GEN(13, Blittable, (Blittable{ 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, guid_of<ITests>() }));
-        TEST_GEN(14, NonBlittable, (NonBlittable{ false, L'X', L"WinRT", 1234 }));
-        TEST_GEN(15, Nested, (Nested{ { 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, guid_of<ITests>() }, { true, L'X', L"WinRT", 1234 } }));
+#define TEST_GEN(number, type, ...) \
+    void Param ## number ## Call(Param ## number ## Handler const& handler) \
+        { ParamStructCall<number, type>({ __VA_ARGS__ }, handler); }
+
+        TEST_GEN(13, Blittable, Blittable{ 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, guid_of<ITests>() });
+        TEST_GEN(14, NonBlittable, NonBlittable{ false, L'X', L"WinRT", 1234 });
+        TEST_GEN(15, Nested, Nested{ { 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, guid_of<ITests>() }, { true, L'X', L"WinRT", 1234 } });
 
 #undef TEST_GEN
 
+        template<size_t number, typename type>
+        auto Array(array_view<type const> a, array_view<type> b, com_array<type>& c)
+        {
+            TEST_REQUIRE_N(L"Array", number, a.size() == b.size());
+            TEST_REQUIRE_N(L"Array", number, c.size() == 0);
+            std::copy(a.begin(), a.end(), b.begin());
+            c = com_array<type>(a.begin(), a.end());
+            return com_array<type>(a.begin(), a.end());
+        }
+
 #define TEST_GEN(number, type) \
     auto Array ## number(array_view<type const> a, array_view<type> b, com_array<type>& c) \
-    { \
-        TEST_REQUIRE_N(L"Array", number, a.size() == b.size()); \
-        TEST_REQUIRE_N(L"Array", number, c.size() == 0); \
-        std::copy(a.begin(), a.end(), b.begin()); \
-        c = com_array<type>(a.begin(), a.end()); \
-        return com_array<type>(a.begin(), a.end()); \
-    }
+        { return Array<number, type>(a, b, c); }
 
         TEST_GEN(1, bool);
         TEST_GEN(2, uint8_t);
@@ -173,8 +187,8 @@ namespace winrt::TestComponent::implementation
 
 #undef TEST_GEN
 
-    template<typename type, typename ArrayHandler>
-    void ArrayCall(std::array<type, 3> a, size_t number, ArrayHandler const& handler)
+    template<size_t number, typename type, typename ArrayHandler>
+    void ArrayCall(std::array<type, 3> a, ArrayHandler const& handler)
     {
         std::array<type, 3> b; 
         com_array<type> c; 
@@ -186,7 +200,7 @@ namespace winrt::TestComponent::implementation
 
 #define TEST_GEN(number, type, ...) \
     void Array ## number ## Call(Array ## number ## Handler const& handler) \
-        { ArrayCall<type>({ __VA_ARGS__ }, number, handler); }
+        { ArrayCall<number, type>({ __VA_ARGS__ }, handler); }
 
         TEST_GEN(1, bool, true, false, true);
         TEST_GEN(2, uint8_t, 1, 2, 3);
