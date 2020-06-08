@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata minClientVersion="2.5">
+    <id>Microsoft.Windows.TestWinRT</id>
+    <version>1.0.0.0</version>
+    <title>TestWinRT Component</title>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>WinRT component for testing language projections.</description>
+    <releaseNotes></releaseNotes>
+    <tags>native C++ WinRT WinMD nativepackage</tags>
+    <copyright>© Microsoft Corporation. All rights reserved.</copyright>
+    <license type="file">LICENSE</license>
+    <projectUrl>https://github.com/Microsoft/testwinrt/</projectUrl>
+  </metadata>
+  <files>
+    <file src="$testwinrt$\TestComponent.winmd" target="lib\uap10.0"/>
+    <file src="$testwinrt_x64$\TestComponent.dll" target="runtimes\win10-x64\native"/>
+    <file src="$testwinrt_x86$\TestComponent.dll" target="runtimes\win10-x86\native"/>
+  </files>
+</package>
