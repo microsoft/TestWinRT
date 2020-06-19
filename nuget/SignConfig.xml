@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?> 
-<SignConfigXML> 
-  <job platform="" configuration="" dest="__OUTPATHROOT__" jobname="WinRT NuGet" approvers=""> 
-    <file src="__INPATHROOT__\Microsoft.Windows.WinRT.*.nupkg" signType="CP-401405" dest="__OUTPATHROOT__\Microsoft.Windows.WinRT.*.nupkg" /> 
-  </job> 
-</SignConfigXML> 

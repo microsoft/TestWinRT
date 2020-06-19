@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata minClientVersion="2.5">
+    <id>KennyKerr.Windows.TestWinRT</id>
+    <version>1.0.6</version>
+    <title>TestWinRT</title>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>TestWinRT</description>
+    <releaseNotes></releaseNotes>
+    <tags>native C++ WinRT nativepackage</tags>
+    <copyright>© Microsoft Corporation. All rights reserved.</copyright>
+    <projectUrl>https://github.com/microsoft/testwinrt</projectUrl>
+    <repository type="git" url="https://github.com/microsoft/testwinrt" />
+    <dependencies>
+      <group targetFramework="uap10.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="TestComponent.winmd" target="lib\uap10.0"/>
+    <file src="x86\Release\TestComponent.dll" target="runtimes\win-x86\native"/>
+    <file src="x64\Release\TestComponent.dll" target="runtimes\win-x64\native"/>
+  </files>
+</package>
