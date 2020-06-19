@@ -1,6 +1,6 @@
-[![Build Status](https://dev.azure.com/microsoft/Dart/_apis/build/status/TestWinRT?branchName=master)](https://dev.azure.com/microsoft/Dart/_build/latest?definitionId=45310&branchName=master)
+![Build](https://github.com/microsoft/TestWinRT/workflows/Build/badge.svg)
 
-# Contributing
+## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
 Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
