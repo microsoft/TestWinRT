@@ -1,0 +1,29 @@
+name: Publish
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - name: checkout project
+      uses: actions/checkout@v2
+
+    - name: setup msbuild
+      uses: microsoft/setup-msbuild@v1
+
+    - name: setup nuget
+      uses: NuGet/setup-nuget@v1.0.2
+
+    - name: setup cppwinrt
+      run: nuget restore test.sln
+
+    - name: build x86
+      run: msbuild /m /p:Configuration=Release,Platform=x86 test.sln
+
+    - name: build x64
+      run: msbuild /m /p:Configuration=Release,Platform=x64 test.sln
+
+    - name: nuget pack
+      run: nuget.exe pack TestComponent/TestComponent.nuspec -OutputFileNamesWithoutVersion
+
+    - name: nuget push
+      run: nuget push KennyKerr.Windows.TestWinRT.nupkg ${{ secrets.NUGET_KEY }} -Source nuget.org
