@@ -1,8 +1,14 @@
 name: Publish
 
+on:
+  issue_comment:
+    types: [created, edited]
+
 jobs:
   build:
     runs-on: windows-latest
+    if: github.event.comment.body == 'nuget push'
+
     steps:
     - name: checkout project
       uses: actions/checkout@v2
