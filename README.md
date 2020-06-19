@@ -1,4 +1,3 @@
-![Build](https://github.com/microsoft/TestWinRT/workflows/Build/badge.svg)
 
 ## Contributing
 
