@@ -19,6 +19,7 @@ namespace BenchmarkComponent
         Double DoubleProperty{ get; set; };
     }
 
+    // Class intended to help with benchmarking QueryInterface for the default and non default interfaces.
     [default_interface]
     runtimeclass ClassWithMultipleInterfaces :
         IIntProperties
