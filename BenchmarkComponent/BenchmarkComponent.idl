@@ -1,0 +1,34 @@
+// Modern IDL 3.0: https://docs.microsoft.com/en-us/uwp/midl-3/intro
+
+// BenchmarkComponent exercises indivdual isolated scenarios we want to benchmark in a WinRT projection.
+
+namespace BenchmarkComponent
+{
+    interface IIntProperties
+    {
+        Int32 IntProperty1{ get; set; };
+    }
+
+    interface IBoolProperties
+    {
+        Boolean BoolProperty1{ get; set; };
+    }
+
+    interface IDoubleProperties
+    {
+        Double DoubleProperty1{ get; set; };
+    }
+
+    [default_interface]
+    runtimeclass ClassWithMultipleInterfaces :
+        IIntProperties
+        , IBoolProperties
+        , IDoubleProperties
+    {
+        ClassWithMultipleInterfaces();
+
+        Int32 IntProperty{ get; set; };
+        Boolean BoolProperty{ get; set; };
+        Double DoubleProperty{ get; set; };
+    }
+}
