@@ -8,21 +8,21 @@ namespace winrt::BenchmarkComponent::implementation
     {
         ClassWithMultipleInterfaces();
 
-        int32_t IntProperty1();
-        void IntProperty1(int32_t val);
-
-        bool BoolProperty1();
-        void BoolProperty1(bool val);
-
-        double DoubleProperty1();
-        void DoubleProperty1(double val);
-
         int32_t IntProperty();
-        bool BoolProperty();
-        double DoubleProperty();
         void IntProperty(int32_t val);
+
+        bool BoolProperty();
         void BoolProperty(bool val);
+
+        double DoubleProperty();
         void DoubleProperty(double val);
+
+        int32_t DefaultIntProperty();
+        bool DefaultBoolProperty();
+        double DefaultDoubleProperty();
+        void DefaultIntProperty(int32_t val);
+        void DefaultBoolProperty(bool val);
+        void DefaultDoubleProperty(double val);
     };
 }
 
