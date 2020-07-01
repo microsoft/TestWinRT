@@ -1,0 +1,35 @@
+// Modern IDL 3.0: https://docs.microsoft.com/en-us/uwp/midl-3/intro
+
+// BenchmarkComponent exercises indivdual isolated scenarios we want to benchmark in a WinRT projection.
+
+namespace BenchmarkComponent
+{
+    interface IIntProperties
+    {
+        Int32 IntProperty{ get; set; };
+    }
+
+    interface IBoolProperties
+    {
+        Boolean BoolProperty{ get; set; };
+    }
+
+    interface IDoubleProperties
+    {
+        Double DoubleProperty{ get; set; };
+    }
+
+    // Class intended to help with benchmarking QueryInterface for the default and non default interfaces.
+    [default_interface]
+    runtimeclass ClassWithMultipleInterfaces :
+        IIntProperties
+        , IBoolProperties
+        , IDoubleProperties
+    {
+        ClassWithMultipleInterfaces();
+
+        Int32 DefaultIntProperty{ get; set; };
+        Boolean DefaultBoolProperty{ get; set; };
+        Double DefaultDoubleProperty{ get; set; };
+    }
+}
