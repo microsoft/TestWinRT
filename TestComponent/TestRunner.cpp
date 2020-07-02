@@ -673,4 +673,19 @@ namespace winrt::TestComponent::implementation
     {
         return make<Tests>();
     }
+
+    IVector<int32_t> TestRunner::CreateInt32Vector()
+    {
+        return single_threaded_vector<int32_t>();
+    }
+
+    IVector<hstring> TestRunner::CreateStringVector()
+    {
+        return single_threaded_vector<hstring>();
+    }
+
+    IVector<IStringable> TestRunner::CreateStringableVector()
+    {
+        return single_threaded_vector<IStringable>();
+    }
 }
