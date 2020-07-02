@@ -32,7 +32,7 @@ namespace winrt::TestComponent::implementation
     private:
 
         uint32_t m_counter{};
-        const uint32_t m_total{ 97 };
+        const uint32_t m_total{ 99 };
         event<EventHandler<int32_t>> m_event1;
         event<TypedEventHandler<ITests, int32_t>> m_event2;
 
@@ -184,6 +184,7 @@ namespace winrt::TestComponent::implementation
         TEST_GEN(13, Blittable);
         TEST_GEN(14, NonBlittable);
         TEST_GEN(15, Nested);
+        TEST_GEN(16, IStringable);
 
 #undef TEST_GEN
 
@@ -217,6 +218,7 @@ namespace winrt::TestComponent::implementation
         TEST_GEN(13, Blittable, Blittable{ 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, guid_of<ITests>() }, Blittable{ 10, 20, 30, 40, -50, -60, -70, 80.0f, 90.0, guid_of<IStringable>() }, Blittable{ 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, guid_of<IInspectable>() });
         TEST_GEN(14, NonBlittable, NonBlittable{ false, L'X', L"First", 123 }, NonBlittable{ true, L'Y', L"Second", 456 }, NonBlittable{ false, L'Z', L"Third", 789 });
         TEST_GEN(15, Nested, Nested{ { 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, guid_of<ITests>() }, { false, L'X', L"First", 123 } }, Nested{ { 10, 20, 30, 40, -50, -60, -70, 80.0f, 90.0, guid_of<IStringable>() }, { true, L'Y', L"Second", 456 } }, Nested{ { 1, 2, 3, 4, -5, -6, -7, 8.0f, 9.0, guid_of<IInspectable>() }, { false, L'Z', L"Third", 789 } });
+        TEST_GEN(16, IStringable, Uri(L"http://kennykerr.ca/one").as<IStringable>(), Uri(L"http://kennykerr.ca/two").as<IStringable>(), Uri(L"http://kennykerr.ca/three").as<IStringable>());
 
 #undef TEST_GEN
 
@@ -584,6 +586,7 @@ namespace winrt::TestComponent::implementation
         TEST_GEN(Array, 13);
         TEST_GEN(Array, 14);
         TEST_GEN(Array, 15);
+        TEST_GEN(Array, 16);
 
         TEST_GEN(Collection, 1);
         TEST_GEN(Collection, 2);
