@@ -193,5 +193,10 @@ namespace TestComponent
 
         // Returns an implementation of ITests for independently driven testing.
         static ITests MakeTests();
+
+        // Creates empty collections to support Rust/WinRT testing.
+        static Windows.Foundation.Collections.IVector<Int32> CreateInt32Vector();
+        static Windows.Foundation.Collections.IVector<String> CreateStringVector();
+        static Windows.Foundation.Collections.IVector<Windows.Foundation.IStringable> CreateStringableVector();
     }
 }
