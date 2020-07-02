@@ -10,6 +10,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Console", "Console\Console.
 		{2954F343-85A7-46F5-A3F3-F106FDD13900} = {2954F343-85A7-46F5-A3F3-F106FDD13900}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BenchmarkComponent", "BenchmarkComponent\BenchmarkComponent.vcxproj", "{78D85F23-7CB1-44A1-9238-6DF2C76754E4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -42,6 +44,18 @@ Global
 		{8AB80BFD-185A-452D-AAD2-97B38AED3E4B}.Release|x64.Build.0 = Release|x64
 		{8AB80BFD-185A-452D-AAD2-97B38AED3E4B}.Release|x86.ActiveCfg = Release|Win32
 		{8AB80BFD-185A-452D-AAD2-97B38AED3E4B}.Release|x86.Build.0 = Release|Win32
+		{78D85F23-7CB1-44A1-9238-6DF2C76754E4}.Debug|ARM.ActiveCfg = Debug|ARM
+		{78D85F23-7CB1-44A1-9238-6DF2C76754E4}.Debug|ARM.Build.0 = Debug|ARM
+		{78D85F23-7CB1-44A1-9238-6DF2C76754E4}.Debug|x64.ActiveCfg = Debug|x64
+		{78D85F23-7CB1-44A1-9238-6DF2C76754E4}.Debug|x64.Build.0 = Debug|x64
+		{78D85F23-7CB1-44A1-9238-6DF2C76754E4}.Debug|x86.ActiveCfg = Debug|Win32
+		{78D85F23-7CB1-44A1-9238-6DF2C76754E4}.Debug|x86.Build.0 = Debug|Win32
+		{78D85F23-7CB1-44A1-9238-6DF2C76754E4}.Release|ARM.ActiveCfg = Release|ARM
+		{78D85F23-7CB1-44A1-9238-6DF2C76754E4}.Release|ARM.Build.0 = Release|ARM
+		{78D85F23-7CB1-44A1-9238-6DF2C76754E4}.Release|x64.ActiveCfg = Release|x64
+		{78D85F23-7CB1-44A1-9238-6DF2C76754E4}.Release|x64.Build.0 = Release|x64
+		{78D85F23-7CB1-44A1-9238-6DF2C76754E4}.Release|x86.ActiveCfg = Release|Win32
+		{78D85F23-7CB1-44A1-9238-6DF2C76754E4}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
