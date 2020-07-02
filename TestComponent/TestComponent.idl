@@ -65,6 +65,7 @@ namespace TestComponent
     delegate Blittable[] Array13Handler(Blittable[] a, ref Blittable[] b, out Blittable[] c);
     delegate NonBlittable[] Array14Handler(NonBlittable[] a, ref NonBlittable[] b, out NonBlittable[] c);
     delegate Nested[] Array15Handler(Nested[] a, ref Nested[] b, out Nested[] c);
+    delegate Windows.Foundation.IStringable[] Array16Handler(Windows.Foundation.IStringable[] a, ref Windows.Foundation.IStringable[] b, out Windows.Foundation.IStringable[] c);
 
     delegate Windows.Foundation.Collections.IIterable<String> Collection1Handler(Windows.Foundation.Collections.IIterable<String> a, out Windows.Foundation.Collections.IIterable<String> b);
     delegate Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<String, String> > Collection2Handler(Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<String, String> > a, out Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<String, String> > b);
@@ -130,6 +131,7 @@ namespace TestComponent
         Blittable[] Array13(Blittable[] a, ref Blittable[] b, out Blittable[] c);
         NonBlittable[] Array14(NonBlittable[] a, ref NonBlittable[] b, out NonBlittable[] c);
         Nested[] Array15(Nested[] a, ref Nested[] b, out Nested[] c);
+        Windows.Foundation.IStringable[] Array16(Windows.Foundation.IStringable[] a, ref Windows.Foundation.IStringable[] b, out Windows.Foundation.IStringable[] c);
 
         void Array1Call(Array1Handler handler);
         void Array2Call(Array2Handler handler);
@@ -146,6 +148,7 @@ namespace TestComponent
         void Array13Call(Array13Handler handler);
         void Array14Call(Array14Handler handler);
         void Array15Call(Array15Handler handler);
+        void Array16Call(Array16Handler handler);
 
         Windows.Foundation.Collections.IIterable<String> Collection1(Windows.Foundation.Collections.IIterable<String> a, out Windows.Foundation.Collections.IIterable<String> b);
         Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<String, String> > Collection2(Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<String, String> > a, out Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<String, String> > b);
