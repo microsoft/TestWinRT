@@ -14,6 +14,8 @@ namespace winrt::TestComponent::implementation
         static Windows::Foundation::Collections::IVector<int32_t> CreateInt32Vector();
         static Windows::Foundation::Collections::IVector<hstring> CreateStringVector();
         static Windows::Foundation::Collections::IVector<Windows::Foundation::IStringable> CreateStringableVector();
+        static Windows::Foundation::TimeSpan CreateTimeSpan(uint32_t milliseconds);
+        static Windows::Foundation::IAsyncAction CreateAsyncAction(uint32_t milliseconds);
     };
 }
 
