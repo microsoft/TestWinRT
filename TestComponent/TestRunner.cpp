@@ -691,4 +691,14 @@ namespace winrt::TestComponent::implementation
     {
         return single_threaded_vector<IStringable>();
     }
+
+    TimeSpan TestRunner::CreateTimeSpan(uint32_t milliseconds)
+    {
+        return std::chrono::milliseconds(milliseconds);
+    }
+
+    IAsyncAction TestRunner::CreateAsyncAction(uint32_t milliseconds)
+    {
+        co_await resume_after(CreateTimeSpan(milliseconds));
+    }
 }
