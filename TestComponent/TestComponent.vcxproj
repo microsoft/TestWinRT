@@ -126,10 +126,12 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Composable.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="TestRunner.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Composable.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

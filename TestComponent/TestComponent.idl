@@ -204,4 +204,12 @@ namespace TestComponent
         static Windows.Foundation.TimeSpan CreateTimeSpan(UInt32 milliseconds);
         static Windows.Foundation.IAsyncAction CreateAsyncAction(UInt32 milliseconds);
     }
+
+    unsealed runtimeclass Composable
+    {
+        Composable();
+        Composable(Int32 init);
+
+        Int32 Value{ get; };
+    }
 }
