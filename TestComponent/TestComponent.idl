@@ -208,6 +208,8 @@ namespace TestComponent
     unsealed runtimeclass Composable
     {
         Composable();
+
+        [method_name("CreateWithValue")]
         Composable(Int32 init);
 
         Int32 Value{ get; };
