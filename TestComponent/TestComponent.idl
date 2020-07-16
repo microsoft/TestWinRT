@@ -183,6 +183,15 @@ namespace TestComponent
 
     delegate void TestHandler(ITests tests);
 
+    [attributeusage(target_runtimeclass)]
+    attribute CustomTestAttribute
+    {
+        String SomeString;
+        Int32 SomeInt;
+        Boolean SomeBool;
+    }
+
+    [CustomTest("Hello, World!", 1975, TRUE)]
     runtimeclass TestRunner
     {
         // Throws an exception if ITests is not implemented correctly.
