@@ -14,6 +14,11 @@ namespace winrt::TestComponent::implementation
         return m_value;
     }
 
+    void Composable::Value(int32_t value)
+    {
+        m_value = value;
+    }
+
     int32_t Composable::One()
     {
         return 1;

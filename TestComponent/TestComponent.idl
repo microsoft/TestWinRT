@@ -241,7 +241,7 @@ namespace TestComponent
         [method_name("CreateWithValue")]
         Composable(Int32 init);
 
-        Int32 Value{ get; };
+        Int32 Value{ get; set; };
     }
 
     unsealed runtimeclass Derived : Composable, IRequiredOne, IRequiredTwo, IRequiredThree, IRequiredFour
