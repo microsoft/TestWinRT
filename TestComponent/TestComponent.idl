@@ -205,7 +205,27 @@ namespace TestComponent
         static Windows.Foundation.IAsyncAction CreateAsyncAction(UInt32 milliseconds);
     }
 
-    unsealed runtimeclass Composable
+    interface IRequiredOne
+    {
+        Int32 One();
+    };
+
+    interface IRequiredTwo requires IRequiredOne
+    {
+        Int32 Two();
+    };
+
+    interface IRequiredThree requires IRequiredOne, IRequiredTwo
+    {
+        Int32 Three();
+    };
+
+    interface IRequiredFour requires IRequiredOne, IRequiredTwo, IRequiredThree
+    {
+        Int32 Four();
+    };
+
+    unsealed runtimeclass Composable : IRequiredOne, IRequiredTwo, IRequiredThree, IRequiredFour
     {
         Composable();
 
@@ -213,5 +233,10 @@ namespace TestComponent
         Composable(Int32 init);
 
         Int32 Value{ get; };
+    }
+
+    unsealed runtimeclass Derived : Composable, IRequiredOne, IRequiredTwo, IRequiredThree, IRequiredFour
+    {
+        Derived();
     }
 }
