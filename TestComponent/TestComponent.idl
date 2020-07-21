@@ -248,4 +248,9 @@ namespace TestComponent
     {
         Derived();
     }
+
+    unsealed runtimeclass Derived : Composable, IRequiredOne, IRequiredTwo, IRequiredThree, IRequiredFour
+    {
+        Derived();
+    }
 }
