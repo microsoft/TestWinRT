@@ -242,6 +242,12 @@ namespace TestComponent
         Composable(Int32 init);
 
         Int32 Value{ get; set; };
+
+        static Int32 ExpectComposable(Composable t);
+        static Int32 ExpectRequiredOne(IRequiredOne t);
+        static Int32 ExpectRequiredTwo(IRequiredTwo t);
+        static Int32 ExpectRequiredThree(IRequiredThree t);
+        static Int32 ExpectRequiredFour(IRequiredFour t);
     }
 
     unsealed runtimeclass Derived : Composable, IRequiredOne, IRequiredTwo, IRequiredThree, IRequiredFour

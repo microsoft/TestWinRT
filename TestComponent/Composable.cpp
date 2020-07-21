@@ -38,4 +38,29 @@ namespace winrt::TestComponent::implementation
     {
         return 4;
     }
+
+    int32_t Composable::ExpectComposable(TestComponent::Composable const& t)
+    {
+        return t.Value();
+    }
+
+    int32_t Composable::ExpectRequiredOne(TestComponent::IRequiredOne const& t)
+    {
+        return t.One();
+    }
+
+    int32_t Composable::ExpectRequiredTwo(TestComponent::IRequiredTwo const& t)
+    {
+        return t.Two();
+    }
+
+    int32_t Composable::ExpectRequiredThree(TestComponent::IRequiredThree const& t)
+    {
+        return t.Three();
+    }
+
+    int32_t Composable::ExpectRequiredFour(TestComponent::IRequiredFour const& t)
+    {
+        return t.Four();
+    }
 }
