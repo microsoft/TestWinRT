@@ -13,4 +13,24 @@ namespace winrt::TestComponent::implementation
     {
         return m_value;
     }
+
+    int32_t Composable::One()
+    {
+        return 1;
+    }
+
+    int32_t Composable::Two()
+    {
+        return 2;
+    }
+
+    int32_t Composable::Three()
+    {
+        return 3;
+    }
+
+    int32_t Composable::Four()
+    {
+        return 4;
+    }
 }
