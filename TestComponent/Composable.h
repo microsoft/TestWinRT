@@ -9,6 +9,7 @@ namespace winrt::TestComponent::implementation
 
         Composable(int32_t init);
         int32_t Value();
+        void Value(int32_t);
 
         int32_t m_value{};
 
