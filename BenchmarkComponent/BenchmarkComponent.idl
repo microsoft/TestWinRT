@@ -32,4 +32,30 @@ namespace BenchmarkComponent
         Boolean DefaultBoolProperty{ get; set; };
         Double DefaultDoubleProperty{ get; set; };
     }
+
+    [default_interface]
+    runtimeclass WrappedClass
+    {
+        WrappedClass();
+
+        Int32 DefaultIntProperty{ get; set; };
+    }
+    
+
+    [default_interface]
+    runtimeclass ClassWithMarshalingRoutines
+    {
+        ClassWithMarshalingRoutines();
+
+        String DefaultStringProperty{ get; set; };
+        IInspectable NewTypeErasedKeyValuePairObject{ get; set; };
+        IInspectable NewTypeErasedNullableObject{ get; set; };
+        IInspectable NewTypeErasedArrayObject{ get; set; };
+
+        IInspectable ExistingTypeErasedKeyValuePairObject{ get; set; };
+        IInspectable ExistingTypeErasedNullableObject{ get; set; };
+        IInspectable ExistingTypeErasedArrayObject{ get; set; }; 
+
+        WrappedClass NewWrappedClassObject{ get; set; };
+    }
 }

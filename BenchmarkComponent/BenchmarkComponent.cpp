@@ -1,6 +1,10 @@
 #include "pch.h"
 #include "BenchmarkComponent.h"
 #include "ClassWithMultipleInterfaces.g.cpp"
+#include "ClassWithMarshalingRoutines.g.cpp"
+#include "WrappedClass.g.cpp"
+
+using namespace winrt::Windows::Foundation;
 
 namespace winrt::BenchmarkComponent::implementation
 {
@@ -61,4 +65,116 @@ namespace winrt::BenchmarkComponent::implementation
     void ClassWithMultipleInterfaces::DefaultDoubleProperty(double val)
     {
     }
+
+    ClassWithMarshalingRoutines::ClassWithMarshalingRoutines()
+    {
+        keyValuePairObject = createKeyValuePairObject();
+        arrayObject = createArrayObject();
+        nullableObject = createNullableObject();
+    }
+
+    hstring ClassWithMarshalingRoutines::DefaultStringProperty()
+    {
+        return hstring();
+    }
+
+    void ClassWithMarshalingRoutines::DefaultStringProperty(hstring val)
+    {
+    }
+
+    Windows::Foundation::Collections::IKeyValuePair<hstring, IInspectable> ClassWithMarshalingRoutines::createKeyValuePairObject()
+    {
+        Windows::Foundation::Collections::ValueSet valueSet;
+        valueSet.Insert(hstring(L"key"), PropertyValue::CreateInt32(27861));
+        return valueSet.First().Current();
+    }
+
+    Windows::Foundation::IReference<INT32> ClassWithMarshalingRoutines::createNullableObject()
+    {
+        return IReference<INT32>(123);
+    }
+
+    Windows::Foundation::IReferenceArray<int> ClassWithMarshalingRoutines::createArrayObject()
+    {
+        int values[]{ 0, 42, 1729, -1 };
+        auto propertyValue = PropertyValue::CreateInt32Array(values).as<IPropertyValue>();
+        return propertyValue.as<IReferenceArray<int>>();
+    }
+    
+    Windows::Foundation::IInspectable ClassWithMarshalingRoutines::NewTypeErasedKeyValuePairObject()
+    {
+        return createKeyValuePairObject();
+    }
+
+    void ClassWithMarshalingRoutines::NewTypeErasedKeyValuePairObject(Windows::Foundation::IInspectable val)
+    {
+    }
+
+    Windows::Foundation::IInspectable ClassWithMarshalingRoutines::NewTypeErasedNullableObject()
+    {
+        return createNullableObject();
+    }
+
+    void ClassWithMarshalingRoutines::NewTypeErasedNullableObject(Windows::Foundation::IInspectable val)
+    {
+    }
+
+    Windows::Foundation::IInspectable ClassWithMarshalingRoutines::NewTypeErasedArrayObject()
+    {
+        return createArrayObject();
+    }
+
+    void ClassWithMarshalingRoutines::NewTypeErasedArrayObject(Windows::Foundation::IInspectable val)
+    {
+    }
+
+    Windows::Foundation::IInspectable ClassWithMarshalingRoutines::ExistingTypeErasedKeyValuePairObject()
+    {
+        return keyValuePairObject;
+    }
+
+    void ClassWithMarshalingRoutines::ExistingTypeErasedKeyValuePairObject(Windows::Foundation::IInspectable val)
+    {
+    }
+
+    Windows::Foundation::IInspectable ClassWithMarshalingRoutines::ExistingTypeErasedNullableObject()
+    {
+        return nullableObject;
+    }
+
+    void ClassWithMarshalingRoutines::ExistingTypeErasedNullableObject(Windows::Foundation::IInspectable val)
+    {
+    }
+
+    Windows::Foundation::IInspectable ClassWithMarshalingRoutines::ExistingTypeErasedArrayObject()
+    {
+        return arrayObject;
+    }
+
+    void ClassWithMarshalingRoutines::ExistingTypeErasedArrayObject(Windows::Foundation::IInspectable val)
+    {
+    }
+
+    BenchmarkComponent::WrappedClass ClassWithMarshalingRoutines::NewWrappedClassObject()
+    {
+        return make<WrappedClass>();
+    }
+
+    void ClassWithMarshalingRoutines::NewWrappedClassObject(BenchmarkComponent::WrappedClass val)
+    {
+    }
+    
+    WrappedClass::WrappedClass()
+    {
+    }
+
+    int32_t WrappedClass::DefaultIntProperty()
+    {
+        return int32_t();
+    }
+
+    void WrappedClass::DefaultIntProperty(int32_t val)
+    {
+    }
+
 }
