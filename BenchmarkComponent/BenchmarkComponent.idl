@@ -48,8 +48,14 @@ namespace BenchmarkComponent
         ClassWithMarshalingRoutines();
 
         String DefaultStringProperty{ get; set; };
-        IInspectable DefaultKeyValuePairProperty{ get; set; };
-        IInspectable DefaultNullableProperty{ get; set; };
-        IInspectable DefaultArrayProperty{ get; set; };
+        IInspectable NewTypeErasedKeyValuePairObject{ get; set; };
+        IInspectable NewTypeErasedNullableObject{ get; set; };
+        IInspectable NewTypeErasedArrayObject{ get; set; };
+
+        IInspectable ExistingTypeErasedKeyValuePairObject{ get; set; };
+        IInspectable ExistingTypeErasedNullableObject{ get; set; };
+        IInspectable ExistingTypeErasedArrayObject{ get; set; }; 
+
+        WrappedClass NewWrappedClassObject{ get; set; };
     }
 }

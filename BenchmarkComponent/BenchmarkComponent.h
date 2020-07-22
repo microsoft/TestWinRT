@@ -37,21 +37,41 @@ namespace winrt::BenchmarkComponent::implementation
 
     struct ClassWithMarshalingRoutines : ClassWithMarshalingRoutinesT<ClassWithMarshalingRoutines>
     {
+    private:
+        Windows::Foundation::Collections::IKeyValuePair<hstring, IInspectable> keyValuePairObject;
+        Windows::Foundation::IReference<INT32> nullableObject;
+        Windows::Foundation::IReferenceArray<int> arrayObject;
+
+        Windows::Foundation::Collections::IKeyValuePair<hstring, IInspectable> createKeyValuePairObject();
+        Windows::Foundation::IReference<INT32> createNullableObject();
+        Windows::Foundation::IReferenceArray<int> createArrayObject();
+
+    public:
         ClassWithMarshalingRoutines();
 
         hstring DefaultStringProperty();
         void DefaultStringProperty(hstring val);
 
-        /*Windows::Foundation::IInspectable DefaultWrappedClassProperty();
-        void DefaultWrappedClassProperty(Windows::Foundation::IInspectable val);*/
-        Windows::Foundation::IInspectable DefaultKeyValuePairProperty();
-        void DefaultKeyValuePairProperty(Windows::Foundation::IInspectable val);
+        Windows::Foundation::IInspectable NewTypeErasedKeyValuePairObject();
+        void NewTypeErasedKeyValuePairObject(Windows::Foundation::IInspectable val);
 
-        Windows::Foundation::IInspectable DefaultNullableProperty();
-        void DefaultNullableProperty(Windows::Foundation::IInspectable val);
+        Windows::Foundation::IInspectable NewTypeErasedNullableObject();
+        void NewTypeErasedNullableObject(Windows::Foundation::IInspectable val);
 
-        Windows::Foundation::IInspectable DefaultArrayProperty();
-        void DefaultArrayProperty(Windows::Foundation::IInspectable val);
+        Windows::Foundation::IInspectable NewTypeErasedArrayObject();
+        void NewTypeErasedArrayObject(Windows::Foundation::IInspectable val);
+
+        Windows::Foundation::IInspectable ExistingTypeErasedKeyValuePairObject();
+        void ExistingTypeErasedKeyValuePairObject(Windows::Foundation::IInspectable val);
+
+        Windows::Foundation::IInspectable ExistingTypeErasedNullableObject();
+        void ExistingTypeErasedNullableObject(Windows::Foundation::IInspectable val);
+
+        Windows::Foundation::IInspectable ExistingTypeErasedArrayObject();
+        void ExistingTypeErasedArrayObject(Windows::Foundation::IInspectable val);
+
+        BenchmarkComponent::WrappedClass NewWrappedClassObject();
+        void NewWrappedClassObject(BenchmarkComponent::WrappedClass val);
     };
 }
 

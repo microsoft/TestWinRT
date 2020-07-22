@@ -68,6 +68,9 @@ namespace winrt::BenchmarkComponent::implementation
 
     ClassWithMarshalingRoutines::ClassWithMarshalingRoutines()
     {
+        keyValuePairObject = createKeyValuePairObject();
+        arrayObject = createArrayObject();
+        nullableObject = createNullableObject();
     }
 
     hstring ClassWithMarshalingRoutines::DefaultStringProperty()
@@ -78,36 +81,86 @@ namespace winrt::BenchmarkComponent::implementation
     void ClassWithMarshalingRoutines::DefaultStringProperty(hstring val)
     {
     }
-    
-    Windows::Foundation::IInspectable ClassWithMarshalingRoutines::DefaultKeyValuePairProperty()
+
+    Windows::Foundation::Collections::IKeyValuePair<hstring, IInspectable> ClassWithMarshalingRoutines::createKeyValuePairObject()
     {
         Windows::Foundation::Collections::ValueSet valueSet;
-        valueSet.Insert(hstring(L"key"), PropertyValue::CreateString(L"value"));
+        valueSet.Insert(hstring(L"key"), PropertyValue::CreateInt32(27861));
         return valueSet.First().Current();
     }
 
-    void ClassWithMarshalingRoutines::DefaultKeyValuePairProperty(Windows::Foundation::IInspectable val)
-    {
-    }
-
-    Windows::Foundation::IInspectable ClassWithMarshalingRoutines::DefaultNullableProperty()
+    Windows::Foundation::IReference<INT32> ClassWithMarshalingRoutines::createNullableObject()
     {
         return IReference<INT32>(123);
     }
 
-    void ClassWithMarshalingRoutines::DefaultNullableProperty(Windows::Foundation::IInspectable val)
-    {
-    }
-
-    Windows::Foundation::IInspectable ClassWithMarshalingRoutines::DefaultArrayProperty()
+    Windows::Foundation::IReferenceArray<int> ClassWithMarshalingRoutines::createArrayObject()
     {
         int values[]{ 0, 42, 1729, -1 };
         auto propertyValue = PropertyValue::CreateInt32Array(values).as<IPropertyValue>();
-        auto referenceArray = propertyValue.as<IReferenceArray<int>>();
-        return referenceArray;
+        return propertyValue.as<IReferenceArray<int>>();
+    }
+    
+    Windows::Foundation::IInspectable ClassWithMarshalingRoutines::NewTypeErasedKeyValuePairObject()
+    {
+        return createKeyValuePairObject();
     }
 
-    void ClassWithMarshalingRoutines::DefaultArrayProperty(Windows::Foundation::IInspectable val)
+    void ClassWithMarshalingRoutines::NewTypeErasedKeyValuePairObject(Windows::Foundation::IInspectable val)
+    {
+    }
+
+    Windows::Foundation::IInspectable ClassWithMarshalingRoutines::NewTypeErasedNullableObject()
+    {
+        return createNullableObject();
+    }
+
+    void ClassWithMarshalingRoutines::NewTypeErasedNullableObject(Windows::Foundation::IInspectable val)
+    {
+    }
+
+    Windows::Foundation::IInspectable ClassWithMarshalingRoutines::NewTypeErasedArrayObject()
+    {
+        return createArrayObject();
+    }
+
+    void ClassWithMarshalingRoutines::NewTypeErasedArrayObject(Windows::Foundation::IInspectable val)
+    {
+    }
+
+    Windows::Foundation::IInspectable ClassWithMarshalingRoutines::ExistingTypeErasedKeyValuePairObject()
+    {
+        return keyValuePairObject;
+    }
+
+    void ClassWithMarshalingRoutines::ExistingTypeErasedKeyValuePairObject(Windows::Foundation::IInspectable val)
+    {
+    }
+
+    Windows::Foundation::IInspectable ClassWithMarshalingRoutines::ExistingTypeErasedNullableObject()
+    {
+        return nullableObject;
+    }
+
+    void ClassWithMarshalingRoutines::ExistingTypeErasedNullableObject(Windows::Foundation::IInspectable val)
+    {
+    }
+
+    Windows::Foundation::IInspectable ClassWithMarshalingRoutines::ExistingTypeErasedArrayObject()
+    {
+        return arrayObject;
+    }
+
+    void ClassWithMarshalingRoutines::ExistingTypeErasedArrayObject(Windows::Foundation::IInspectable val)
+    {
+    }
+
+    BenchmarkComponent::WrappedClass ClassWithMarshalingRoutines::NewWrappedClassObject()
+    {
+        return make<WrappedClass>();
+    }
+
+    void ClassWithMarshalingRoutines::NewWrappedClassObject(BenchmarkComponent::WrappedClass val)
     {
     }
     
