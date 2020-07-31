@@ -206,12 +206,13 @@ namespace TestComponent
         // Returns an implementation of ITests for independently driven testing.
         static ITests MakeTests();
 
-        // Creates values to support Rust/WinRT testing.
+        // Helpers in support of Rust/WinRT testing.
         static Windows.Foundation.Collections.IVector<Int32> CreateInt32Vector();
         static Windows.Foundation.Collections.IVector<String> CreateStringVector();
         static Windows.Foundation.Collections.IVector<Windows.Foundation.IStringable> CreateStringableVector();
         static Windows.Foundation.TimeSpan CreateTimeSpan(UInt32 milliseconds);
         static Windows.Foundation.IAsyncAction CreateAsyncAction(UInt32 milliseconds);
+        static String ExpectObject(Object value);
     }
 
     interface IRequiredOne
