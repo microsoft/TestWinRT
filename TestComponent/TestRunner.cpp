@@ -701,4 +701,9 @@ namespace winrt::TestComponent::implementation
     {
         co_await resume_after(CreateTimeSpan(milliseconds));
     }
+
+    hstring TestRunner::ExpectObject(Windows::Foundation::IInspectable const& value)
+    {
+        return get_class_name(value);
+    }
 }
