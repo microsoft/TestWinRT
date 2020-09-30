@@ -25,6 +25,21 @@ auto auto_event()
     return handle{ CreateEvent(nullptr, false, false, nullptr) };
 }
 
+namespace winrt
+{
+    template <typename T, typename Allocator = std::allocator<T>>
+    Windows::Foundation::Collections::IVectorView<T> single_threaded_vector_view(std::vector<T, Allocator>&& values = {})
+    {
+        return make<impl::input_vector_view<T, std::vector<T, Allocator>>>(std::move(values));
+    }
+
+    template <typename K, typename V, typename Allocator = std::allocator<K>>
+    Windows::Foundation::Collections::IMapView<K, V> single_threaded_map_view(std::map<K, V, Allocator>&& values = {})
+    {
+        return make<impl::input_map_view<K, V, std::map<K, V, Allocator>>>(std::move(values));
+    }
+}
+
 namespace winrt::TestComponent::implementation
 {
     struct Tests : implements<Tests, ITests>
@@ -260,7 +275,7 @@ namespace winrt::TestComponent::implementation
                 copy[pair.Key()] = pair.Value();
             }
 
-            b = single_threaded_map(std::move(copy)).GetView();
+            b = single_threaded_map_view(std::move(copy));
             return b;
         }
         auto Collection5(IVector<hstring> const& a, IVector<hstring>& b)
@@ -271,7 +286,7 @@ namespace winrt::TestComponent::implementation
 
         auto Collection6(IVectorView<hstring> const& a, IVectorView<hstring>& b)
         {
-            b = single_threaded_vector(std::vector<hstring>{ begin(a), end(a) }).GetView();
+            b = single_threaded_vector_view(std::vector<hstring>{ begin(a), end(a) });
             return b;
         }
 
@@ -304,7 +319,7 @@ namespace winrt::TestComponent::implementation
         }
         void Collection4Call(Collection4Handler const& handler)
         {
-            IMapView<hstring, hstring> a = single_threaded_map<hstring, hstring>(std::map<hstring, hstring>{ {L"apples", L"1"}, { L"oranges",L"2" }, { L"pears",L"3" } }).GetView();
+            IMapView<hstring, hstring> a = single_threaded_map_view<hstring, hstring>(std::map<hstring, hstring>{ {L"apples", L"1"}, { L"oranges",L"2" }, { L"pears",L"3" } });
             IMapView<hstring, hstring> b;
             IMapView<hstring, hstring> c = handler(a, b);
             TEST_REQUIRE_N(L"Collection", 4, a != b && a != c);
@@ -322,7 +337,7 @@ namespace winrt::TestComponent::implementation
         }
         void Collection6Call(Collection6Handler const& handler)
         {
-            IVectorView<hstring> a = single_threaded_vector<hstring>({ L"apples",L"oranges",L"pears" }).GetView();
+            IVectorView<hstring> a = single_threaded_vector_view<hstring>({ L"apples",L"oranges",L"pears" });
             IVectorView<hstring> b;
             IVectorView<hstring> c = handler(a, b);
             TEST_REQUIRE_N(L"Collection", 6, a != b && a != c);
