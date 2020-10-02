@@ -9,17 +9,17 @@ namespace winrt::TestComponent::implementation
     {
     }
 
-    int32_t Composable::Value()
+    int32_t Composable::Value() noexcept
     {
         return m_value;
     }
 
-    void Composable::Value(int32_t value)
+    void Composable::Value(int32_t value) noexcept
     {
         m_value = value;
     }
 
-    int32_t Composable::One()
+    int32_t Composable::One() noexcept
     {
         return 1;
     }

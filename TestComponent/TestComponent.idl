@@ -217,7 +217,7 @@ namespace TestComponent
 
     interface IRequiredOne
     {
-        Int32 One();
+        [noexcept] Int32 One();
     };
 
     interface IRequiredTwo requires IRequiredOne
@@ -242,7 +242,7 @@ namespace TestComponent
         [method_name("CreateWithValue")]
         Composable(Int32 init);
 
-        Int32 Value{ get; set; };
+        [noexcept] Int32 Value{ get; set; };
 
         static Int32 ExpectComposable(Composable t);
         static Int32 ExpectRequiredOne(IRequiredOne t);
