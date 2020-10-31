@@ -316,6 +316,16 @@ namespace winrt::TestComponent::implementation
             TEST_REQUIRE_N(L"Collection", 3, a != b && a != c);
             TEST_REQUIRE_N(L"Collection", 3, std::equal(begin(a), end(a), begin(b), end(b)));
             TEST_REQUIRE_N(L"Collection", 3, std::equal(begin(a), end(a), begin(c), end(c)));
+
+            TEST_REQUIRE_N(L"Collection", 3, !c.Insert(L"strawberries", L"4"));
+            TEST_REQUIRE_N(L"Collection", 3, c.HasKey(L"strawberries"));
+            TEST_REQUIRE_N(L"Collection", 3, c.Lookup(L"strawberries") == L"4");
+            c.Remove(L"strawberries");
+            TEST_REQUIRE_N(L"Collection", 3, c.Size() == 3);
+            TEST_REQUIRE_N(L"Collection", 3, c.GetView().Size() == 3);
+            c.Clear();
+            TEST_REQUIRE_N(L"Collection", 3, c.Size() == 0);
+            
         }
         void Collection4Call(Collection4Handler const& handler)
         {
@@ -325,6 +335,13 @@ namespace winrt::TestComponent::implementation
             TEST_REQUIRE_N(L"Collection", 4, a != b && a != c);
             TEST_REQUIRE_N(L"Collection", 4, std::equal(begin(a), end(a), begin(b), end(b)));
             TEST_REQUIRE_N(L"Collection", 4, std::equal(begin(a), end(a), begin(c), end(c)));
+
+            TEST_REQUIRE_N(L"Collection", 4, c.Lookup(L"apples") == L"1");
+            TEST_REQUIRE_N(L"Collection", 4, c.HasKey(L"oranges"));
+            IMapView<hstring, hstring> d;
+            IMapView<hstring, hstring> e;
+            c.Split(d, e);
+            TEST_REQUIRE_N(L"Collection", 4, d.Size() && e.Size());
         }
         void Collection5Call(Collection5Handler const& handler)
         {
@@ -334,6 +351,20 @@ namespace winrt::TestComponent::implementation
             TEST_REQUIRE_N(L"Collection", 5, a != b && a != c);
             TEST_REQUIRE_N(L"Collection", 5, std::equal(begin(a), end(a), begin(b), end(b)));
             TEST_REQUIRE_N(L"Collection", 5, std::equal(begin(a), end(a), begin(c), end(c)));
+
+            c.Append(L"bananas");
+            TEST_REQUIRE_N(L"Collection", 5, c.GetAt(3) == L"bananas");
+            
+            c.SetAt(3, L"strawberries");
+            c.RemoveAtEnd();
+
+            TEST_REQUIRE_N(L"Collection", 5, c.Size() == 3);
+
+            auto iterator = c.GetView().First();
+            iterator.MoveNext();
+            TEST_REQUIRE_N(L"Collection", 5, iterator.Current() == L"oranges");
+
+            c.Clear();
         }
         void Collection6Call(Collection6Handler const& handler)
         {
@@ -343,6 +374,9 @@ namespace winrt::TestComponent::implementation
             TEST_REQUIRE_N(L"Collection", 6, a != b && a != c);
             TEST_REQUIRE_N(L"Collection", 6, std::equal(begin(a), end(a), begin(b), end(b)));
             TEST_REQUIRE_N(L"Collection", 6, std::equal(begin(a), end(a), begin(c), end(c)));
+            TEST_REQUIRE_N(L"Collection", 6, c.GetAt(1) == L"oranges");
+            uint32_t x;
+            TEST_REQUIRE_N(L"Collection", 6, c.IndexOf(L"apples", x));
         }
 
         IAsyncAction Async1(IAsyncAction suspend, bool fail)
