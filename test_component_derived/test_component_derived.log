@@ -1,0 +1,1 @@
+﻿C:\source\repos\CsWinRT\TestWinRT\test_component_derived\test_component_derived.vcxproj(44,3): error MSB4019: The imported project "C:\source\repos\CsWinRT\cppwinrt.props" was not found. Confirm that the expression in the Import declaration "C:\source\repos\CsWinRT\\cppwinrt.props" is correct, and that the file exists on disk.
