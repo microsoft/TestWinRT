@@ -1,4 +1,4 @@
-import "test_component_base.idl";
+
 
 namespace test_component_derived
 {
@@ -19,5 +19,6 @@ namespace test_component_derived
 
             void HierarchyD_Method();
         }
+
     }
 }

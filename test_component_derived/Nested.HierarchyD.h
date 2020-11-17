@@ -1,5 +1,5 @@
 #pragma once
-#include "Nested/HierarchyD.g.h"
+#include "Nested.HierarchyD.g.h"
 #include "Nested.HierarchyC.h"
 #include <windows.ui.xaml.hosting.referencetracker.h>
 

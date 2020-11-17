@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Nested.HierarchyD.h"
+#include "Nested.HierarchyD.g.cpp"
 
 namespace winrt::test_component_derived::Nested::implementation
 {

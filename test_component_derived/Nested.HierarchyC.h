@@ -1,5 +1,5 @@
 #pragma once
-#include "Nested/HierarchyC.g.h"
+#include "Nested.HierarchyC.g.h"
 
 namespace winrt::test_component_derived::Nested::implementation
 {

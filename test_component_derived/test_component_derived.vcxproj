@@ -70,16 +70,16 @@
 	</ImportGroup>
 	<PropertyGroup Label="UserMacros" />
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-		<OutDir>$(SolutionDir)x64\$(Configuration)\</OutDir>
+		<OutDir>$(SolutionDir)x64\$(Configuration)\$(ProjectName)</OutDir>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-		<OutDir>$(SolutionDir)x64\$(Configuration)\</OutDir>
+		<OutDir>$(SolutionDir)x64\$(Configuration)\$(ProjectName)</OutDir>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-		<OutDir>$(SolutionDir)x86\$(Configuration)\</OutDir>
+		<OutDir>$(SolutionDir)x86\$(Configuration)\$(ProjectName)</OutDir>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-		<OutDir>$(SolutionDir)x86\$(Configuration)\</OutDir>
+		<OutDir>$(SolutionDir)x86\$(Configuration)\$(ProjectName)</OutDir>
 	</PropertyGroup>
 	<ItemDefinitionGroup>
 		<ClCompile>
@@ -142,7 +142,9 @@
 		<ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
 	</ItemGroup>
 	<ItemGroup>
-		<Midl Include="test_component_derived.idl" />
+		<Midl Include="test_component_derived.idl" >
+			<AdditionalIncludeDirectories>..\test_component_base</AdditionalIncludeDirectories>
+		</Midl>
 	</ItemGroup>
 
 	<ItemGroup>
