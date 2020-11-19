@@ -17,6 +17,8 @@ jobs:
 
     - name: setup nuget
       uses: NuGet/setup-nuget@v1.0.2
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
 
     - name: setup cppwinrt
       run: nuget restore test.sln
