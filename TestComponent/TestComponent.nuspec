@@ -19,7 +19,7 @@
   </metadata>
   <files>
     <file src="..\TestComponent.winmd" target="lib\uap10.0"/>
-    <file src="..\x86\Release\TestComponent.dll" target="runtimes\win10-x86\native"/>
-    <file src="..\x64\Release\TestComponent.dll" target="runtimes\win10-x64\native"/>
+    <file src="..\x86\Release\TestComponent\TestComponent.dll" target="runtimes\win10-x86\native"/>
+    <file src="..\x64\Release\TestComponent\TestComponent.dll" target="runtimes\win10-x64\native"/>
   </files>
 </package>
