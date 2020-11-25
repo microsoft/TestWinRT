@@ -9,7 +9,8 @@ namespace winrt::test_component_base::implementation
         HierarchyB() = default;
 
         HierarchyB(hstring const& name);
-        void HierarchyB_Method();
+        virtual winrt::hstring HierarchyA_Method();
+        virtual winrt::hstring HierarchyB_Method();
     };
 }
 namespace winrt::test_component_base::factory_implementation

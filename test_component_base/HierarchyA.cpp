@@ -8,7 +8,8 @@ namespace winrt::test_component_base::implementation
     {
         throw hresult_not_implemented();
     }
-    void HierarchyA::HierarchyA_Method()
+    winrt::hstring HierarchyA::HierarchyA_Method()
     {
+        return L"HierarchyA.HierarchyA_Method";
     }
 }

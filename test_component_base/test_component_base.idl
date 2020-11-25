@@ -5,7 +5,7 @@ namespace test_component_base
         HierarchyA();
         HierarchyA(String name);
 
-        void HierarchyA_Method();
+        String HierarchyA_Method();
     }
 
     unsealed runtimeclass HierarchyB : HierarchyA
@@ -13,6 +13,6 @@ namespace test_component_base
         HierarchyB();
         HierarchyB(String name);
 
-        void HierarchyB_Method();
+        String HierarchyB_Method();
     }
 }
