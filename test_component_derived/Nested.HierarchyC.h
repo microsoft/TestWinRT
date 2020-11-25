@@ -3,12 +3,13 @@
 
 namespace winrt::test_component_derived::Nested::implementation
 {
-    struct HierarchyC : HierarchyCT<HierarchyC>
+    struct HierarchyC : HierarchyCT<HierarchyC, winrt::test_component_base::HierarchyB>
     {
         HierarchyC() = default;
 
         HierarchyC(hstring const& name);
-        void HierarchyC_Method();
+        virtual winrt::hstring HierarchyB_Method();
+        virtual winrt::hstring HierarchyC_Method();
     };
 }
 namespace winrt::test_component_derived::Nested::factory_implementation
