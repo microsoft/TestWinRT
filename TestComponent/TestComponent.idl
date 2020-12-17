@@ -179,6 +179,15 @@ namespace TestComponent
 
         void Event1Call(Int32 value);
         void Event2Call(Int32 value);
+
+        Windows.Foundation.Collections.IVectorView<Class> GetClassVectorSubset(Windows.Foundation.Collections.IVectorView<Class> classVector, Int32 startIndex);
+        Windows.Foundation.Collections.IVectorView<Composable> GetComposableClassVectorSubset(Windows.Foundation.Collections.IVectorView<Composable> classVector, Int32 startIndex);
+        Windows.Foundation.Collections.IVectorView<Object> GetObjectVectorSubset(Windows.Foundation.Collections.IVectorView<Object> objectVector, Int32 startIndex);
+        Windows.Foundation.Collections.IVectorView<IRequiredOne> GetInterfaceVectorSubset(Windows.Foundation.Collections.IVectorView<IRequiredOne> interfaceVector, Int32 startIndex);
+        Windows.Foundation.Collections.IVectorView<Boolean> GetBooleanVectorSubset(Windows.Foundation.Collections.IVectorView<Boolean> booleanVector, Int32 startIndex);
+        Windows.Foundation.Collections.IVectorView<String> GetStringVectorSubset(Windows.Foundation.Collections.IVectorView<String> stringVector, Int32 startIndex);
+        Windows.Foundation.Collections.IVectorView<Blittable> GetBlittableVectorSubset(Windows.Foundation.Collections.IVectorView<Blittable> blittableVector, Int32 startIndex);
+        Windows.Foundation.Collections.IVectorView<NonBlittable> GetNonBlittableVectorSubset(Windows.Foundation.Collections.IVectorView<NonBlittable> nonBlittableVector, Int32 startIndex);
     }
 
     delegate void TestHandler(ITests tests);
@@ -234,6 +243,12 @@ namespace TestComponent
     {
         Int32 Four();
     };
+
+    [default_interface]
+    runtimeclass Class : IRequiredOne
+    {
+        Class();
+    }
 
     unsealed runtimeclass Composable : IRequiredOne, IRequiredTwo, IRequiredThree, IRequiredFour
     {

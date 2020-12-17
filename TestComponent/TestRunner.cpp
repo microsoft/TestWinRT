@@ -595,6 +595,27 @@ namespace winrt::TestComponent::implementation
             m_event2(*this, value);
         }
 
+#define TEST_GEN(variant, type, ...) \
+        Windows::Foundation::Collections::IVectorView<## type ##> Get## variant ##VectorSubset( \
+            Windows::Foundation::Collections::IVectorView<## type ##> const& vector, \
+            int32_t startIndex) \
+        { \
+            std::array<## type ##, 3> subset{}; \
+            vector.GetMany(startIndex, subset); \
+            return winrt::single_threaded_vector_view(std::vector<## type ##>{subset.begin(), subset.end()}); \
+        }
+
+        TEST_GEN(Class, Class);
+        TEST_GEN(ComposableClass, Composable);
+        TEST_GEN(Object, Windows::Foundation::IInspectable);
+        TEST_GEN(Interface, IRequiredOne);
+        TEST_GEN(Boolean, bool);
+        TEST_GEN(String, hstring);
+        TEST_GEN(Blittable, Blittable);
+        TEST_GEN(NonBlittable, NonBlittable);
+
+#undef TEST_GEN
+
     };
 
     void RunTests(ITests const& tests)
