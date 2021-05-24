@@ -177,4 +177,30 @@ namespace winrt::BenchmarkComponent::implementation
     {
     }
 
+    int32_t ClassWithMarshalingRoutines::IntProperty()
+    {
+        return _int;
+    }
+    void ClassWithMarshalingRoutines::IntProperty(int32_t value)
+    {
+        _int = value;
+        _intChanged(*this, _int);
+    }
+    winrt::event_token ClassWithMarshalingRoutines::IntPropertyChanged(EventHandler<int32_t> const& handler)
+    {
+        return _intChanged.add(handler);
+    }
+    void ClassWithMarshalingRoutines::IntPropertyChanged(winrt::event_token const& token) noexcept
+    {
+        _intChanged.remove(token);
+    }
+    void ClassWithMarshalingRoutines::RaiseIntChanged()
+    {
+        _intChanged(*this, _int);
+    }
+    void ClassWithMarshalingRoutines::CallForInt(BenchmarkComponent::ProvideInt const& provideInt)
+    {
+        _int = provideInt();
+    }
+
 }

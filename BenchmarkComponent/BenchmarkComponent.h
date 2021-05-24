@@ -46,6 +46,9 @@ namespace winrt::BenchmarkComponent::implementation
         Windows::Foundation::IReference<INT32> createNullableObject();
         Windows::Foundation::IReferenceArray<int> createArrayObject();
 
+        int32_t _int = 0;
+        winrt::event<Windows::Foundation::EventHandler<int32_t>> _intChanged;
+
     public:
         ClassWithMarshalingRoutines();
 
@@ -72,6 +75,13 @@ namespace winrt::BenchmarkComponent::implementation
 
         BenchmarkComponent::WrappedClass NewWrappedClassObject();
         void NewWrappedClassObject(BenchmarkComponent::WrappedClass val);
+
+        int32_t IntProperty();
+        void IntProperty(int32_t value);
+        winrt::event_token IntPropertyChanged(Windows::Foundation::EventHandler<int32_t> const& handler);
+        void IntPropertyChanged(winrt::event_token const& token) noexcept;
+        void RaiseIntChanged();
+        void CallForInt(BenchmarkComponent::ProvideInt const& provideInt);
     };
 }
 
