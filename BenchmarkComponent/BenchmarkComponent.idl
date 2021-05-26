@@ -19,6 +19,8 @@ namespace BenchmarkComponent
         Double DoubleProperty{ get; set; };
     }
 
+    delegate Int32 ProvideInt();
+
     // Class intended to help with benchmarking QueryInterface for the default and non default interfaces.
     [default_interface]
     runtimeclass ClassWithMultipleInterfaces :
@@ -57,5 +59,10 @@ namespace BenchmarkComponent
         IInspectable ExistingTypeErasedArrayObject{ get; set; }; 
 
         WrappedClass NewWrappedClassObject{ get; set; };
+
+        Int32 IntProperty;
+        event Windows.Foundation.EventHandler<Int32> IntPropertyChanged;
+        void RaiseIntChanged();
+        void CallForInt(ProvideInt provideInt);
     }
 }
