@@ -1,22 +1,45 @@
 namespace test_component_fast
 {
+    delegate void EventHandler0();
+
     [contractversion(4)]
     apicontract SimpleContract{};
 
+    [contractversion(5)]
+    apicontract TContract{};
+
+    [contractversion(6)]
+    apicontract UContract{};
+
     [fastabi(SimpleContract, 1)]
     [contract(SimpleContract, 1)]
+    [from_contract(TContract, range(2, 4))]
+    [from_contract(UContract, range(2, 4), TContract)]
     runtimeclass Simple
     {
         Simple();
 
         String Method1();
+        String Property1;
 
-        [contract(SimpleContract, 1.2)]
+        [contract(SimpleContract, 2)]
         {
-            String Method2();
+            String Property2{ get; };
         }
 
-        [contract(SimpleContract, 2.1)]
+        [contract(TContract, 3)]
+        {
+            String Method2();
+            event EventHandler0 Event0;
+            void InvokeEvent0();
+        }
+
+        [contract(UContract, 3)]
+        {
+            String Property3;
+        }
+
+        [contract(UContract, 2.1)]
         {
             String Method3();
         }

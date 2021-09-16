@@ -19,4 +19,36 @@ namespace winrt::test_component_fast::implementation
     {
         return L"Method3";
     }
+    hstring Simple::Property1()
+    {
+        return this->_property1;
+    }
+    void Simple::Property1(hstring val)
+    {
+        this->_property1 = val;
+    }
+    hstring Simple::Property2()
+    {
+        return L"Property2";
+    }
+    hstring Simple::Property3()
+    {
+        return this->_property3;
+    }
+    void Simple::Property3(hstring val)
+    {
+        this->_property3 = val;
+    }
+    winrt::event_token Simple::Event0(test_component_fast::EventHandler0 const& handler)
+    {
+        return _event0.add(handler);
+    }
+    void Simple::Event0(winrt::event_token const& token) noexcept
+    {
+        _event0.remove(token);
+    }
+    void Simple::InvokeEvent0()
+    {
+        _event0();
+    }
 }
