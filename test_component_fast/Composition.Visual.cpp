@@ -19,4 +19,8 @@ namespace winrt::test_component_fast::Composition::implementation
     void Visual::ParentForTransform([[maybe_unused]] Composition::Visual const& value)
     {
     }
+    int32_t Visual::Pad()
+    {
+        return m_pad;
+    }
 }

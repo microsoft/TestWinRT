@@ -11,9 +11,11 @@ namespace winrt::test_component_fast::Composition::implementation
         int32_t Offset();
         void Offset(int32_t value);
         void ParentForTransform(Composition::Visual const& value);
+        int32_t Pad();
 
     private:
-
         int32_t m_offset{};
+    protected:
+        int32_t m_pad = 10;
     };
 }

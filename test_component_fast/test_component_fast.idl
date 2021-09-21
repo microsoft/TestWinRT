@@ -85,7 +85,8 @@ namespace test_component_fast
         [exclusiveto(Visual)]
         interface IVisual
         {
-            [noexcept] Int32 Offset{ get; set; };
+            [noexcept] Int32 Offset{ get; };
+            [noexcept] Int32 Pad{ get; };
         }
 
         [contract(test_component_fast.Composition.FastContract, 4.0)]
@@ -93,6 +94,7 @@ namespace test_component_fast
         interface IVisual2
         {
             [noexcept] void ParentForTransform(test_component_fast.Composition.Visual value);
+            [noexcept] Int32 Offset{ set; };
         }
 
         [contract(test_component_fast.Composition.FastContract, 2.0)]
