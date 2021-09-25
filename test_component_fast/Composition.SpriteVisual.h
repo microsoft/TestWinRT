@@ -10,5 +10,6 @@ namespace winrt::test_component_fast::Composition::implementation
 
         void Brush();
         void Shadow();
+        winrt::hstring Echo(winrt::hstring message);
     };
 }

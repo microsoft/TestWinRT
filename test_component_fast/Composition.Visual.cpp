@@ -23,4 +23,8 @@ namespace winrt::test_component_fast::Composition::implementation
     {
         return m_pad;
     }
+    winrt::hstring Visual::Serialize(int32_t number)
+    {
+        return winrt::hstring();
+    }
 }

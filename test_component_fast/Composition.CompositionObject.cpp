@@ -19,4 +19,12 @@ namespace winrt::test_component_fast::Composition::implementation
     void CompositionObject::StartAnimationGroup()
     {
     }
+    Windows::Foundation::IInspectable CompositionObject::ObjectProperty()
+    {
+        return _object;
+    }
+    void CompositionObject::ObjectProperty(Windows::Foundation::IInspectable const& value)
+    {
+        _object = value;
+    }
 }

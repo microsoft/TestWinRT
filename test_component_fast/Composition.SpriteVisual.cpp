@@ -15,4 +15,8 @@ namespace winrt::test_component_fast::Composition::implementation
     void SpriteVisual::Shadow()
     {
     }
+    winrt::hstring SpriteVisual::Echo(winrt::hstring message)
+    {
+        return message;
+    }
 }

@@ -79,6 +79,7 @@ namespace test_component_fast
         interface ICompositionObject2
         {
             [noexcept] void StartAnimationGroup();
+            [noexcept] Object ObjectProperty{ get; set; };
         }
 
         [contract(test_component_fast.Composition.FastContract, 2.0)]
@@ -98,6 +99,12 @@ namespace test_component_fast
         }
 
         [contract(test_component_fast.Composition.FastContract, 2.0)]
+        interface ISerializable
+        {
+            String Serialize(Int32 number);
+        };
+
+        [contract(test_component_fast.Composition.FastContract, 2.0)]
         [exclusiveto(SpriteVisual)]
         interface ISpriteVisual
         {
@@ -109,6 +116,7 @@ namespace test_component_fast
         interface ISpriteVisual2
         {
             [noexcept] void Shadow();
+            [noexcept] String Echo(String message);
         }
 
         [composable(test_component_fast.Composition.ICompositionObjectFactory, protected, test_component_fast.Composition.FastContract, 2.0)]
@@ -132,6 +140,7 @@ namespace test_component_fast
         {
             [default] interface test_component_fast.Composition.IVisual;
             [contract(test_component_fast.Composition.FastContract, 4.0)] interface test_component_fast.Composition.IVisual2;
+            [contract(test_component_fast.Composition.FastContract, 2.0)] interface ISerializable;
         }
 
         [contract(test_component_fast.Composition.FastContract, 2.0)]

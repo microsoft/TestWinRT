@@ -12,6 +12,7 @@ namespace winrt::test_component_fast::Composition::implementation
         void Offset(int32_t value);
         void ParentForTransform(Composition::Visual const& value);
         int32_t Pad();
+        winrt::hstring Serialize(int32_t number);
 
     private:
         int32_t m_offset{};
