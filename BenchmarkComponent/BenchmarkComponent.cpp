@@ -71,6 +71,7 @@ namespace winrt::BenchmarkComponent::implementation
         keyValuePairObject = createKeyValuePairObject();
         arrayObject = createArrayObject();
         nullableObject = createNullableObject();
+        dictionary = createDictionary();
     }
 
     hstring ClassWithMarshalingRoutines::DefaultStringProperty()
@@ -99,6 +100,18 @@ namespace winrt::BenchmarkComponent::implementation
         int values[]{ 0, 42, 1729, -1 };
         auto propertyValue = PropertyValue::CreateInt32Array(values).as<IPropertyValue>();
         return propertyValue.as<IReferenceArray<int>>();
+    }
+
+    Windows::Foundation::Collections::IMap<hstring, BenchmarkComponent::WrappedClass> ClassWithMarshalingRoutines::createDictionary()
+    {
+        std::map<hstring, BenchmarkComponent::WrappedClass> dict;
+        dict[L"a"] = winrt::make<WrappedClass>();
+        return winrt::single_threaded_map(std::move(dict));
+    }
+
+    Windows::Foundation::Collections::IMap<winrt::hstring, BenchmarkComponent::WrappedClass> ClassWithMarshalingRoutines::ExistingDictionary()
+    {
+        return dictionary;
     }
     
     Windows::Foundation::IInspectable ClassWithMarshalingRoutines::NewTypeErasedKeyValuePairObject()

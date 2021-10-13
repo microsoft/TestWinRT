@@ -41,10 +41,12 @@ namespace winrt::BenchmarkComponent::implementation
         Windows::Foundation::Collections::IKeyValuePair<hstring, IInspectable> keyValuePairObject;
         Windows::Foundation::IReference<INT32> nullableObject;
         Windows::Foundation::IReferenceArray<int> arrayObject;
+        Windows::Foundation::Collections::IMap<hstring, BenchmarkComponent::WrappedClass> dictionary;
 
         Windows::Foundation::Collections::IKeyValuePair<hstring, IInspectable> createKeyValuePairObject();
         Windows::Foundation::IReference<INT32> createNullableObject();
         Windows::Foundation::IReferenceArray<int> createArrayObject();
+        Windows::Foundation::Collections::IMap<hstring, BenchmarkComponent::WrappedClass> createDictionary();
 
         int32_t _int = 0;
         winrt::event<Windows::Foundation::EventHandler<int32_t>> _intChanged;
@@ -82,6 +84,8 @@ namespace winrt::BenchmarkComponent::implementation
         void IntPropertyChanged(winrt::event_token const& token) noexcept;
         void RaiseIntChanged();
         void CallForInt(BenchmarkComponent::ProvideInt const& provideInt);
+
+        Windows::Foundation::Collections::IMap<winrt::hstring, BenchmarkComponent::WrappedClass> ExistingDictionary();
     };
 }
 

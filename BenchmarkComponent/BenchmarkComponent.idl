@@ -64,5 +64,7 @@ namespace BenchmarkComponent
         event Windows.Foundation.EventHandler<Int32> IntPropertyChanged;
         void RaiseIntChanged();
         void CallForInt(ProvideInt provideInt);
+
+        Windows.Foundation.Collections.IMap<String, WrappedClass> ExistingDictionary{ get; };
     }
 }
