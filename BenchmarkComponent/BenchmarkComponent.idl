@@ -62,7 +62,21 @@ namespace BenchmarkComponent
 
         Int32 IntProperty;
         event Windows.Foundation.EventHandler<Int32> IntPropertyChanged;
+        event Windows.Foundation.EventHandler<Double> DoublePropertyChanged;
         void RaiseIntChanged();
+        void RaiseDoubleChanged();
         void CallForInt(ProvideInt provideInt);
+    }
+
+
+    [default_interface]
+    runtimeclass HierarchyA
+    {
+        HierarchyA();
+
+        Windows.Foundation.Collections.IVector<Int32> GetIntList();
+        Windows.Foundation.Collections.IVector<IInspectable> GetList();
+        Windows.Foundation.Collections.IObservableVector<IInspectable> GetXamlList();
+
     }
 }

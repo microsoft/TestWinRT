@@ -13,9 +13,11 @@
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="BenchmarkComponent.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <ClCompile Include="HierarchyA.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="HierarchyA.h" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="BenchmarkComponent.idl" />
