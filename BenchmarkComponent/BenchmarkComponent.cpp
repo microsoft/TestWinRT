@@ -12,6 +12,30 @@ namespace winrt::BenchmarkComponent::implementation
     {
     }
 
+    Windows::Foundation::IInspectable ClassWithMultipleInterfaces::NewObject() const
+    {
+        return make<ClassWithMarshalingRoutines>();
+    }
+
+    Windows::Foundation::IInspectable ClassWithMultipleInterfaces::DefaultObjectProperty() const
+    {
+        return m_object;
+    }
+
+    void ClassWithMultipleInterfaces::DefaultObjectProperty(Windows::Foundation::IInspectable const& value)
+    {
+        m_object = value;
+    }
+
+    hstring ClassWithMultipleInterfaces::DefaultStringProperty() const
+    {
+        return m_string;
+    }
+    void ClassWithMultipleInterfaces::DefaultStringProperty(hstring const& value)
+    {
+        m_string = value;
+    }
+
     int32_t ClassWithMultipleInterfaces::IntProperty()
     {
         return 1;
