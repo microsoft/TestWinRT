@@ -216,4 +216,16 @@ namespace winrt::BenchmarkComponent::implementation
         _int = provideInt();
     }
 
+    winrt::event_token ClassWithMarshalingRoutines::DoublePropertyChanged(EventHandler<double_t> const& handler)
+    {
+        return _doubleChanged.add(handler);
+    }
+    void ClassWithMarshalingRoutines::DoublePropertyChanged(winrt::event_token const& token) noexcept
+    {
+        _doubleChanged.remove(token);
+    }
+    void ClassWithMarshalingRoutines::RaiseDoubleChanged()
+    {
+        _doubleChanged(*this, _int);
+    }
 }

@@ -50,6 +50,7 @@ namespace winrt::BenchmarkComponent::implementation
 
         int32_t _int = 0;
         winrt::event<Windows::Foundation::EventHandler<int32_t>> _intChanged;
+        winrt::event<Windows::Foundation::EventHandler<double_t>> _doubleChanged;
 
     public:
         ClassWithMarshalingRoutines();
@@ -84,6 +85,10 @@ namespace winrt::BenchmarkComponent::implementation
         void IntPropertyChanged(winrt::event_token const& token) noexcept;
         void RaiseIntChanged();
         void CallForInt(BenchmarkComponent::ProvideInt const& provideInt);
+
+        winrt::event_token DoublePropertyChanged(Windows::Foundation::EventHandler<double_t> const& handler);
+        void DoublePropertyChanged(winrt::event_token const& token) noexcept;
+        void RaiseDoubleChanged();
 
         Windows::Foundation::Collections::IMap<winrt::hstring, BenchmarkComponent::WrappedClass> ExistingDictionary();
     };
