@@ -25,6 +25,16 @@ namespace winrt::BenchmarkComponent::implementation
         void DefaultIntProperty(int32_t val);
         void DefaultBoolProperty(bool val);
         void DefaultDoubleProperty(double val);
+        Windows::Foundation::IInspectable DefaultObjectProperty() const;
+        void DefaultObjectProperty(Windows::Foundation::IInspectable const& value);
+        hstring DefaultStringProperty() const;
+        void DefaultStringProperty(hstring const& value);
+
+        Windows::Foundation::IInspectable NewObject() const;
+
+    private:
+        Windows::Foundation::IInspectable m_object;
+        hstring m_string;
     };
 
     struct WrappedClass : WrappedClassT<WrappedClass>
