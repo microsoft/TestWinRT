@@ -33,6 +33,9 @@ namespace BenchmarkComponent
         Int32 DefaultIntProperty{ get; set; };
         Boolean DefaultBoolProperty{ get; set; };
         Double DefaultDoubleProperty{ get; set; };
+        Object DefaultObjectProperty{ get; set; };
+        String DefaultStringProperty{ get; set; };
+        Object NewObject();
     }
 
     [default_interface]
