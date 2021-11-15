@@ -3,6 +3,7 @@
 #include "ClassWithMultipleInterfaces.g.h"
 #include "ClassWithMarshalingRoutines.g.h"
 #include "WrappedClass.g.h"
+#include "EventOperations.g.h"
 
 namespace winrt::BenchmarkComponent::implementation
 {
@@ -102,6 +103,27 @@ namespace winrt::BenchmarkComponent::implementation
 
         Windows::Foundation::Collections::IMap<winrt::hstring, BenchmarkComponent::WrappedClass> ExistingDictionary();
     };
+
+    struct EventOperations : EventOperationsT<EventOperations>
+    {
+    private:
+        BenchmarkComponent::IEvents events;
+        int32_t intVal;
+        double_t doubleVal;
+        winrt::event_token intEventToken;
+        winrt::event_token doubleEventToken;
+
+    public:
+        EventOperations() = default;
+
+        EventOperations(BenchmarkComponent::IEvents const& instance);
+        void AddIntEvent();
+        void AddDoubleEvent();
+        void RemoveIntEvent();
+        void RemoveDoubleEvent();
+        void FireIntEvent();
+        void FireDoubleEvent();
+    };
 }
 
 namespace winrt::BenchmarkComponent::factory_implementation
@@ -115,6 +137,10 @@ namespace winrt::BenchmarkComponent::factory_implementation
     };
 
     struct WrappedClass : WrappedClassT<WrappedClass, implementation::WrappedClass>
+    {
+    };
+
+    struct EventOperations : EventOperationsT<EventOperations, implementation::EventOperations>
     {
     };
 }

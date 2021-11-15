@@ -3,6 +3,7 @@
 #include "ClassWithMultipleInterfaces.g.cpp"
 #include "ClassWithMarshalingRoutines.g.cpp"
 #include "WrappedClass.g.cpp"
+#include "EventOperations.g.cpp"
 
 using namespace winrt::Windows::Foundation;
 
@@ -251,5 +252,40 @@ namespace winrt::BenchmarkComponent::implementation
     void ClassWithMarshalingRoutines::RaiseDoubleChanged()
     {
         _doubleChanged(*this, _int);
+    }
+
+    EventOperations::EventOperations(BenchmarkComponent::IEvents const& instance)
+        :events(instance)
+    {
+    }
+    void EventOperations::AddIntEvent()
+    {
+        intEventToken = events.IntPropertyChanged([this](IInspectable const& sender, int32_t value)
+        {
+            intVal = value;
+        });
+    }
+    void EventOperations::AddDoubleEvent()
+    {
+        doubleEventToken = events.DoublePropertyChanged([this](IInspectable const& sender, double_t value)
+        {
+            doubleVal = value;
+        });
+    }
+    void EventOperations::RemoveIntEvent()
+    {
+        events.IntPropertyChanged(intEventToken);
+    }
+    void EventOperations::RemoveDoubleEvent()
+    {
+        events.DoublePropertyChanged(doubleEventToken);
+    }
+    void EventOperations::FireIntEvent()
+    {
+        events.RaiseIntChanged();
+    }
+    void EventOperations::FireDoubleEvent()
+    {
+        events.RaiseDoubleChanged();
     }
 }

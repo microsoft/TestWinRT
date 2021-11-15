@@ -19,6 +19,14 @@ namespace BenchmarkComponent
         Double DoubleProperty{ get; set; };
     }
 
+    interface IEvents
+    {
+        event Windows.Foundation.EventHandler<Int32> IntPropertyChanged;
+        event Windows.Foundation.EventHandler<Double> DoublePropertyChanged;
+        void RaiseIntChanged();
+        void RaiseDoubleChanged();
+    }
+
     delegate Int32 ProvideInt();
 
     // Class intended to help with benchmarking QueryInterface for the default and non default interfaces.
@@ -71,5 +79,18 @@ namespace BenchmarkComponent
         void CallForInt(ProvideInt provideInt);
 
         Windows.Foundation.Collections.IMap<String, WrappedClass> ExistingDictionary{ get; };
+    }
+
+    [default_interface]
+    runtimeclass EventOperations
+    {
+        EventOperations(IEvents instance);
+
+        void AddIntEvent();
+        void AddDoubleEvent();
+        void RemoveIntEvent();
+        void RemoveDoubleEvent();
+        void FireIntEvent();
+        void FireDoubleEvent();
     }
 }
