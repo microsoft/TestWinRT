@@ -60,6 +60,7 @@ namespace winrt::BenchmarkComponent::implementation
         Windows::Foundation::Collections::IMap<hstring, BenchmarkComponent::WrappedClass> createDictionary();
 
         int32_t _int = 0;
+        BenchmarkComponent::NonBlittable _nonBlittable;
         winrt::event<Windows::Foundation::EventHandler<int32_t>> _intChanged;
         winrt::event<Windows::Foundation::EventHandler<double_t>> _doubleChanged;
 
@@ -102,6 +103,13 @@ namespace winrt::BenchmarkComponent::implementation
         void RaiseDoubleChanged();
 
         Windows::Foundation::Collections::IMap<winrt::hstring, BenchmarkComponent::WrappedClass> ExistingDictionary();
+
+        Windows::Foundation::IReference<int32_t> NullableInt();
+        void NullableInt(Windows::Foundation::IReference<int32_t> const& value);
+        Windows::Foundation::IReference<BenchmarkComponent::BlittableStruct> NullableBlittableStruct();
+        void NullableBlittableStruct(Windows::Foundation::IReference<BenchmarkComponent::BlittableStruct> const& value);
+        Windows::Foundation::IReference<BenchmarkComponent::NonBlittable> NullableNonBlittableStruct();
+        void NullableNonBlittableStruct(Windows::Foundation::IReference<BenchmarkComponent::NonBlittable> const& value);
     };
 
     struct EventOperations : EventOperationsT<EventOperations>

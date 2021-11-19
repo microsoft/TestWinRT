@@ -201,7 +201,32 @@ namespace winrt::BenchmarkComponent::implementation
     void ClassWithMarshalingRoutines::NewWrappedClassObject(BenchmarkComponent::WrappedClass val)
     {
     }
-    
+
+    Windows::Foundation::IReference<int32_t> ClassWithMarshalingRoutines::NullableInt()
+    {
+        return IReference<INT32>(123);
+    }
+    void ClassWithMarshalingRoutines::NullableInt(Windows::Foundation::IReference<int32_t> const& value)
+    {
+        _int = value.Value();
+    }
+    Windows::Foundation::IReference<BenchmarkComponent::BlittableStruct> ClassWithMarshalingRoutines::NullableBlittableStruct()
+    {
+        return IReference<BenchmarkComponent::BlittableStruct>(BenchmarkComponent::BlittableStruct{2});
+    }
+    void ClassWithMarshalingRoutines::NullableBlittableStruct(Windows::Foundation::IReference<BenchmarkComponent::BlittableStruct> const& value)
+    {
+        _int = value.Value().i32;
+    }
+    Windows::Foundation::IReference<BenchmarkComponent::NonBlittable> ClassWithMarshalingRoutines::NullableNonBlittableStruct()
+    {
+        return IReference<BenchmarkComponent::NonBlittable>(BenchmarkComponent::NonBlittable{ true, hstring(L"alpha") });
+    }
+    void ClassWithMarshalingRoutines::NullableNonBlittableStruct(Windows::Foundation::IReference<BenchmarkComponent::NonBlittable> const& value)
+    {
+        _nonBlittable = value.Value();
+    }
+
     WrappedClass::WrappedClass()
     {
     }
