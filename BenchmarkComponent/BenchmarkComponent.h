@@ -53,6 +53,7 @@ namespace winrt::BenchmarkComponent::implementation
         Windows::Foundation::IReference<INT32> nullableObject;
         Windows::Foundation::IReferenceArray<int> arrayObject;
         Windows::Foundation::Collections::IMap<hstring, BenchmarkComponent::WrappedClass> dictionary;
+        Windows::Foundation::Collections::IVector<winrt::hstring> list;
 
         Windows::Foundation::Collections::IKeyValuePair<hstring, IInspectable> createKeyValuePairObject();
         Windows::Foundation::IReference<INT32> createNullableObject();
@@ -102,6 +103,7 @@ namespace winrt::BenchmarkComponent::implementation
         void RaiseDoubleChanged();
 
         Windows::Foundation::Collections::IMap<winrt::hstring, BenchmarkComponent::WrappedClass> ExistingDictionary();
+        Windows::Foundation::Collections::IVector<winrt::hstring> NewList();
     };
 
     struct EventOperations : EventOperationsT<EventOperations>

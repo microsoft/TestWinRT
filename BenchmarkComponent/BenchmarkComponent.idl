@@ -79,6 +79,7 @@ namespace BenchmarkComponent
         void CallForInt(ProvideInt provideInt);
 
         Windows.Foundation.Collections.IMap<String, WrappedClass> ExistingDictionary{ get; };
+        Windows.Foundation.Collections.IVector<String> NewList();
     }
 
     [default_interface]
