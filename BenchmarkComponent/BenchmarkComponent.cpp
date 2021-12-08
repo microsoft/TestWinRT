@@ -226,6 +226,23 @@ namespace winrt::BenchmarkComponent::implementation
     {
         _nonBlittable = value.Value();
     }
+    Windows::Foundation::IReference<Windows::Foundation::TimeSpan> ClassWithMarshalingRoutines::NullableTimeSpan()
+    {
+        return IReference<Windows::Foundation::TimeSpan>(Windows::Foundation::TimeSpan(4));
+    }
+    void ClassWithMarshalingRoutines::NullableTimeSpan(Windows::Foundation::IReference<Windows::Foundation::TimeSpan> const& value)
+    {
+        _int = value.Value().count();
+    }
+    Windows::Foundation::IInspectable ClassWithMarshalingRoutines::BoxedDelegate()
+    {
+        BenchmarkComponent::ProvideInt handler = [] { return 4; };
+        return winrt::box_value(handler);
+    }
+    void ClassWithMarshalingRoutines::BoxedDelegate(Windows::Foundation::IInspectable const& value)
+    {
+        _handler = value.as<Windows::Foundation::IReference<BenchmarkComponent::ProvideInt>>().Value();
+    }
 
     WrappedClass::WrappedClass()
     {
