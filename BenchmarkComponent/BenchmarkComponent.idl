@@ -27,6 +27,17 @@ namespace BenchmarkComponent
         void RaiseDoubleChanged();
     }
 
+    struct BlittableStruct
+    {
+        Int32 i32;
+    };
+
+    struct NonBlittable
+    {
+        Boolean A;
+        String C;
+    };
+
     delegate Int32 ProvideInt();
 
     // Class intended to help with benchmarking QueryInterface for the default and non default interfaces.
@@ -79,6 +90,12 @@ namespace BenchmarkComponent
         void CallForInt(ProvideInt provideInt);
 
         Windows.Foundation.Collections.IMap<String, WrappedClass> ExistingDictionary{ get; };
+
+        Windows.Foundation.IReference<Int32> NullableInt{ get; set; };
+        Windows.Foundation.IReference<BlittableStruct> NullableBlittableStruct{ get; set; };
+        Windows.Foundation.IReference<NonBlittable> NullableNonBlittableStruct{ get; set; };
+        Windows.Foundation.IReference<Windows.Foundation.TimeSpan> NullableTimeSpan{ get; set; };
+        Object BoxedDelegate{ get; set; };
     }
 
     [default_interface]
