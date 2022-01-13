@@ -96,6 +96,9 @@ namespace BenchmarkComponent
         Windows.Foundation.IReference<NonBlittable> NullableNonBlittableStruct{ get; set; };
         Windows.Foundation.IReference<Windows.Foundation.TimeSpan> NullableTimeSpan{ get; set; };
         Object BoxedDelegate{ get; set; };
+
+        ProvideInt NewIntDelegate{ get; };
+        ProvideInt ExistingIntDelegate{ get; };
     }
 
     [default_interface]

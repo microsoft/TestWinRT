@@ -244,6 +244,16 @@ namespace winrt::BenchmarkComponent::implementation
         _handler = value.as<Windows::Foundation::IReference<BenchmarkComponent::ProvideInt>>().Value();
     }
 
+    BenchmarkComponent::ProvideInt ClassWithMarshalingRoutines::NewIntDelegate()
+    {
+        BenchmarkComponent::ProvideInt handler = [] { return 4; };
+        return handler;
+    }
+    BenchmarkComponent::ProvideInt ClassWithMarshalingRoutines::ExistingIntDelegate()
+    {
+        return _existingHandler;
+    }
+
     WrappedClass::WrappedClass()
     {
     }
