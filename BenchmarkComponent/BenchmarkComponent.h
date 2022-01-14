@@ -93,6 +93,8 @@ namespace winrt::BenchmarkComponent::implementation
         BenchmarkComponent::WrappedClass NewWrappedClassObject();
         void NewWrappedClassObject(BenchmarkComponent::WrappedClass val);
 
+        Windows::Foundation::Collections::IVector<winrt::hstring> NewList();
+
         int32_t IntProperty();
         void IntProperty(int32_t value);
         winrt::event_token IntPropertyChanged(Windows::Foundation::EventHandler<int32_t> const& handler);
