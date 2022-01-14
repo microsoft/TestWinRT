@@ -91,12 +91,19 @@ namespace winrt::BenchmarkComponent::implementation
     {
     }
 
+    Windows::Foundation::Collections::IVector<winrt::hstring> createList()
+    {
+        std::vector<winrt::hstring> list;
+        return winrt::single_threaded_vector(std::move(list));
+    }
+
     ClassWithMarshalingRoutines::ClassWithMarshalingRoutines()
     {
         keyValuePairObject = createKeyValuePairObject();
         arrayObject = createArrayObject();
         nullableObject = createNullableObject();
         dictionary = createDictionary();
+        list = createList();
     }
 
     hstring ClassWithMarshalingRoutines::DefaultStringProperty()
@@ -137,6 +144,11 @@ namespace winrt::BenchmarkComponent::implementation
     Windows::Foundation::Collections::IMap<winrt::hstring, BenchmarkComponent::WrappedClass> ClassWithMarshalingRoutines::ExistingDictionary()
     {
         return dictionary;
+    }
+
+    Windows::Foundation::Collections::IVector<winrt::hstring> ClassWithMarshalingRoutines::NewList()
+    {
+        return createList();
     }
     
     Windows::Foundation::IInspectable ClassWithMarshalingRoutines::NewTypeErasedKeyValuePairObject()

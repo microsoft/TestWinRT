@@ -90,6 +90,7 @@ namespace BenchmarkComponent
         void CallForInt(ProvideInt provideInt);
 
         Windows.Foundation.Collections.IMap<String, WrappedClass> ExistingDictionary{ get; };
+        Windows.Foundation.Collections.IVector<String> NewList();
 
         Windows.Foundation.IReference<Int32> NullableInt{ get; set; };
         Windows.Foundation.IReference<BlittableStruct> NullableBlittableStruct{ get; set; };
