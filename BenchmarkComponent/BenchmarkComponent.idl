@@ -19,6 +19,25 @@ namespace BenchmarkComponent
         Double DoubleProperty{ get; set; };
     }
 
+    interface IEvents
+    {
+        event Windows.Foundation.EventHandler<Int32> IntPropertyChanged;
+        event Windows.Foundation.EventHandler<Double> DoublePropertyChanged;
+        void RaiseIntChanged();
+        void RaiseDoubleChanged();
+    }
+
+    struct BlittableStruct
+    {
+        Int32 i32;
+    };
+
+    struct NonBlittable
+    {
+        Boolean A;
+        String C;
+    };
+
     delegate Int32 ProvideInt();
 
     // Class intended to help with benchmarking QueryInterface for the default and non default interfaces.
@@ -33,6 +52,9 @@ namespace BenchmarkComponent
         Int32 DefaultIntProperty{ get; set; };
         Boolean DefaultBoolProperty{ get; set; };
         Double DefaultDoubleProperty{ get; set; };
+        Object DefaultObjectProperty{ get; set; };
+        String DefaultStringProperty{ get; set; };
+        Object NewObject();
     }
 
     [default_interface]
@@ -62,7 +84,31 @@ namespace BenchmarkComponent
 
         Int32 IntProperty;
         event Windows.Foundation.EventHandler<Int32> IntPropertyChanged;
+        event Windows.Foundation.EventHandler<Double> DoublePropertyChanged;
         void RaiseIntChanged();
+        void RaiseDoubleChanged();
         void CallForInt(ProvideInt provideInt);
+
+        Windows.Foundation.Collections.IMap<String, WrappedClass> ExistingDictionary{ get; };
+        Windows.Foundation.Collections.IVector<String> NewList();
+
+        Windows.Foundation.IReference<Int32> NullableInt{ get; set; };
+        Windows.Foundation.IReference<BlittableStruct> NullableBlittableStruct{ get; set; };
+        Windows.Foundation.IReference<NonBlittable> NullableNonBlittableStruct{ get; set; };
+        Windows.Foundation.IReference<Windows.Foundation.TimeSpan> NullableTimeSpan{ get; set; };
+        Object BoxedDelegate{ get; set; };
+    }
+
+    [default_interface]
+    runtimeclass EventOperations
+    {
+        EventOperations(IEvents instance);
+
+        void AddIntEvent();
+        void AddDoubleEvent();
+        void RemoveIntEvent();
+        void RemoveDoubleEvent();
+        void FireIntEvent();
+        void FireDoubleEvent();
     }
 }

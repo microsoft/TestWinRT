@@ -3,6 +3,7 @@
 #include "ClassWithMultipleInterfaces.g.cpp"
 #include "ClassWithMarshalingRoutines.g.cpp"
 #include "WrappedClass.g.cpp"
+#include "EventOperations.g.cpp"
 
 using namespace winrt::Windows::Foundation;
 
@@ -10,6 +11,30 @@ namespace winrt::BenchmarkComponent::implementation
 {
     ClassWithMultipleInterfaces::ClassWithMultipleInterfaces()
     {
+    }
+
+    Windows::Foundation::IInspectable ClassWithMultipleInterfaces::NewObject() const
+    {
+        return make<ClassWithMarshalingRoutines>();
+    }
+
+    Windows::Foundation::IInspectable ClassWithMultipleInterfaces::DefaultObjectProperty() const
+    {
+        return m_object;
+    }
+
+    void ClassWithMultipleInterfaces::DefaultObjectProperty(Windows::Foundation::IInspectable const& value)
+    {
+        m_object = value;
+    }
+
+    hstring ClassWithMultipleInterfaces::DefaultStringProperty() const
+    {
+        return m_string;
+    }
+    void ClassWithMultipleInterfaces::DefaultStringProperty(hstring const& value)
+    {
+        m_string = value;
     }
 
     int32_t ClassWithMultipleInterfaces::IntProperty()
@@ -66,11 +91,19 @@ namespace winrt::BenchmarkComponent::implementation
     {
     }
 
+    Windows::Foundation::Collections::IVector<winrt::hstring> createList()
+    {
+        std::vector<winrt::hstring> list;
+        return winrt::single_threaded_vector(std::move(list));
+    }
+
     ClassWithMarshalingRoutines::ClassWithMarshalingRoutines()
     {
         keyValuePairObject = createKeyValuePairObject();
         arrayObject = createArrayObject();
         nullableObject = createNullableObject();
+        dictionary = createDictionary();
+        list = createList();
     }
 
     hstring ClassWithMarshalingRoutines::DefaultStringProperty()
@@ -99,6 +132,23 @@ namespace winrt::BenchmarkComponent::implementation
         int values[]{ 0, 42, 1729, -1 };
         auto propertyValue = PropertyValue::CreateInt32Array(values).as<IPropertyValue>();
         return propertyValue.as<IReferenceArray<int>>();
+    }
+
+    Windows::Foundation::Collections::IMap<hstring, BenchmarkComponent::WrappedClass> ClassWithMarshalingRoutines::createDictionary()
+    {
+        std::map<hstring, BenchmarkComponent::WrappedClass> dict;
+        dict[L"a"] = winrt::make<WrappedClass>();
+        return winrt::single_threaded_map(std::move(dict));
+    }
+
+    Windows::Foundation::Collections::IMap<winrt::hstring, BenchmarkComponent::WrappedClass> ClassWithMarshalingRoutines::ExistingDictionary()
+    {
+        return dictionary;
+    }
+
+    Windows::Foundation::Collections::IVector<winrt::hstring> ClassWithMarshalingRoutines::NewList()
+    {
+        return createList();
     }
     
     Windows::Foundation::IInspectable ClassWithMarshalingRoutines::NewTypeErasedKeyValuePairObject()
@@ -163,7 +213,49 @@ namespace winrt::BenchmarkComponent::implementation
     void ClassWithMarshalingRoutines::NewWrappedClassObject(BenchmarkComponent::WrappedClass val)
     {
     }
-    
+
+    Windows::Foundation::IReference<int32_t> ClassWithMarshalingRoutines::NullableInt()
+    {
+        return IReference<INT32>(123);
+    }
+    void ClassWithMarshalingRoutines::NullableInt(Windows::Foundation::IReference<int32_t> const& value)
+    {
+        _int = value.Value();
+    }
+    Windows::Foundation::IReference<BenchmarkComponent::BlittableStruct> ClassWithMarshalingRoutines::NullableBlittableStruct()
+    {
+        return IReference<BenchmarkComponent::BlittableStruct>(BenchmarkComponent::BlittableStruct{2});
+    }
+    void ClassWithMarshalingRoutines::NullableBlittableStruct(Windows::Foundation::IReference<BenchmarkComponent::BlittableStruct> const& value)
+    {
+        _int = value.Value().i32;
+    }
+    Windows::Foundation::IReference<BenchmarkComponent::NonBlittable> ClassWithMarshalingRoutines::NullableNonBlittableStruct()
+    {
+        return IReference<BenchmarkComponent::NonBlittable>(BenchmarkComponent::NonBlittable{ true, hstring(L"alpha") });
+    }
+    void ClassWithMarshalingRoutines::NullableNonBlittableStruct(Windows::Foundation::IReference<BenchmarkComponent::NonBlittable> const& value)
+    {
+        _nonBlittable = value.Value();
+    }
+    Windows::Foundation::IReference<Windows::Foundation::TimeSpan> ClassWithMarshalingRoutines::NullableTimeSpan()
+    {
+        return IReference<Windows::Foundation::TimeSpan>(Windows::Foundation::TimeSpan(4));
+    }
+    void ClassWithMarshalingRoutines::NullableTimeSpan(Windows::Foundation::IReference<Windows::Foundation::TimeSpan> const& value)
+    {
+        _int = value.Value().count();
+    }
+    Windows::Foundation::IInspectable ClassWithMarshalingRoutines::BoxedDelegate()
+    {
+        BenchmarkComponent::ProvideInt handler = [] { return 4; };
+        return winrt::box_value(handler);
+    }
+    void ClassWithMarshalingRoutines::BoxedDelegate(Windows::Foundation::IInspectable const& value)
+    {
+        _handler = value.as<Windows::Foundation::IReference<BenchmarkComponent::ProvideInt>>().Value();
+    }
+
     WrappedClass::WrappedClass()
     {
     }
@@ -203,4 +295,51 @@ namespace winrt::BenchmarkComponent::implementation
         _int = provideInt();
     }
 
+    winrt::event_token ClassWithMarshalingRoutines::DoublePropertyChanged(EventHandler<double_t> const& handler)
+    {
+        return _doubleChanged.add(handler);
+    }
+    void ClassWithMarshalingRoutines::DoublePropertyChanged(winrt::event_token const& token) noexcept
+    {
+        _doubleChanged.remove(token);
+    }
+    void ClassWithMarshalingRoutines::RaiseDoubleChanged()
+    {
+        _doubleChanged(*this, _int);
+    }
+
+    EventOperations::EventOperations(BenchmarkComponent::IEvents const& instance)
+        :events(instance)
+    {
+    }
+    void EventOperations::AddIntEvent()
+    {
+        intEventToken = events.IntPropertyChanged([this](IInspectable const& sender, int32_t value)
+        {
+            intVal = value;
+        });
+    }
+    void EventOperations::AddDoubleEvent()
+    {
+        doubleEventToken = events.DoublePropertyChanged([this](IInspectable const& sender, double_t value)
+        {
+            doubleVal = value;
+        });
+    }
+    void EventOperations::RemoveIntEvent()
+    {
+        events.IntPropertyChanged(intEventToken);
+    }
+    void EventOperations::RemoveDoubleEvent()
+    {
+        events.DoublePropertyChanged(doubleEventToken);
+    }
+    void EventOperations::FireIntEvent()
+    {
+        events.RaiseIntChanged();
+    }
+    void EventOperations::FireDoubleEvent()
+    {
+        events.RaiseDoubleChanged();
+    }
 }
