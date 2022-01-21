@@ -616,6 +616,34 @@ namespace winrt::TestComponent::implementation
 
 #undef TEST_GEN
 
+#define TEST_GEN(number, type, ...) \
+        auto Box ## number ##(type param, IInspectable boxedParam) \
+        { \
+            auto unboxedValue = unbox_value<type>(boxedParam); \
+            TEST_REQUIRE_N(L"Param", ## number ##, param == unboxedValue); \
+            return box_value(param); \
+        }
+
+        TEST_GEN(1, uint8_t);
+        TEST_GEN(2, uint16_t);
+        TEST_GEN(3, uint32_t);
+        TEST_GEN(4, uint64_t);
+        TEST_GEN(5, int16_t);
+        TEST_GEN(6, int32_t);
+        TEST_GEN(7, int64_t);
+        TEST_GEN(8, bool);
+        TEST_GEN(9, float);
+        TEST_GEN(10, double);
+        TEST_GEN(11, guid);
+        TEST_GEN(12, char16_t);
+        TEST_GEN(13, hstring);
+        TEST_GEN(14, TimeSpan);
+        TEST_GEN(15, Blittable);
+        TEST_GEN(16, NonBlittable);
+        TEST_GEN(17, DateTime);
+
+#undef TEST_GEN
+
     };
 
     void RunTests(ITests const& tests)
