@@ -188,6 +188,24 @@ namespace TestComponent
         Windows.Foundation.Collections.IVectorView<String> GetStringVectorSubset(Windows.Foundation.Collections.IVectorView<String> stringVector, Int32 startIndex);
         Windows.Foundation.Collections.IVectorView<Blittable> GetBlittableVectorSubset(Windows.Foundation.Collections.IVectorView<Blittable> blittableVector, Int32 startIndex);
         Windows.Foundation.Collections.IVectorView<NonBlittable> GetNonBlittableVectorSubset(Windows.Foundation.Collections.IVectorView<NonBlittable> nonBlittableVector, Int32 startIndex);
+
+        Object Box1(UInt8 param, Object boxedParam);
+        Object Box2(UInt16 param, Object boxedParam);
+        Object Box3(UInt32 param, Object boxedParam);
+        Object Box4(UInt64 param, Object boxedParam);
+        Object Box5(Int16 param, Object boxedParam);
+        Object Box6(Int32 param, Object boxedParam);
+        Object Box7(Int64 param, Object boxedParam);
+        Object Box8(Boolean param, Object boxedParam);
+        Object Box9(Single param, Object boxedParam);
+        Object Box10(Double param, Object boxedParam);
+        Object Box11(Guid param, Object boxedParam);
+        Object Box12(Char param, Object boxedParam);
+        Object Box13(String param, Object boxedParam);
+        Object Box14(Windows.Foundation.TimeSpan param, Object boxedParam);
+        Object Box15(Blittable param, Object boxedParam);
+        Object Box16(NonBlittable param, Object boxedParam);
+        Object Box17(Windows.Foundation.DateTime param, Object boxedParam);
     }
 
     delegate void TestHandler(ITests tests);
