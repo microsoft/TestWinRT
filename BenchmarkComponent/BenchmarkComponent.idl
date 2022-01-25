@@ -82,6 +82,8 @@ namespace BenchmarkComponent
 
         WrappedClass NewWrappedClassObject{ get; set; };
 
+        Windows.Foundation.Uri NewUri{ get; set; };
+
         Int32 IntProperty;
         event Windows.Foundation.EventHandler<Int32> IntPropertyChanged;
         event Windows.Foundation.EventHandler<Double> DoublePropertyChanged;

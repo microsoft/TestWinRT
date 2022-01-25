@@ -214,6 +214,16 @@ namespace winrt::BenchmarkComponent::implementation
     {
     }
 
+    Windows::Foundation::Uri ClassWithMarshalingRoutines::NewUri()
+    {
+        Windows::Foundation::Uri uri(L"https://github.com");
+        return uri;
+    }
+
+    void ClassWithMarshalingRoutines::NewUri(Windows::Foundation::Uri val)
+    {
+    }
+
     Windows::Foundation::IReference<int32_t> ClassWithMarshalingRoutines::NullableInt()
     {
         return IReference<INT32>(123);

@@ -94,6 +94,9 @@ namespace winrt::BenchmarkComponent::implementation
         BenchmarkComponent::WrappedClass NewWrappedClassObject();
         void NewWrappedClassObject(BenchmarkComponent::WrappedClass val);
 
+        Windows::Foundation::Uri NewUri();
+        void NewUri(Windows::Foundation::Uri val);
+
         Windows::Foundation::Collections::IVector<winrt::hstring> NewList();
 
         int32_t IntProperty();
