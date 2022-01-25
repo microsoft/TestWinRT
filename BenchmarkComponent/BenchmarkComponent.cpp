@@ -98,6 +98,7 @@ namespace winrt::BenchmarkComponent::implementation
     }
 
     ClassWithMarshalingRoutines::ClassWithMarshalingRoutines()
+        :_uri(L"https://github.com")
     {
         keyValuePairObject = createKeyValuePairObject();
         arrayObject = createArrayObject();
@@ -221,6 +222,15 @@ namespace winrt::BenchmarkComponent::implementation
     }
 
     void ClassWithMarshalingRoutines::NewUri(Windows::Foundation::Uri val)
+    {
+    }
+
+    Windows::Foundation::Uri ClassWithMarshalingRoutines::ExistingUri()
+    {
+        return _uri;
+    }
+
+    void ClassWithMarshalingRoutines::ExistingUri(Windows::Foundation::Uri val)
     {
     }
 
