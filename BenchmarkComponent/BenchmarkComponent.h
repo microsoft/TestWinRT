@@ -66,6 +66,7 @@ namespace winrt::BenchmarkComponent::implementation
         winrt::event<Windows::Foundation::EventHandler<double_t>> _doubleChanged;
         BenchmarkComponent::ProvideInt _handler;
         BenchmarkComponent::ProvideInt _existingHandler = [] { return 4; };
+        Windows::Foundation::Uri _uri;
 
     public:
         ClassWithMarshalingRoutines();
@@ -93,6 +94,11 @@ namespace winrt::BenchmarkComponent::implementation
 
         BenchmarkComponent::WrappedClass NewWrappedClassObject();
         void NewWrappedClassObject(BenchmarkComponent::WrappedClass val);
+
+        Windows::Foundation::Uri NewUri();
+        void NewUri(Windows::Foundation::Uri val);
+        Windows::Foundation::Uri ExistingUri();
+        void ExistingUri(Windows::Foundation::Uri val);
 
         Windows::Foundation::Collections::IVector<winrt::hstring> NewList();
 
