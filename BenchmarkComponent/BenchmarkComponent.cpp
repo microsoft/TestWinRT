@@ -105,6 +105,7 @@ namespace winrt::BenchmarkComponent::implementation
         nullableObject = createNullableObject();
         dictionary = createDictionary();
         list = createList();
+        _type = winrt::xaml_typename<winrt::BenchmarkComponent::ClassWithMultipleInterfaces>();
     }
 
     hstring ClassWithMarshalingRoutines::DefaultStringProperty()
@@ -231,6 +232,25 @@ namespace winrt::BenchmarkComponent::implementation
     }
 
     void ClassWithMarshalingRoutines::ExistingUri(Windows::Foundation::Uri val)
+    {
+    }
+
+    Windows::UI::Xaml::Interop::TypeName ClassWithMarshalingRoutines::NewType()
+    {
+        Windows::UI::Xaml::Interop::TypeName type = winrt::xaml_typename<winrt::BenchmarkComponent::ClassWithMarshalingRoutines>();
+        return type;
+    }
+
+    void ClassWithMarshalingRoutines::NewType(Windows::UI::Xaml::Interop::TypeName val)
+    {
+    }
+
+    Windows::UI::Xaml::Interop::TypeName ClassWithMarshalingRoutines::ExistingType()
+    {
+        return _type;
+    }
+
+    void ClassWithMarshalingRoutines::ExistingType(Windows::UI::Xaml::Interop::TypeName val)
     {
     }
 
