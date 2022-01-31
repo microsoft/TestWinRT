@@ -85,6 +85,9 @@ namespace BenchmarkComponent
         Windows.Foundation.Uri NewUri{ get; set; };
         Windows.Foundation.Uri ExistingUri{ get; set; };
 
+        Windows.UI.Xaml.Interop.TypeName NewType{ get; set; };
+        Windows.UI.Xaml.Interop.TypeName ExistingType{ get; set; };
+
         Int32 IntProperty;
         event Windows.Foundation.EventHandler<Int32> IntPropertyChanged;
         event Windows.Foundation.EventHandler<Double> DoublePropertyChanged;
