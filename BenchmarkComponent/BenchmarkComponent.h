@@ -65,7 +65,9 @@ namespace winrt::BenchmarkComponent::implementation
         winrt::event<Windows::Foundation::EventHandler<int32_t>> _intChanged;
         winrt::event<Windows::Foundation::EventHandler<double_t>> _doubleChanged;
         BenchmarkComponent::ProvideInt _handler;
-
+        BenchmarkComponent::ProvideInt _existingHandler = [] { return 4; };
+        Windows::Foundation::Uri _uri;
+        Windows::UI::Xaml::Interop::TypeName _type;
     public:
         ClassWithMarshalingRoutines();
 
@@ -93,6 +95,16 @@ namespace winrt::BenchmarkComponent::implementation
         BenchmarkComponent::WrappedClass NewWrappedClassObject();
         void NewWrappedClassObject(BenchmarkComponent::WrappedClass val);
 
+        Windows::Foundation::Uri NewUri();
+        void NewUri(Windows::Foundation::Uri val);
+        Windows::Foundation::Uri ExistingUri();
+        void ExistingUri(Windows::Foundation::Uri val);
+
+        Windows::UI::Xaml::Interop::TypeName NewType();
+        void NewType(Windows::UI::Xaml::Interop::TypeName val);
+        Windows::UI::Xaml::Interop::TypeName ExistingType();
+        void ExistingType(Windows::UI::Xaml::Interop::TypeName val);
+
         Windows::Foundation::Collections::IVector<winrt::hstring> NewList();
 
         int32_t IntProperty();
@@ -118,6 +130,9 @@ namespace winrt::BenchmarkComponent::implementation
         void NullableTimeSpan(Windows::Foundation::IReference<Windows::Foundation::TimeSpan> const& value);
         Windows::Foundation::IInspectable BoxedDelegate();
         void BoxedDelegate(Windows::Foundation::IInspectable const& value);
+
+        BenchmarkComponent::ProvideInt NewIntDelegate();
+        BenchmarkComponent::ProvideInt ExistingIntDelegate();
     };
 
     struct EventOperations : EventOperationsT<EventOperations>

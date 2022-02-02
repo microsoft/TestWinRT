@@ -98,12 +98,14 @@ namespace winrt::BenchmarkComponent::implementation
     }
 
     ClassWithMarshalingRoutines::ClassWithMarshalingRoutines()
+        :_uri(L"https://github.com")
     {
         keyValuePairObject = createKeyValuePairObject();
         arrayObject = createArrayObject();
         nullableObject = createNullableObject();
         dictionary = createDictionary();
         list = createList();
+        _type = winrt::xaml_typename<winrt::BenchmarkComponent::ClassWithMultipleInterfaces>();
     }
 
     hstring ClassWithMarshalingRoutines::DefaultStringProperty()
@@ -214,6 +216,44 @@ namespace winrt::BenchmarkComponent::implementation
     {
     }
 
+    Windows::Foundation::Uri ClassWithMarshalingRoutines::NewUri()
+    {
+        Windows::Foundation::Uri uri(L"https://github.com");
+        return uri;
+    }
+
+    void ClassWithMarshalingRoutines::NewUri(Windows::Foundation::Uri val)
+    {
+    }
+
+    Windows::Foundation::Uri ClassWithMarshalingRoutines::ExistingUri()
+    {
+        return _uri;
+    }
+
+    void ClassWithMarshalingRoutines::ExistingUri(Windows::Foundation::Uri val)
+    {
+    }
+
+    Windows::UI::Xaml::Interop::TypeName ClassWithMarshalingRoutines::NewType()
+    {
+        Windows::UI::Xaml::Interop::TypeName type = winrt::xaml_typename<winrt::BenchmarkComponent::ClassWithMarshalingRoutines>();
+        return type;
+    }
+
+    void ClassWithMarshalingRoutines::NewType(Windows::UI::Xaml::Interop::TypeName val)
+    {
+    }
+
+    Windows::UI::Xaml::Interop::TypeName ClassWithMarshalingRoutines::ExistingType()
+    {
+        return _type;
+    }
+
+    void ClassWithMarshalingRoutines::ExistingType(Windows::UI::Xaml::Interop::TypeName val)
+    {
+    }
+
     Windows::Foundation::IReference<int32_t> ClassWithMarshalingRoutines::NullableInt()
     {
         return IReference<INT32>(123);
@@ -254,6 +294,16 @@ namespace winrt::BenchmarkComponent::implementation
     void ClassWithMarshalingRoutines::BoxedDelegate(Windows::Foundation::IInspectable const& value)
     {
         _handler = value.as<Windows::Foundation::IReference<BenchmarkComponent::ProvideInt>>().Value();
+    }
+
+    BenchmarkComponent::ProvideInt ClassWithMarshalingRoutines::NewIntDelegate()
+    {
+        BenchmarkComponent::ProvideInt handler = [] { return 4; };
+        return handler;
+    }
+    BenchmarkComponent::ProvideInt ClassWithMarshalingRoutines::ExistingIntDelegate()
+    {
+        return _existingHandler;
     }
 
     WrappedClass::WrappedClass()
