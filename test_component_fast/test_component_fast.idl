@@ -11,11 +11,11 @@ namespace test_component_fast
     [contractversion(6)]
     apicontract UContract{};
 
-    [fastabi(SimpleContract, 1)]
+    [fastabi(SimpleContract, 4)]
     [contract(SimpleContract, 1)]
     [from_contract(TContract, range(2, 4))]
-    [from_contract(UContract, range(2, 4), TContract)]
-    runtimeclass Simple
+    [from_contract(UContract, range(2, 5), TContract)]
+    runtimeclass Simple : IOrange, IBanana
     {
         Simple();
 
@@ -25,6 +25,21 @@ namespace test_component_fast
         [contract(SimpleContract, 2)]
         {
             String Property2{ get; };
+        }
+
+        [contract(SimpleContract, 3)]
+        {
+            String Method5();
+        }
+
+        [contract(SimpleContract, 2.1)]
+        {
+            String Method6();
+        }
+
+        [contract(SimpleContract, 3.4)]
+        {
+            String Method7();
         }
 
         [contract(TContract, 3)]
@@ -39,10 +54,29 @@ namespace test_component_fast
             String Property3;
         }
 
+        [contract(UContract, 4)]
+        {
+            String Method4();
+        }
+
         [contract(UContract, 2.1)]
         {
             String Method3();
         }
+    }
+
+    [contract(SimpleContract, 2.0)]
+    [exclusiveto(Simple)]
+    interface IOrange
+    {
+        String Method8();
+    }
+
+    [contract(SimpleContract, 2.0)]
+    [exclusiveto(Simple)]
+    interface IBanana
+    {
+        String Method9();
     }
 
     namespace Composition

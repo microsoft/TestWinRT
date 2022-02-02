@@ -10,6 +10,12 @@ namespace winrt::test_component_fast::implementation
         hstring Method1();
         hstring Method2();
         hstring Method3();
+        hstring Method4();
+        hstring Method5();
+        hstring Method6();
+        hstring Method7();
+        hstring Method8();
+        hstring Method9();
         hstring Property1();
         void Property1(hstring val);
         hstring Property2();

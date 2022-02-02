@@ -19,6 +19,30 @@ namespace winrt::test_component_fast::implementation
     {
         return L"Method3";
     }
+    hstring Simple::Method4()
+    {
+        return L"Method4";
+    }
+    hstring Simple::Method5()
+    {
+        return L"Method5";
+    }
+    hstring Simple::Method6()
+    {
+        return L"Method6";
+    }
+    hstring Simple::Method7()
+    {
+        return L"Method7";
+    }
+    hstring Simple::Method8()
+    {
+        return L"Method8";
+    }
+    hstring Simple::Method9()
+    {
+        return L"Method9";
+    }
     hstring Simple::Property1()
     {
         return this->_property1;
