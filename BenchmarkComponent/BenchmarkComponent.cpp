@@ -4,6 +4,7 @@
 #include "ClassWithMarshalingRoutines.g.cpp"
 #include "WrappedClass.g.cpp"
 #include "EventOperations.g.cpp"
+#include "Composable.g.cpp"
 
 using namespace winrt::Windows::Foundation;
 
@@ -89,6 +90,12 @@ namespace winrt::BenchmarkComponent::implementation
 
     void ClassWithMultipleInterfaces::DefaultDoubleProperty(double val)
     {
+    }
+
+    void ClassWithMultipleInterfaces::QueryBoolInterface(IIntProperties properties)
+    {
+        auto boolProperties = properties.as<IBoolProperties>();
+        boolProperties.BoolProperty();
     }
 
     Windows::Foundation::Collections::IVector<winrt::hstring> createList()
@@ -391,5 +398,14 @@ namespace winrt::BenchmarkComponent::implementation
     void EventOperations::FireDoubleEvent()
     {
         events.RaiseDoubleChanged();
+    }
+
+    bool Composable::BoolProperty()
+    {
+        return true;
+    }
+
+    void Composable::BoolProperty(bool val)
+    {
     }
 }

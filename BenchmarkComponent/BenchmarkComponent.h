@@ -4,6 +4,7 @@
 #include "ClassWithMarshalingRoutines.g.h"
 #include "WrappedClass.g.h"
 #include "EventOperations.g.h"
+#include "Composable.g.h"
 
 namespace winrt::BenchmarkComponent::implementation
 {
@@ -33,6 +34,7 @@ namespace winrt::BenchmarkComponent::implementation
 
         Windows::Foundation::IInspectable NewObject() const;
 
+        void QueryBoolInterface(IIntProperties properties);
     private:
         Windows::Foundation::IInspectable m_object;
         hstring m_string;
@@ -155,6 +157,14 @@ namespace winrt::BenchmarkComponent::implementation
         void FireIntEvent();
         void FireDoubleEvent();
     };
+
+    struct Composable : ComposableT<Composable>
+    {
+        Composable() = default;
+
+        bool BoolProperty();
+        void BoolProperty(bool val);
+    };
 }
 
 namespace winrt::BenchmarkComponent::factory_implementation
@@ -172,6 +182,10 @@ namespace winrt::BenchmarkComponent::factory_implementation
     };
 
     struct EventOperations : EventOperationsT<EventOperations, implementation::EventOperations>
+    {
+    };
+
+    struct Composable : ComposableT<Composable, implementation::Composable>
     {
     };
 }

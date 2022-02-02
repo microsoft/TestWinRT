@@ -55,6 +55,13 @@ namespace BenchmarkComponent
         Object DefaultObjectProperty{ get; set; };
         String DefaultStringProperty{ get; set; };
         Object NewObject();
+
+        void QueryBoolInterface(IIntProperties properties);
+    }
+
+    unsealed runtimeclass Composable : IBoolProperties
+    {
+        Composable();
     }
 
     [default_interface]
