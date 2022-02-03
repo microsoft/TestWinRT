@@ -365,6 +365,17 @@ namespace winrt::BenchmarkComponent::implementation
         _doubleChanged(*this, _int);
     }
 
+    void ClassWithMarshalingRoutines::GetWeakReference(Windows::Foundation::IInspectable obj)
+    {
+        auto weak_ref = winrt::make_weak(obj);
+    }
+
+    Windows::Foundation::IInspectable ClassWithMarshalingRoutines::GetAndResolveWeakReference(Windows::Foundation::IInspectable obj)
+    {
+        auto weak_ref = winrt::make_weak(obj);
+        return weak_ref.get();
+    }
+
     EventOperations::EventOperations(BenchmarkComponent::IEvents const& instance)
         :events(instance)
     {

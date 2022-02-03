@@ -135,6 +135,9 @@ namespace winrt::BenchmarkComponent::implementation
 
         BenchmarkComponent::ProvideInt NewIntDelegate();
         BenchmarkComponent::ProvideInt ExistingIntDelegate();
+
+        void GetWeakReference(Windows::Foundation::IInspectable obj);
+        Windows::Foundation::IInspectable GetAndResolveWeakReference(Windows::Foundation::IInspectable obj);
     };
 
     struct EventOperations : EventOperationsT<EventOperations>

@@ -113,6 +113,9 @@ namespace BenchmarkComponent
 
         ProvideInt NewIntDelegate{ get; };
         ProvideInt ExistingIntDelegate{ get; };
+
+        void GetWeakReference(Object obj);
+        Object GetAndResolveWeakReference(Object obj);
     }
 
     [default_interface]
