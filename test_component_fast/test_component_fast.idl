@@ -1,0 +1,199 @@
+namespace test_component_fast
+{
+    delegate void EventHandler0();
+
+    [contractversion(4)]
+    apicontract SimpleContract{};
+
+    [contractversion(5)]
+    apicontract TContract{};
+
+    [contractversion(6)]
+    apicontract UContract{};
+
+    [fastabi(SimpleContract, 4)]
+    [contract(SimpleContract, 1)]
+    [from_contract(TContract, range(2, 4))]
+    [from_contract(UContract, range(2, 5), TContract)]
+    runtimeclass Simple : IOrange, IBanana
+    {
+        Simple();
+
+        String Method1();
+        String Property1;
+
+        [contract(SimpleContract, 2)]
+        {
+            String Property2{ get; };
+        }
+
+        [contract(SimpleContract, 3)]
+        {
+            String Method5();
+        }
+
+        [contract(SimpleContract, 2.1)]
+        {
+            String Method6();
+        }
+
+        [contract(SimpleContract, 3.4)]
+        {
+            String Method7();
+        }
+
+        [contract(TContract, 3)]
+        {
+            String Method2();
+            event EventHandler0 Event0;
+            void InvokeEvent0();
+        }
+
+        [contract(UContract, 3)]
+        {
+            String Property3;
+        }
+
+        [contract(UContract, 4)]
+        {
+            String Method4();
+        }
+
+        [contract(UContract, 2.1)]
+        {
+            String Method3();
+        }
+    }
+
+    [contract(SimpleContract, 2.0)]
+    [exclusiveto(Simple)]
+    interface IOrange
+    {
+        String Method8();
+    }
+
+    [contract(SimpleContract, 2.0)]
+    [exclusiveto(Simple)]
+    interface IBanana
+    {
+        String Method9();
+    }
+
+    namespace Composition
+    {
+        [contractversion(4)]
+        apicontract FastContract{};
+
+        runtimeclass Visual;
+        runtimeclass Compositor;
+
+        [contract(test_component_fast.Composition.FastContract, 2.0)]
+        [exclusiveto(CompositionObject)]
+        [uuid(51205C5E-558A-4F2A-8D39-37BFE1E20DDD)]
+        interface ICompositionObjectFactory
+        {
+        }
+
+        [contract(test_component_fast.Composition.FastContract, 2.0)]
+        [exclusiveto(Visual)]
+        [uuid(AD0FF93E-B502-4EB5-87B4-9A38A71D0137)]
+        interface IVisualFactory
+        {
+        }
+
+        [contract(test_component_fast.Composition.FastContract, 2.0)]
+        [exclusiveto(CompositionObject)]
+        interface ICompositionObject
+        {
+            [noexcept] Compositor Compositor();
+        }
+
+        [contract(test_component_fast.Composition.FastContract, 3.0)]
+        [exclusiveto(CompositionObject)]
+        interface ICompositionObject2
+        {
+            [noexcept] void StartAnimationGroup();
+            [noexcept] Object ObjectProperty{ get; set; };
+        }
+
+        [contract(test_component_fast.Composition.FastContract, 2.0)]
+        [exclusiveto(Visual)]
+        interface IVisual
+        {
+            [noexcept] Int32 Offset{ get; };
+            [noexcept] Int32 Pad{ get; };
+        }
+
+        [contract(test_component_fast.Composition.FastContract, 4.0)]
+        [exclusiveto(Visual)]
+        interface IVisual2
+        {
+            [noexcept] void ParentForTransform(test_component_fast.Composition.Visual value);
+            [noexcept] Int32 Offset{ set; };
+        }
+
+        [contract(test_component_fast.Composition.FastContract, 2.0)]
+        interface ISerializable
+        {
+            String Serialize(Int32 number);
+        };
+
+        [contract(test_component_fast.Composition.FastContract, 2.0)]
+        [exclusiveto(SpriteVisual)]
+        interface ISpriteVisual
+        {
+            [noexcept] void Brush();
+        }
+
+        [contract(test_component_fast.Composition.FastContract, 3.0)]
+        [exclusiveto(SpriteVisual)]
+        interface ISpriteVisual2
+        {
+            [noexcept] void Shadow();
+            [noexcept] String Echo(String message);
+        }
+
+        [composable(test_component_fast.Composition.ICompositionObjectFactory, protected, test_component_fast.Composition.FastContract, 2.0)]
+        [contract(test_component_fast.Composition.FastContract, 2.0)]
+        [marshaling_behavior(agile)]
+        [threading(both)]
+        [fastabi(test_component_fast.Composition.FastContract, 2.0)]
+        runtimeclass CompositionObject
+        {
+            [default] interface test_component_fast.Composition.ICompositionObject;
+            
+            [contract(test_component_fast.Composition.FastContract, 3.0)] interface test_component_fast.Composition.ICompositionObject2;
+        }
+
+        [composable(test_component_fast.Composition.IVisualFactory, protected, test_component_fast.Composition.FastContract, 2.0)]
+        [contract(test_component_fast.Composition.FastContract, 2.0)]
+        [marshaling_behavior(agile)]
+        [threading(both)]
+        [fastabi(test_component_fast.Composition.FastContract, 2.0)]
+        runtimeclass Visual : test_component_fast.Composition.CompositionObject
+        {
+            [default] interface test_component_fast.Composition.IVisual;
+            [contract(test_component_fast.Composition.FastContract, 4.0)] interface test_component_fast.Composition.IVisual2;
+            [contract(test_component_fast.Composition.FastContract, 2.0)] interface ISerializable;
+        }
+
+        [contract(test_component_fast.Composition.FastContract, 2.0)]
+        [marshaling_behavior(agile)]
+        [threading(both)]
+        [fastabi(test_component_fast.Composition.FastContract, 2.0)]
+        runtimeclass SpriteVisual : test_component_fast.Composition.Visual
+        {
+            [default] interface test_component_fast.Composition.ISpriteVisual;
+            [contract(test_component_fast.Composition.FastContract, 3.0)] interface test_component_fast.Composition.ISpriteVisual2;
+        }
+
+        [contract(test_component_fast.Composition.FastContract, 2.0)]
+        [fastabi(test_component_fast.Composition.FastContract, 2.0)]
+        runtimeclass Compositor
+        {
+            Compositor();
+
+            [noexcept] test_component_fast.Composition.SpriteVisual CreateSpriteVisual();
+        }
+    }
+}
