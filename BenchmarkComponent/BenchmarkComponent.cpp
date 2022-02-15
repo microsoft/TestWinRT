@@ -4,6 +4,7 @@
 #include "ClassWithMarshalingRoutines.g.cpp"
 #include "WrappedClass.g.cpp"
 #include "EventOperations.g.cpp"
+#include "Composable.g.cpp"
 #include "ClassWithFastAbi.g.cpp"
 
 using namespace winrt::Windows::Foundation;
@@ -90,6 +91,12 @@ namespace winrt::BenchmarkComponent::implementation
 
     void ClassWithMultipleInterfaces::DefaultDoubleProperty(double val)
     {
+    }
+
+    void ClassWithMultipleInterfaces::QueryBoolInterface(IIntProperties properties)
+    {
+        auto boolProperties = properties.as<IBoolProperties>();
+        boolProperties.BoolProperty();
     }
 
     Windows::Foundation::Collections::IVector<winrt::hstring> createList()
@@ -359,6 +366,17 @@ namespace winrt::BenchmarkComponent::implementation
         _doubleChanged(*this, _int);
     }
 
+    void ClassWithMarshalingRoutines::GetWeakReference(Windows::Foundation::IInspectable obj)
+    {
+        auto weak_ref = winrt::make_weak(obj);
+    }
+
+    Windows::Foundation::IInspectable ClassWithMarshalingRoutines::GetAndResolveWeakReference(Windows::Foundation::IInspectable obj)
+    {
+        auto weak_ref = winrt::make_weak(obj);
+        return weak_ref.get();
+    }
+
     EventOperations::EventOperations(BenchmarkComponent::IEvents const& instance)
         :events(instance)
     {
@@ -400,5 +418,14 @@ namespace winrt::BenchmarkComponent::implementation
     int32_t ClassWithFastAbi::NonDefaultIntProperty()
     {
         return 3;
+    }
+
+    bool Composable::BoolProperty()
+    {
+        return true;
+    }
+
+    void Composable::BoolProperty(bool val)
+    {
     }
 }

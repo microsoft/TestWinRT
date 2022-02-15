@@ -55,6 +55,13 @@ namespace BenchmarkComponent
         Object DefaultObjectProperty{ get; set; };
         String DefaultStringProperty{ get; set; };
         Object NewObject();
+
+        void QueryBoolInterface(IIntProperties properties);
+    }
+
+    unsealed runtimeclass Composable : IBoolProperties
+    {
+        Composable();
     }
 
     [default_interface]
@@ -106,6 +113,9 @@ namespace BenchmarkComponent
 
         ProvideInt NewIntDelegate{ get; };
         ProvideInt ExistingIntDelegate{ get; };
+
+        void GetWeakReference(Object obj);
+        Object GetAndResolveWeakReference(Object obj);
     }
 
     [default_interface]
