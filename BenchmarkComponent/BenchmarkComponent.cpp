@@ -4,6 +4,7 @@
 #include "ClassWithMarshalingRoutines.g.cpp"
 #include "WrappedClass.g.cpp"
 #include "EventOperations.g.cpp"
+#include "ClassWithFastAbi.g.cpp"
 
 using namespace winrt::Windows::Foundation;
 
@@ -391,5 +392,13 @@ namespace winrt::BenchmarkComponent::implementation
     void EventOperations::FireDoubleEvent()
     {
         events.RaiseDoubleChanged();
+    }
+    int32_t ClassWithFastAbi::DefaultIntProperty()
+    {
+        return 3;
+    }
+    int32_t ClassWithFastAbi::NonDefaultIntProperty()
+    {
+        return 3;
     }
 }

@@ -109,6 +109,20 @@ namespace BenchmarkComponent
     }
 
     [default_interface]
+    [fastabi(1)]
+    runtimeclass ClassWithFastAbi : NonDefaultFastAbiInterface
+    {
+        ClassWithFastAbi();
+        Int32 DefaultIntProperty { get; };
+    }
+
+    [exclusiveto(ClassWithFastAbi)]
+    interface NonDefaultFastAbiInterface
+    {
+        Int32 NonDefaultIntProperty{ get; };
+    };
+
+    [default_interface]
     runtimeclass EventOperations
     {
         EventOperations(IEvents instance);

@@ -2,6 +2,7 @@
 
 #include "ClassWithMultipleInterfaces.g.h"
 #include "ClassWithMarshalingRoutines.g.h"
+#include "ClassWithFastAbi.g.h"
 #include "WrappedClass.g.h"
 #include "EventOperations.g.h"
 
@@ -155,6 +156,12 @@ namespace winrt::BenchmarkComponent::implementation
         void FireIntEvent();
         void FireDoubleEvent();
     };
+
+    struct ClassWithFastAbi : ClassWithFastAbiT<ClassWithFastAbi>
+    {
+        int32_t DefaultIntProperty();
+        int32_t NonDefaultIntProperty();
+    };
 }
 
 namespace winrt::BenchmarkComponent::factory_implementation
@@ -172,6 +179,10 @@ namespace winrt::BenchmarkComponent::factory_implementation
     };
 
     struct EventOperations : EventOperationsT<EventOperations, implementation::EventOperations>
+    {
+    };
+
+    struct ClassWithFastAbi : ClassWithFastAbiT<ClassWithFastAbi, implementation::ClassWithFastAbi>
     {
     };
 }

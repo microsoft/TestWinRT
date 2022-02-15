@@ -89,7 +89,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="BenchmarkComponent.idl" />
+    <Midl Include="BenchmarkComponent.idl" >
+      <AdditionalOptions>/fastabi %(AdditionalOptions)</AdditionalOptions>
+    </Midl>
   </ItemGroup>
   <ItemGroup>
     <None Include="BenchmarkComponent.def" />
