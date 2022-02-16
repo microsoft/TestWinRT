@@ -5,6 +5,8 @@
 #include "WrappedClass.g.cpp"
 #include "EventOperations.g.cpp"
 #include "Composable.g.cpp"
+#include "ClassWithFastAbi.g.cpp"
+#include "ClassWithFastAbiDerived.g.cpp"
 
 using namespace winrt::Windows::Foundation;
 
@@ -410,7 +412,26 @@ namespace winrt::BenchmarkComponent::implementation
     {
         events.RaiseDoubleChanged();
     }
+    int32_t ClassWithFastAbi::DefaultIntProperty()
+    {
+        return 1;
+    }
+    int32_t ClassWithFastAbi::NonDefaultIntProperty()
+    {
+        return 2;
+    }
+    int32_t ClassWithFastAbiDerived::DerivedDefaultIntProperty()
+    {
+        return 3;
+    }
+    int32_t ClassWithFastAbiDerived::DerivedNonDefaultIntProperty()
+    {
+        return 4;
+    }
+    ClassWithFastAbiDerived::ClassWithFastAbiDerived() : base_type()
+    {
 
+    }
     bool Composable::BoolProperty()
     {
         return true;
