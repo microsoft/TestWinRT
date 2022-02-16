@@ -3,6 +3,7 @@
 #include "ClassWithMultipleInterfaces.g.h"
 #include "ClassWithMarshalingRoutines.g.h"
 #include "ClassWithFastAbi.g.h"
+#include "ClassWithFastAbiDerived.g.h"
 #include "WrappedClass.g.h"
 #include "EventOperations.g.h"
 #include "Composable.g.h"
@@ -175,6 +176,13 @@ namespace winrt::BenchmarkComponent::implementation
         int32_t DefaultIntProperty();
         int32_t NonDefaultIntProperty();
     };
+
+    struct ClassWithFastAbiDerived : ClassWithFastAbiDerivedT<ClassWithFastAbiDerived, implementation::ClassWithFastAbi>
+    {
+        ClassWithFastAbiDerived();
+        int32_t DerivedDefaultIntProperty();
+        int32_t DerivedNonDefaultIntProperty();
+    };
 }
 
 namespace winrt::BenchmarkComponent::factory_implementation
@@ -200,6 +208,10 @@ namespace winrt::BenchmarkComponent::factory_implementation
     };
 
     struct ClassWithFastAbi : ClassWithFastAbiT<ClassWithFastAbi, implementation::ClassWithFastAbi>
+    {
+    };
+
+    struct ClassWithFastAbiDerived : ClassWithFastAbiT<ClassWithFastAbiDerived, implementation::ClassWithFastAbiDerived>
     {
     };
 }
