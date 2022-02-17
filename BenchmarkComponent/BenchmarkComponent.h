@@ -211,7 +211,7 @@ namespace winrt::BenchmarkComponent::factory_implementation
     {
     };
 
-    struct ClassWithFastAbiDerived : ClassWithFastAbiT<ClassWithFastAbiDerived, implementation::ClassWithFastAbiDerived>
+    struct ClassWithFastAbiDerived : ClassWithFastAbiDerivedT<ClassWithFastAbiDerived, implementation::ClassWithFastAbiDerived>
     {
     };
 }
