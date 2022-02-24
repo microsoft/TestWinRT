@@ -18,13 +18,16 @@ namespace test_component_fast
     runtimeclass Simple : IOrange, IBanana
     {
         Simple();
+        Simple(String property1);
 
         String Method1();
         String Property1;
+        static String StaticMethod1();
 
         [contract(SimpleContract, 2)]
         {
             String Property2{ get; };
+            static String StaticMethod2();
         }
 
         [contract(SimpleContract, 3)]

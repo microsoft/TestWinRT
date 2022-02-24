@@ -7,6 +7,18 @@
 
 namespace winrt::test_component_fast::implementation
 {
+    Simple::Simple(hstring property1)
+    {
+        _property1 = property1;
+    }
+    hstring Simple::StaticMethod1()
+    {
+        return L"StaticMethod1";
+    }
+    hstring Simple::StaticMethod2()
+    {
+        return L"StaticMethod2";
+    }
     hstring Simple::Method1()
     {
         return L"Method1";
