@@ -6,7 +6,9 @@ namespace winrt::test_component_fast::implementation
     struct Simple : SimpleT<Simple>
     {
         Simple() = default;
-
+        Simple(hstring property1);
+        static hstring StaticMethod1();
+        static hstring StaticMethod2();
         hstring Method1();
         hstring Method2();
         hstring Method3();
