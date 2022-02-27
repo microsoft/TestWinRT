@@ -140,6 +140,13 @@ namespace winrt::BenchmarkComponent::implementation
 
         void GetWeakReference(Windows::Foundation::IInspectable obj);
         Windows::Foundation::IInspectable GetAndResolveWeakReference(Windows::Foundation::IInspectable obj);
+
+        Windows::Foundation::Collections::IMap<Windows::Foundation::IInspectable, Windows::Foundation::IInspectable> NewObjectDictionary(bool populate);
+        Windows::Foundation::Collections::IVector<Windows::Foundation::IInspectable> NewObjectList(bool populate);
+        Windows::Foundation::Collections::IMap<BenchmarkComponent::IIntProperties, BenchmarkComponent::WrappedClass> NewInterfaceDictionary(bool populate);
+        Windows::Foundation::Collections::IVector<BenchmarkComponent::IIntProperties> NewInterfaceList(bool populate);
+        Windows::Foundation::Collections::IMap<BenchmarkComponent::WrappedClass, bool> NewClassDictionary(bool populate);
+        Windows::Foundation::Collections::IVector<BenchmarkComponent::WrappedClass> NewClassList(bool populate);
     };
 
     struct EventOperations : EventOperationsT<EventOperations>

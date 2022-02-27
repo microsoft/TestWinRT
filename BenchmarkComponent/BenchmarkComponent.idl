@@ -104,6 +104,12 @@ namespace BenchmarkComponent
 
         Windows.Foundation.Collections.IMap<String, WrappedClass> ExistingDictionary{ get; };
         Windows.Foundation.Collections.IVector<String> NewList();
+        Windows.Foundation.Collections.IMap<Object, Object> NewObjectDictionary(Boolean populate);
+        Windows.Foundation.Collections.IVector<Object> NewObjectList(Boolean populate);
+        Windows.Foundation.Collections.IMap<IIntProperties, WrappedClass> NewInterfaceDictionary(Boolean populate);
+        Windows.Foundation.Collections.IVector<IIntProperties> NewInterfaceList(Boolean populate);
+        Windows.Foundation.Collections.IMap<WrappedClass, Boolean> NewClassDictionary(Boolean populate);
+        Windows.Foundation.Collections.IVector<WrappedClass> NewClassList(Boolean populate);
 
         Windows.Foundation.IReference<Int32> NullableInt{ get; set; };
         Windows.Foundation.IReference<BlittableStruct> NullableBlittableStruct{ get; set; };

@@ -162,6 +162,79 @@ namespace winrt::BenchmarkComponent::implementation
         return createList();
     }
     
+
+    Windows::Foundation::Collections::IMap<Windows::Foundation::IInspectable, Windows::Foundation::IInspectable> ClassWithMarshalingRoutines::NewObjectDictionary(bool populate)
+    {
+        std::map<Windows::Foundation::IInspectable, Windows::Foundation::IInspectable> dict;
+        if (populate)
+        {
+            dict[winrt::make<WrappedClass>()] = winrt::make<WrappedClass>();
+            dict[winrt::make<ClassWithMarshalingRoutines>()] = winrt::make<WrappedClass>();
+            dict[winrt::make<ClassWithMultipleInterfaces>()] = winrt::make<ClassWithMultipleInterfaces>();
+        }
+        return winrt::single_threaded_map(std::move(dict));
+    }
+
+    Windows::Foundation::Collections::IVector<Windows::Foundation::IInspectable> ClassWithMarshalingRoutines::NewObjectList(bool populate)
+    {
+        std::vector<Windows::Foundation::IInspectable> list;
+        if (populate)
+        {
+            list.push_back(winrt::make<WrappedClass>());
+            list.push_back(winrt::make<ClassWithMarshalingRoutines>());
+            list.push_back(winrt::make<ClassWithMultipleInterfaces>());
+        }
+        return winrt::single_threaded_vector(std::move(list));
+    }
+
+    Windows::Foundation::Collections::IMap<BenchmarkComponent::IIntProperties, BenchmarkComponent::WrappedClass> ClassWithMarshalingRoutines::NewInterfaceDictionary(bool populate)
+    {
+        std::map<BenchmarkComponent::IIntProperties, BenchmarkComponent::WrappedClass> dict;
+        if (populate)
+        {
+            dict[winrt::make<ClassWithMultipleInterfaces>()] = winrt::make<WrappedClass>();
+            dict[winrt::make<ClassWithMultipleInterfaces>()] = winrt::make<WrappedClass>();
+            dict[winrt::make<ClassWithMultipleInterfaces>()] = winrt::make<WrappedClass>();
+        }
+        return winrt::single_threaded_map(std::move(dict));
+    }
+
+    Windows::Foundation::Collections::IVector<BenchmarkComponent::IIntProperties> ClassWithMarshalingRoutines::NewInterfaceList(bool populate)
+    {
+        std::vector<BenchmarkComponent::IIntProperties> list;
+        if (populate)
+        {
+            list.push_back(winrt::make<ClassWithMultipleInterfaces>());
+            list.push_back(winrt::make<ClassWithMultipleInterfaces>());
+            list.push_back(winrt::make<ClassWithMultipleInterfaces>());
+        }
+        return winrt::single_threaded_vector(std::move(list));
+    }
+
+    Windows::Foundation::Collections::IMap<BenchmarkComponent::WrappedClass, bool> ClassWithMarshalingRoutines::NewClassDictionary(bool populate)
+    {
+        std::map<BenchmarkComponent::WrappedClass, bool> dict;
+        if (populate)
+        {
+            dict[winrt::make<WrappedClass>()] = true;
+            dict[winrt::make<WrappedClass>()] = false;
+            dict[winrt::make<WrappedClass>()] = true;
+        }
+        return winrt::single_threaded_map(std::move(dict));
+    }
+
+    Windows::Foundation::Collections::IVector<BenchmarkComponent::WrappedClass> ClassWithMarshalingRoutines::NewClassList(bool populate)
+    {
+        std::vector<BenchmarkComponent::WrappedClass> list;
+        if (populate)
+        {
+            list.push_back(winrt::make<WrappedClass>());
+            list.push_back(winrt::make<WrappedClass>());
+            list.push_back(winrt::make<WrappedClass>());
+        }
+        return winrt::single_threaded_vector(std::move(list));
+    }
+
     Windows::Foundation::IInspectable ClassWithMarshalingRoutines::NewTypeErasedKeyValuePairObject()
     {
         return createKeyValuePairObject();
