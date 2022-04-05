@@ -644,6 +644,22 @@ namespace winrt::TestComponent::implementation
 
 #undef TEST_GEN
 
+#define TEST_GEN(number, type, ...) \
+        auto Box ## number ##(array_view<type const>param, IInspectable boxedParam) \
+        { \
+            auto referenceArray = boxedParam.as<IReferenceArray<type>>(); \
+            auto unboxedValue = referenceArray.Value(); \
+            TEST_REQUIRE_N(L"Param", ## number ##, std::equal(param.begin(), param.end(), unboxedValue.begin(), unboxedValue.end())); \
+            auto arr = com_array<type>(param.begin(), param.end()); \
+            return box_value(arr); \
+        }
+
+        TEST_GEN(18, int64_t);
+        TEST_GEN(19, bool);
+        TEST_GEN(20, hstring);
+        TEST_GEN(21, TimeSpan);
+
+#undef TEST_GEN
     };
 
     void RunTests(ITests const& tests)

@@ -206,6 +206,10 @@ namespace TestComponent
         Object Box15(Blittable param, Object boxedParam);
         Object Box16(NonBlittable param, Object boxedParam);
         Object Box17(Windows.Foundation.DateTime param, Object boxedParam);
+        Object Box18(Int64[] param, Object boxedParam);
+        Object Box19(Boolean[] param, Object boxedParam);
+        Object Box20(String[] param, Object boxedParam);
+        Object Box21(Windows.Foundation.TimeSpan[] param, Object boxedParam);
     }
 
     delegate void TestHandler(ITests tests);
