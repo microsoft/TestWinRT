@@ -9,6 +9,11 @@ namespace test_component_derived
             HierarchyC();
             HierarchyC(String name);
 
+            static HierarchyC CreateDerivedHierarchyD();
+            static Object CreateDerivedHierarchyDAsObject();
+            static Windows.Foundation.Collections.IVector<HierarchyC> CreateDerivedHierarchyDList();
+            static Windows.Foundation.Collections.IVector<Object> CreateDerivedHierarchyDAsObjectList();
+
             void HierarchyC_Method();
         }
 
