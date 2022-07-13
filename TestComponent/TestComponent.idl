@@ -288,7 +288,7 @@ namespace TestComponent
         static Int32 ExpectRequiredFour(IRequiredFour t);
     }
 
-    unsealed runtimeclass Derived : Composable, IRequiredOne, IRequiredTwo, IRequiredThree, IRequiredFour
+    unsealed runtimeclass Derived : Composable
     {
         Derived();
     }
