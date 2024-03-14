@@ -159,4 +159,15 @@ namespace BenchmarkComponent
         void FireIntEvent();
         void FireDoubleEvent();
     }
+
+    [default_interface]
+    runtimeclass ClassWithAsync
+    {
+        ClassWithAsync();
+
+        Windows.Foundation.IAsyncAction Complete();
+        Windows.Foundation.IAsyncAction YieldComplete();
+        Windows.Foundation.IAsyncOperation<Int32> Return(Int32 number);
+        Windows.Foundation.IAsyncOperation<Int32> YieldReturn(Int32 number);
+    }
 }

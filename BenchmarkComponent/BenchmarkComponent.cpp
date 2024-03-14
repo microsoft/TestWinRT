@@ -4,6 +4,7 @@
 #include "ClassWithMarshalingRoutines.g.cpp"
 #include "WrappedClass.g.cpp"
 #include "EventOperations.g.cpp"
+#include "ClassWithAsync.g.cpp"
 #include "Composable.g.cpp"
 #include "ClassWithFastAbi.g.cpp"
 #include "ClassWithFastAbiDerived.g.cpp"
@@ -161,7 +162,7 @@ namespace winrt::BenchmarkComponent::implementation
     {
         return createList();
     }
-    
+
     Windows::Foundation::IInspectable ClassWithMarshalingRoutines::NewTypeErasedKeyValuePairObject()
     {
         return createKeyValuePairObject();
@@ -273,7 +274,7 @@ namespace winrt::BenchmarkComponent::implementation
     }
     Windows::Foundation::IReference<BenchmarkComponent::BlittableStruct> ClassWithMarshalingRoutines::NullableBlittableStruct()
     {
-        return IReference<BenchmarkComponent::BlittableStruct>(BenchmarkComponent::BlittableStruct{2});
+        return IReference<BenchmarkComponent::BlittableStruct>(BenchmarkComponent::BlittableStruct{ 2 });
     }
     void ClassWithMarshalingRoutines::NullableBlittableStruct(Windows::Foundation::IReference<BenchmarkComponent::BlittableStruct> const& value)
     {
@@ -385,16 +386,16 @@ namespace winrt::BenchmarkComponent::implementation
     void EventOperations::AddIntEvent()
     {
         intEventToken = events.IntPropertyChanged([this](IInspectable const& sender, int32_t value)
-        {
-            intVal = value;
-        });
+            {
+                intVal = value;
+            });
     }
     void EventOperations::AddDoubleEvent()
     {
         doubleEventToken = events.DoublePropertyChanged([this](IInspectable const& sender, double_t value)
-        {
-            doubleVal = value;
-        });
+            {
+                doubleVal = value;
+            });
     }
     void EventOperations::RemoveIntEvent()
     {
@@ -411,6 +412,24 @@ namespace winrt::BenchmarkComponent::implementation
     void EventOperations::FireDoubleEvent()
     {
         events.RaiseDoubleChanged();
+    }
+    IAsyncAction ClassWithAsync::Complete()
+    {
+        co_return;
+    }
+    IAsyncAction ClassWithAsync::YieldComplete()
+    {
+        co_await resume_background();
+        co_return;
+    }
+    IAsyncOperation<int32_t> ClassWithAsync::Return(int32_t value)
+    {
+        co_return value;
+    }
+    IAsyncOperation<int32_t> ClassWithAsync::YieldReturn(int32_t value)
+    {
+        co_await resume_background();
+        co_return value;
     }
     int32_t ClassWithFastAbi::DefaultIntProperty()
     {
