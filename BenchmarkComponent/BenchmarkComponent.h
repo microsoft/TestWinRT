@@ -6,6 +6,7 @@
 #include "ClassWithFastAbiDerived.g.h"
 #include "WrappedClass.g.h"
 #include "EventOperations.g.h"
+#include "ClassWithAsync.g.h"
 #include "Composable.g.h"
 
 namespace winrt::BenchmarkComponent::implementation
@@ -163,6 +164,17 @@ namespace winrt::BenchmarkComponent::implementation
         void FireDoubleEvent();
     };
 
+    struct ClassWithAsync : ClassWithAsyncT<ClassWithAsync>
+    {
+    public:
+        ClassWithAsync() = default;
+
+        Windows::Foundation::IAsyncAction Complete();
+        Windows::Foundation::IAsyncAction YieldComplete();
+        Windows::Foundation::IAsyncOperation<int32_t> Return(int32_t value);
+        Windows::Foundation::IAsyncOperation<int32_t> YieldReturn(int32_t value);
+    };
+
     struct Composable : ComposableT<Composable>
     {
         Composable() = default;
@@ -212,6 +224,10 @@ namespace winrt::BenchmarkComponent::factory_implementation
     };
 
     struct ClassWithFastAbiDerived : ClassWithFastAbiDerivedT<ClassWithFastAbiDerived, implementation::ClassWithFastAbiDerived>
+    {
+    };
+
+    struct ClassWithAsync : ClassWithAsyncT<ClassWithAsync, implementation::ClassWithAsync>
     {
     };
 }
