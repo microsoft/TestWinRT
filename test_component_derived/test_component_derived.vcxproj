@@ -19,6 +19,10 @@
       <Configuration>Debug</Configuration>
       <Platform>ARM</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
@@ -109,6 +113,7 @@
     </ClCompile>
     <PostBuildEvent>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">copy $(OutDir)$(ProjectName).winmd $(SolutionDir)</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">copy $(OutDir)$(ProjectName).winmd $(SolutionDir)</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">copy $(OutDir)$(ProjectName).winmd $(SolutionDir)</Command>
@@ -123,6 +128,7 @@
     </ClCompile>
     <PostBuildEvent>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">copy $(OutDir)$(ProjectName).winmd $(SolutionDir)</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">copy $(OutDir)$(ProjectName).winmd $(SolutionDir)</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">copy $(OutDir)$(ProjectName).winmd $(SolutionDir)</Command>
