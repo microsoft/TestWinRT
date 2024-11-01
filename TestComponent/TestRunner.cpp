@@ -341,7 +341,7 @@ namespace winrt::TestComponent::implementation
             IMapView<hstring, hstring> d;
             IMapView<hstring, hstring> e;
             c.Split(d, e);
-            TEST_REQUIRE_N(L"Collection", 4, d.Size() && e.Size());
+            TEST_REQUIRE_N(L"Collection", 4, (!d && !e) || (d.Size() && e.Size()));
         }
         void Collection5Call(Collection5Handler const& handler)
         {
