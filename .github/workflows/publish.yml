@@ -33,4 +33,4 @@ jobs:
       run: nuget.exe pack TestComponent/TestComponent.nuspec -OutputFileNamesWithoutVersion
 
     - name: nuget push
-      run: nuget push KennyKerr.Windows.TestWinRT.nupkg ${{ secrets.NUGET_KEY }} -Source nuget.org
+      run: nuget push PyWinRT.TestWinRT.nupkg ${{ secrets.NUGET_KEY }} -Source nuget.org
