@@ -2,22 +2,23 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>PyWinRT.TestWinRT</id>
-    <version>1.0.21</version>
+    <version>1.0.0</version>
     <title>TestWinRT</title>
     <authors>Microsoft</authors>
-    <owners>Microsoft</owners>
+    <license type="expression">MIT</license>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>TestWinRT</description>
+    <readme>docs/README.md</readme>
     <releaseNotes></releaseNotes>
-    <tags>native C++ WinRT nativepackage</tags>
     <copyright>© Microsoft Corporation. All rights reserved.</copyright>
-    <projectUrl>https://github.com/microsoft/testwinrt</projectUrl>
-    <repository type="git" url="https://github.com/microsoft/testwinrt" />
+    <projectUrl>https://github.com/pywinrt/testwinrt</projectUrl>
+    <repository type="git" url="https://github.com/pywinrt/testwinrt" />
     <dependencies>
       <group targetFramework="uap10.0" />
     </dependencies>
   </metadata>
   <files>
+    <file src="README.md" target="docs\"/>
     <file src="..\TestComponent.winmd" target="lib\uap10.0"/>
     <file src="..\x86\Release\TestComponent\TestComponent.dll" target="runtimes\win10-x86\native"/>
     <file src="..\x64\Release\TestComponent\TestComponent.dll" target="runtimes\win10-x64\native"/>
