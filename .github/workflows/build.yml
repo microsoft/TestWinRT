@@ -29,5 +29,8 @@ jobs:
     - name: build x64
       run: msbuild /m /p:Configuration=Release,Platform=x64 test.sln
 
+    - name: build ARM64
+      run: msbuild /m /p:Configuration=Release,Platform=ARM64 test.sln
+
     - name: nuget pack
       run: nuget.exe pack TestComponent/TestComponent.nuspec -OutputFileNamesWithoutVersion
