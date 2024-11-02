@@ -5,3 +5,4 @@ packages
 Generated Files
 *.user
 *.winmd
+*.nupkg
