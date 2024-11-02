@@ -10,15 +10,13 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: checkout project
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: setup msbuild
-      uses: microsoft/setup-msbuild@v1
+      uses: microsoft/setup-msbuild@v2
 
     - name: setup nuget
-      uses: NuGet/setup-nuget@v1.0.2
-      env:
-        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+      uses: NuGet/setup-nuget@v2
 
     - name: setup cppwinrt
       run: nuget restore test.sln
