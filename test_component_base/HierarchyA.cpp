@@ -4,7 +4,7 @@
 
 namespace winrt::test_component_base::implementation
 {
-    HierarchyA::HierarchyA(hstring const& name)
+    HierarchyA::HierarchyA(hstring const&)
     {
         throw hresult_not_implemented();
     }
