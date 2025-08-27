@@ -10,6 +10,8 @@ namespace test_component_derived
             HierarchyC(String name);
 
             static HierarchyC CreateDerivedHierarchyD();
+            static test_component_base.HierarchyB CreateNonProjectedDerivedHierarchyEAsHierarchyB();
+            static HierarchyC CreateNonProjectedDerivedHierarchyEAsHierarchyC();
             static Object CreateDerivedHierarchyDAsObject();
             static Windows.Foundation.Collections.IVector<HierarchyC> CreateDerivedHierarchyDList();
             static Windows.Foundation.Collections.IVector<Object> CreateDerivedHierarchyDAsObjectList();

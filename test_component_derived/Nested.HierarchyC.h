@@ -12,6 +12,8 @@ namespace winrt::test_component_derived::Nested::implementation
         virtual winrt::hstring HierarchyC_Method();
 
         static winrt::test_component_derived::Nested::HierarchyC CreateDerivedHierarchyD();
+        static winrt::test_component_base::HierarchyB CreateNonProjectedDerivedHierarchyEAsHierarchyB();
+        static winrt::test_component_derived::Nested::HierarchyC CreateNonProjectedDerivedHierarchyEAsHierarchyC();
         static Windows::Foundation::IInspectable CreateDerivedHierarchyDAsObject();
         static Windows::Foundation::Collections::IVector<winrt::test_component_derived::Nested::HierarchyC> CreateDerivedHierarchyDList();
         static Windows::Foundation::Collections::IVector <Windows::Foundation::IInspectable> CreateDerivedHierarchyDAsObjectList();
