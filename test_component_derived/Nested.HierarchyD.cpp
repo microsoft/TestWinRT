@@ -4,7 +4,7 @@
 
 namespace winrt::test_component_derived::Nested::implementation
 {
-    HierarchyD::HierarchyD(hstring const& name)
+    HierarchyD::HierarchyD(hstring const& /*name*/)
     {
         throw hresult_not_implemented();
     }
