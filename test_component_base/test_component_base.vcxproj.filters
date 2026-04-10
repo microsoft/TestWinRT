@@ -24,7 +24,7 @@
     <Midl Include="test_component_base.idl" />
   </ItemGroup>
   <ItemGroup>
-	  <None Include="exports.def" />
-    <None Include="packages.config" />    
+    <None Include="exports.def" />
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

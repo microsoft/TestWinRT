@@ -46,7 +46,7 @@ namespace winrt::BenchmarkComponent::implementation
         return 1;
     }
 
-    void ClassWithMultipleInterfaces::IntProperty(int32_t val)
+    void ClassWithMultipleInterfaces::IntProperty(int32_t /*val*/)
     {
     }
 
@@ -55,7 +55,7 @@ namespace winrt::BenchmarkComponent::implementation
         return true;
     }
 
-    void ClassWithMultipleInterfaces::BoolProperty(bool val)
+    void ClassWithMultipleInterfaces::BoolProperty(bool /*val*/)
     {
     }
 
@@ -64,7 +64,7 @@ namespace winrt::BenchmarkComponent::implementation
         return 1;
     }
 
-    void ClassWithMultipleInterfaces::DoubleProperty(double val)
+    void ClassWithMultipleInterfaces::DoubleProperty(double /*val*/)
     {
     }
 
@@ -83,22 +83,22 @@ namespace winrt::BenchmarkComponent::implementation
         return 1;
     }
 
-    void ClassWithMultipleInterfaces::DefaultIntProperty(int32_t val)
+    void ClassWithMultipleInterfaces::DefaultIntProperty(int32_t /*val*/)
     {
     }
 
-    void ClassWithMultipleInterfaces::DefaultBoolProperty(bool val)
+    void ClassWithMultipleInterfaces::DefaultBoolProperty(bool /*val*/)
     {
     }
 
-    void ClassWithMultipleInterfaces::DefaultDoubleProperty(double val)
+    void ClassWithMultipleInterfaces::DefaultDoubleProperty(double /*val*/)
     {
     }
 
     void ClassWithMultipleInterfaces::QueryBoolInterface(IIntProperties properties)
     {
         auto boolProperties = properties.as<IBoolProperties>();
-        boolProperties.BoolProperty();
+        (void)boolProperties.BoolProperty();
     }
 
     Windows::Foundation::Collections::IVector<winrt::hstring> createList()
@@ -123,7 +123,7 @@ namespace winrt::BenchmarkComponent::implementation
         return hstring();
     }
 
-    void ClassWithMarshalingRoutines::DefaultStringProperty(hstring val)
+    void ClassWithMarshalingRoutines::DefaultStringProperty(hstring /*val*/)
     {
     }
 
@@ -168,7 +168,7 @@ namespace winrt::BenchmarkComponent::implementation
         return createKeyValuePairObject();
     }
 
-    void ClassWithMarshalingRoutines::NewTypeErasedKeyValuePairObject(Windows::Foundation::IInspectable val)
+    void ClassWithMarshalingRoutines::NewTypeErasedKeyValuePairObject(Windows::Foundation::IInspectable /*val*/)
     {
     }
 
@@ -177,7 +177,7 @@ namespace winrt::BenchmarkComponent::implementation
         return createNullableObject();
     }
 
-    void ClassWithMarshalingRoutines::NewTypeErasedNullableObject(Windows::Foundation::IInspectable val)
+    void ClassWithMarshalingRoutines::NewTypeErasedNullableObject(Windows::Foundation::IInspectable /*val*/)
     {
     }
 
@@ -186,7 +186,7 @@ namespace winrt::BenchmarkComponent::implementation
         return createArrayObject();
     }
 
-    void ClassWithMarshalingRoutines::NewTypeErasedArrayObject(Windows::Foundation::IInspectable val)
+    void ClassWithMarshalingRoutines::NewTypeErasedArrayObject(Windows::Foundation::IInspectable /*val*/)
     {
     }
 
@@ -195,7 +195,7 @@ namespace winrt::BenchmarkComponent::implementation
         return keyValuePairObject;
     }
 
-    void ClassWithMarshalingRoutines::ExistingTypeErasedKeyValuePairObject(Windows::Foundation::IInspectable val)
+    void ClassWithMarshalingRoutines::ExistingTypeErasedKeyValuePairObject(Windows::Foundation::IInspectable /*val*/)
     {
     }
 
@@ -204,7 +204,7 @@ namespace winrt::BenchmarkComponent::implementation
         return nullableObject;
     }
 
-    void ClassWithMarshalingRoutines::ExistingTypeErasedNullableObject(Windows::Foundation::IInspectable val)
+    void ClassWithMarshalingRoutines::ExistingTypeErasedNullableObject(Windows::Foundation::IInspectable /*val*/)
     {
     }
 
@@ -213,7 +213,7 @@ namespace winrt::BenchmarkComponent::implementation
         return arrayObject;
     }
 
-    void ClassWithMarshalingRoutines::ExistingTypeErasedArrayObject(Windows::Foundation::IInspectable val)
+    void ClassWithMarshalingRoutines::ExistingTypeErasedArrayObject(Windows::Foundation::IInspectable /*val*/)
     {
     }
 
@@ -222,7 +222,7 @@ namespace winrt::BenchmarkComponent::implementation
         return make<WrappedClass>();
     }
 
-    void ClassWithMarshalingRoutines::NewWrappedClassObject(BenchmarkComponent::WrappedClass val)
+    void ClassWithMarshalingRoutines::NewWrappedClassObject(BenchmarkComponent::WrappedClass /*val*/)
     {
     }
 
@@ -232,7 +232,7 @@ namespace winrt::BenchmarkComponent::implementation
         return uri;
     }
 
-    void ClassWithMarshalingRoutines::NewUri(Windows::Foundation::Uri val)
+    void ClassWithMarshalingRoutines::NewUri(Windows::Foundation::Uri /*val*/)
     {
     }
 
@@ -241,7 +241,7 @@ namespace winrt::BenchmarkComponent::implementation
         return _uri;
     }
 
-    void ClassWithMarshalingRoutines::ExistingUri(Windows::Foundation::Uri val)
+    void ClassWithMarshalingRoutines::ExistingUri(Windows::Foundation::Uri /*val*/)
     {
     }
 
@@ -251,7 +251,7 @@ namespace winrt::BenchmarkComponent::implementation
         return type;
     }
 
-    void ClassWithMarshalingRoutines::NewType(Windows::UI::Xaml::Interop::TypeName val)
+    void ClassWithMarshalingRoutines::NewType(Windows::UI::Xaml::Interop::TypeName /*val*/)
     {
     }
 
@@ -260,7 +260,7 @@ namespace winrt::BenchmarkComponent::implementation
         return _type;
     }
 
-    void ClassWithMarshalingRoutines::ExistingType(Windows::UI::Xaml::Interop::TypeName val)
+    void ClassWithMarshalingRoutines::ExistingType(Windows::UI::Xaml::Interop::TypeName /*val*/)
     {
     }
 
@@ -294,7 +294,7 @@ namespace winrt::BenchmarkComponent::implementation
     }
     void ClassWithMarshalingRoutines::NullableTimeSpan(Windows::Foundation::IReference<Windows::Foundation::TimeSpan> const& value)
     {
-        _int = value.Value().count();
+        _int = static_cast<int32_t>(value.Value().count());
     }
     Windows::Foundation::IInspectable ClassWithMarshalingRoutines::BoxedDelegate()
     {
@@ -325,7 +325,7 @@ namespace winrt::BenchmarkComponent::implementation
         return int32_t();
     }
 
-    void WrappedClass::DefaultIntProperty(int32_t val)
+    void WrappedClass::DefaultIntProperty(int32_t /*val*/)
     {
     }
 
@@ -385,14 +385,14 @@ namespace winrt::BenchmarkComponent::implementation
     }
     void EventOperations::AddIntEvent()
     {
-        intEventToken = events.IntPropertyChanged([this](IInspectable const& sender, int32_t value)
+        intEventToken = events.IntPropertyChanged([this](IInspectable const& /*sender*/, int32_t value)
             {
                 intVal = value;
             });
     }
     void EventOperations::AddDoubleEvent()
     {
-        doubleEventToken = events.DoublePropertyChanged([this](IInspectable const& sender, double_t value)
+        doubleEventToken = events.DoublePropertyChanged([this](IInspectable const& /*sender*/, double_t value)
             {
                 doubleVal = value;
             });
@@ -456,7 +456,7 @@ namespace winrt::BenchmarkComponent::implementation
         return true;
     }
 
-    void Composable::BoolProperty(bool val)
+    void Composable::BoolProperty(bool /*val*/)
     {
     }
 }
