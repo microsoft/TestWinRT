@@ -60,6 +60,7 @@ namespace BenchmarkComponent
         Object NewObject();
         void DefaultVoidMethod();
         Int32 DefaultIntMethod(Int32 value);
+        String DefaultStringMethod(String input);
 
         void QueryBoolInterface(IIntProperties properties);
     }

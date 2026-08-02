@@ -40,6 +40,7 @@ namespace winrt::BenchmarkComponent::implementation
         void DefaultStringProperty(hstring const& value);
         void DefaultVoidMethod();
         int32_t DefaultIntMethod(int32_t value);
+        hstring DefaultStringMethod(hstring const& input);
 
         Windows::Foundation::IInspectable NewObject() const;
 

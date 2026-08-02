@@ -118,6 +118,11 @@ namespace winrt::BenchmarkComponent::implementation
         return value;
     }
 
+    hstring ClassWithMultipleInterfaces::DefaultStringMethod(hstring const& input)
+    {
+        return input;
+    }
+
     void ClassWithMultipleInterfaces::QueryBoolInterface(IIntProperties properties)
     {
         auto boolProperties = properties.as<IBoolProperties>();
