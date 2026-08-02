@@ -8,12 +8,17 @@
 #include "Composable.g.cpp"
 #include "ClassWithFastAbi.g.cpp"
 #include "ClassWithFastAbiDerived.g.cpp"
+#include "NonAgileClassWithMultipleInterfaces.g.cpp"
 
 using namespace winrt::Windows::Foundation;
 
 namespace winrt::BenchmarkComponent::implementation
 {
     ClassWithMultipleInterfaces::ClassWithMultipleInterfaces()
+    {
+    }
+
+    ClassWithMultipleInterfaces::ClassWithMultipleInterfaces(int32_t /*value*/)
     {
     }
 
@@ -48,6 +53,15 @@ namespace winrt::BenchmarkComponent::implementation
 
     void ClassWithMultipleInterfaces::IntProperty(int32_t /*val*/)
     {
+    }
+
+    void ClassWithMultipleInterfaces::VoidMethod()
+    {
+    }
+
+    int32_t ClassWithMultipleInterfaces::IntMethod(int32_t value)
+    {
+        return value;
     }
 
     bool ClassWithMultipleInterfaces::BoolProperty()
@@ -95,6 +109,15 @@ namespace winrt::BenchmarkComponent::implementation
     {
     }
 
+    void ClassWithMultipleInterfaces::DefaultVoidMethod()
+    {
+    }
+
+    int32_t ClassWithMultipleInterfaces::DefaultIntMethod(int32_t value)
+    {
+        return value;
+    }
+
     void ClassWithMultipleInterfaces::QueryBoolInterface(IIntProperties properties)
     {
         auto boolProperties = properties.as<IBoolProperties>();
@@ -115,7 +138,14 @@ namespace winrt::BenchmarkComponent::implementation
         nullableObject = createNullableObject();
         dictionary = createDictionary();
         list = createList();
+        existingWrappedClass = make<WrappedClass>();
+        existingUnsealedObject = make<ClassWithFastAbi>();
         _type = winrt::xaml_typename<winrt::BenchmarkComponent::ClassWithMultipleInterfaces>();
+    }
+
+    ClassWithMarshalingRoutines::ClassWithMarshalingRoutines(hstring const& /*value*/)
+        : ClassWithMarshalingRoutines()
+    {
     }
 
     hstring ClassWithMarshalingRoutines::DefaultStringProperty()
@@ -316,6 +346,26 @@ namespace winrt::BenchmarkComponent::implementation
         return _existingHandler;
     }
 
+    BenchmarkComponent::WrappedClass ClassWithMarshalingRoutines::GetNewSealedObject()
+    {
+        return make<WrappedClass>();
+    }
+
+    BenchmarkComponent::WrappedClass ClassWithMarshalingRoutines::GetExistingSealedObject()
+    {
+        return existingWrappedClass;
+    }
+
+    BenchmarkComponent::ClassWithFastAbi ClassWithMarshalingRoutines::GetNewUnsealedObject()
+    {
+        return make<ClassWithFastAbi>();
+    }
+
+    BenchmarkComponent::ClassWithFastAbi ClassWithMarshalingRoutines::GetExistingUnsealedObject()
+    {
+        return existingUnsealedObject;
+    }
+
     WrappedClass::WrappedClass()
     {
     }
@@ -458,5 +508,90 @@ namespace winrt::BenchmarkComponent::implementation
 
     void Composable::BoolProperty(bool /*val*/)
     {
+    }
+
+    ClassWithFastAbi::ClassWithFastAbi(int32_t /*value*/)
+    {
+    }
+
+    void ClassWithFastAbi::DefaultVoidMethod()
+    {
+    }
+
+    int32_t ClassWithFastAbi::DefaultIntMethod(int32_t value)
+    {
+        return value;
+    }
+
+    void ClassWithFastAbi::NonDefaultVoidMethod()
+    {
+    }
+
+    int32_t ClassWithFastAbi::NonDefaultIntMethod(int32_t value)
+    {
+        return value;
+    }
+
+    ClassWithFastAbiDerived::ClassWithFastAbiDerived(int32_t value) : base_type(value)
+    {
+    }
+
+    void ClassWithFastAbiDerived::DerivedDefaultVoidMethod()
+    {
+    }
+
+    int32_t ClassWithFastAbiDerived::DerivedDefaultIntMethod(int32_t value)
+    {
+        return value;
+    }
+
+    void ClassWithFastAbiDerived::DerivedNonDefaultVoidMethod()
+    {
+    }
+
+    int32_t ClassWithFastAbiDerived::DerivedNonDefaultIntMethod(int32_t value)
+    {
+        return value;
+    }
+
+    int32_t NonAgileClassWithMultipleInterfaces::IntProperty()
+    {
+        return 1;
+    }
+
+    void NonAgileClassWithMultipleInterfaces::IntProperty(int32_t /*value*/)
+    {
+    }
+
+    void NonAgileClassWithMultipleInterfaces::VoidMethod()
+    {
+    }
+
+    int32_t NonAgileClassWithMultipleInterfaces::IntMethod(int32_t value)
+    {
+        return value;
+    }
+
+    bool NonAgileClassWithMultipleInterfaces::BoolProperty()
+    {
+        return true;
+    }
+
+    void NonAgileClassWithMultipleInterfaces::BoolProperty(bool /*value*/)
+    {
+    }
+
+    double NonAgileClassWithMultipleInterfaces::DoubleProperty()
+    {
+        return 1;
+    }
+
+    void NonAgileClassWithMultipleInterfaces::DoubleProperty(double /*value*/)
+    {
+    }
+
+    int32_t NonAgileClassWithMultipleInterfaces::DefaultIntProperty()
+    {
+        return 1;
     }
 }

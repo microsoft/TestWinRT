@@ -7,6 +7,8 @@ namespace BenchmarkComponent
     interface IIntProperties
     {
         Int32 IntProperty{ get; set; };
+        void VoidMethod();
+        Int32 IntMethod(Int32 value);
     }
 
     interface IBoolProperties
@@ -48,6 +50,7 @@ namespace BenchmarkComponent
         , IDoubleProperties
     {
         ClassWithMultipleInterfaces();
+        ClassWithMultipleInterfaces(Int32 input);
 
         Int32 DefaultIntProperty{ get; set; };
         Boolean DefaultBoolProperty{ get; set; };
@@ -55,6 +58,8 @@ namespace BenchmarkComponent
         Object DefaultObjectProperty{ get; set; };
         String DefaultStringProperty{ get; set; };
         Object NewObject();
+        void DefaultVoidMethod();
+        Int32 DefaultIntMethod(Int32 value);
 
         void QueryBoolInterface(IIntProperties properties);
     }
@@ -77,6 +82,7 @@ namespace BenchmarkComponent
     runtimeclass ClassWithMarshalingRoutines
     {
         ClassWithMarshalingRoutines();
+        ClassWithMarshalingRoutines(String input);
 
         String DefaultStringProperty{ get; set; };
         IInspectable NewTypeErasedKeyValuePairObject{ get; set; };
@@ -114,6 +120,11 @@ namespace BenchmarkComponent
         ProvideInt NewIntDelegate{ get; };
         ProvideInt ExistingIntDelegate{ get; };
 
+        WrappedClass GetNewSealedObject();
+        WrappedClass GetExistingSealedObject();
+        ClassWithFastAbi GetNewUnsealedObject();
+        ClassWithFastAbi GetExistingUnsealedObject();
+
         void GetWeakReference(Object obj);
         Object GetAndResolveWeakReference(Object obj);
     }
@@ -124,7 +135,10 @@ namespace BenchmarkComponent
     unsealed runtimeclass ClassWithFastAbi : NonDefaultFastAbiInterface
     {
         ClassWithFastAbi();
+        ClassWithFastAbi(Int32 input);
         Int32 DefaultIntProperty { get; };
+        void DefaultVoidMethod();
+        Int32 DefaultIntMethod(Int32 value);
     }
 
     [exclusiveto(ClassWithFastAbi)]
@@ -132,6 +146,8 @@ namespace BenchmarkComponent
     interface NonDefaultFastAbiInterface
     {
         Int32 NonDefaultIntProperty{ get; };
+        void NonDefaultVoidMethod();
+        Int32 NonDefaultIntMethod(Int32 value);
     };
 
     [default_interface]
@@ -140,11 +156,28 @@ namespace BenchmarkComponent
     runtimeclass ClassWithFastAbiDerived : ClassWithFastAbi
     {
         ClassWithFastAbiDerived();
+        ClassWithFastAbiDerived(Int32 input);
         Int32 DerivedDefaultIntProperty{ get; };
+        void DerivedDefaultVoidMethod();
+        Int32 DerivedDefaultIntMethod(Int32 value);
         [version(2.0)]
         {
             Int32 DerivedNonDefaultIntProperty{ get; };
+            void DerivedNonDefaultVoidMethod();
+            Int32 DerivedNonDefaultIntMethod(Int32 value);
         }
+    }
+
+    [default_interface]
+    [marshaling_behavior(standard)]
+    [threading(sta)]
+    runtimeclass NonAgileClassWithMultipleInterfaces :
+        IIntProperties
+        , IBoolProperties
+        , IDoubleProperties
+    {
+        NonAgileClassWithMultipleInterfaces();
+        Int32 DefaultIntProperty{ get; };
     }
 
     [default_interface]

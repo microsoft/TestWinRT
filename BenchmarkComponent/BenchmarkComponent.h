@@ -4,6 +4,7 @@
 #include "ClassWithMarshalingRoutines.g.h"
 #include "ClassWithFastAbi.g.h"
 #include "ClassWithFastAbiDerived.g.h"
+#include "NonAgileClassWithMultipleInterfaces.g.h"
 #include "WrappedClass.g.h"
 #include "EventOperations.g.h"
 #include "ClassWithAsync.g.h"
@@ -14,9 +15,12 @@ namespace winrt::BenchmarkComponent::implementation
     struct ClassWithMultipleInterfaces : ClassWithMultipleInterfacesT<ClassWithMultipleInterfaces>
     {
         ClassWithMultipleInterfaces();
+        ClassWithMultipleInterfaces(int32_t value);
 
         int32_t IntProperty();
         void IntProperty(int32_t val);
+        void VoidMethod();
+        int32_t IntMethod(int32_t value);
 
         bool BoolProperty();
         void BoolProperty(bool val);
@@ -34,6 +38,8 @@ namespace winrt::BenchmarkComponent::implementation
         void DefaultObjectProperty(Windows::Foundation::IInspectable const& value);
         hstring DefaultStringProperty() const;
         void DefaultStringProperty(hstring const& value);
+        void DefaultVoidMethod();
+        int32_t DefaultIntMethod(int32_t value);
 
         Windows::Foundation::IInspectable NewObject() const;
 
@@ -59,6 +65,8 @@ namespace winrt::BenchmarkComponent::implementation
         Windows::Foundation::IReferenceArray<int> arrayObject;
         Windows::Foundation::Collections::IMap<hstring, BenchmarkComponent::WrappedClass> dictionary;
         Windows::Foundation::Collections::IVector<winrt::hstring> list;
+        BenchmarkComponent::WrappedClass existingWrappedClass;
+        BenchmarkComponent::ClassWithFastAbi existingUnsealedObject;
 
         Windows::Foundation::Collections::IKeyValuePair<hstring, IInspectable> createKeyValuePairObject();
         Windows::Foundation::IReference<INT32> createNullableObject();
@@ -75,6 +83,7 @@ namespace winrt::BenchmarkComponent::implementation
         Windows::UI::Xaml::Interop::TypeName _type;
     public:
         ClassWithMarshalingRoutines();
+        ClassWithMarshalingRoutines(hstring const& value);
 
         hstring DefaultStringProperty();
         void DefaultStringProperty(hstring val);
@@ -138,6 +147,10 @@ namespace winrt::BenchmarkComponent::implementation
 
         BenchmarkComponent::ProvideInt NewIntDelegate();
         BenchmarkComponent::ProvideInt ExistingIntDelegate();
+        BenchmarkComponent::WrappedClass GetNewSealedObject();
+        BenchmarkComponent::WrappedClass GetExistingSealedObject();
+        BenchmarkComponent::ClassWithFastAbi GetNewUnsealedObject();
+        BenchmarkComponent::ClassWithFastAbi GetExistingUnsealedObject();
 
         void GetWeakReference(Windows::Foundation::IInspectable obj);
         Windows::Foundation::IInspectable GetAndResolveWeakReference(Windows::Foundation::IInspectable obj);
@@ -185,15 +198,41 @@ namespace winrt::BenchmarkComponent::implementation
 
     struct ClassWithFastAbi : ClassWithFastAbiT<ClassWithFastAbi>
     {
+        ClassWithFastAbi() = default;
+        ClassWithFastAbi(int32_t value);
         int32_t DefaultIntProperty();
         int32_t NonDefaultIntProperty();
+        void DefaultVoidMethod();
+        int32_t DefaultIntMethod(int32_t value);
+        void NonDefaultVoidMethod();
+        int32_t NonDefaultIntMethod(int32_t value);
     };
 
     struct ClassWithFastAbiDerived : ClassWithFastAbiDerivedT<ClassWithFastAbiDerived, implementation::ClassWithFastAbi>
     {
         ClassWithFastAbiDerived();
+        ClassWithFastAbiDerived(int32_t value);
         int32_t DerivedDefaultIntProperty();
         int32_t DerivedNonDefaultIntProperty();
+        void DerivedDefaultVoidMethod();
+        int32_t DerivedDefaultIntMethod(int32_t value);
+        void DerivedNonDefaultVoidMethod();
+        int32_t DerivedNonDefaultIntMethod(int32_t value);
+    };
+
+    struct NonAgileClassWithMultipleInterfaces : NonAgileClassWithMultipleInterfacesT<NonAgileClassWithMultipleInterfaces>
+    {
+        NonAgileClassWithMultipleInterfaces() = default;
+
+        int32_t IntProperty();
+        void IntProperty(int32_t value);
+        void VoidMethod();
+        int32_t IntMethod(int32_t value);
+        bool BoolProperty();
+        void BoolProperty(bool value);
+        double DoubleProperty();
+        void DoubleProperty(double value);
+        int32_t DefaultIntProperty();
     };
 }
 
@@ -224,6 +263,10 @@ namespace winrt::BenchmarkComponent::factory_implementation
     };
 
     struct ClassWithFastAbiDerived : ClassWithFastAbiDerivedT<ClassWithFastAbiDerived, implementation::ClassWithFastAbiDerived>
+    {
+    };
+
+    struct NonAgileClassWithMultipleInterfaces : NonAgileClassWithMultipleInterfacesT<NonAgileClassWithMultipleInterfaces, implementation::NonAgileClassWithMultipleInterfaces>
     {
     };
 
