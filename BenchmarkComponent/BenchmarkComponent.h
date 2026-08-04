@@ -41,6 +41,7 @@ namespace winrt::BenchmarkComponent::implementation
         void DefaultVoidMethod();
         int32_t DefaultIntMethod(int32_t value);
         hstring DefaultStringMethod(hstring const& input);
+        void ThrowInvalidArgument();
 
         Windows::Foundation::IInspectable NewObject() const;
 

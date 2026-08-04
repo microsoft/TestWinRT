@@ -123,6 +123,11 @@ namespace winrt::BenchmarkComponent::implementation
         return input;
     }
 
+    void ClassWithMultipleInterfaces::ThrowInvalidArgument()
+    {
+        throw hresult_invalid_argument();
+    }
+
     void ClassWithMultipleInterfaces::QueryBoolInterface(IIntProperties properties)
     {
         auto boolProperties = properties.as<IBoolProperties>();

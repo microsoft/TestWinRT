@@ -61,6 +61,7 @@ namespace BenchmarkComponent
         void DefaultVoidMethod();
         Int32 DefaultIntMethod(Int32 value);
         String DefaultStringMethod(String input);
+        void ThrowInvalidArgument();
 
         void QueryBoolInterface(IIntProperties properties);
     }
