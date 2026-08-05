@@ -123,6 +123,10 @@ namespace winrt::BenchmarkComponent::implementation
         return input;
     }
 
+    void ClassWithMultipleInterfaces::AcceptStringArray(array_view<hstring const> /*values*/)
+    {
+    }
+
     void ClassWithMultipleInterfaces::ThrowInvalidArgument()
     {
         throw hresult_invalid_argument();
