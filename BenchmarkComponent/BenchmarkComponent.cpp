@@ -376,6 +376,11 @@ namespace winrt::BenchmarkComponent::implementation
         return existingUnsealedObject;
     }
 
+    BenchmarkComponent::ClassWithFastAbi ClassWithMarshalingRoutines::GetNewDerivedAsBase()
+    {
+        return make<ClassWithFastAbiDerived>();
+    }
+
     WrappedClass::WrappedClass()
     {
     }

@@ -153,6 +153,7 @@ namespace winrt::BenchmarkComponent::implementation
         BenchmarkComponent::WrappedClass GetExistingSealedObject();
         BenchmarkComponent::ClassWithFastAbi GetNewUnsealedObject();
         BenchmarkComponent::ClassWithFastAbi GetExistingUnsealedObject();
+        BenchmarkComponent::ClassWithFastAbi GetNewDerivedAsBase();
 
         void GetWeakReference(Windows::Foundation::IInspectable obj);
         Windows::Foundation::IInspectable GetAndResolveWeakReference(Windows::Foundation::IInspectable obj);

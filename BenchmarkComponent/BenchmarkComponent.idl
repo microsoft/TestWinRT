@@ -126,6 +126,7 @@ namespace BenchmarkComponent
         WrappedClass GetExistingSealedObject();
         ClassWithFastAbi GetNewUnsealedObject();
         ClassWithFastAbi GetExistingUnsealedObject();
+        ClassWithFastAbi GetNewDerivedAsBase();
 
         void GetWeakReference(Object obj);
         Object GetAndResolveWeakReference(Object obj);
