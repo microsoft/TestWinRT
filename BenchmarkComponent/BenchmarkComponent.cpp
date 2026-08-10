@@ -207,6 +207,76 @@ namespace winrt::BenchmarkComponent::implementation
         return createList();
     }
 
+    Windows::Foundation::Collections::IVector<int32_t> ClassWithMarshalingRoutines::Items(uint32_t count)
+    {
+        std::vector<int32_t> values(count);
+        for (uint32_t i = 0; i < count; ++i)
+        {
+            values[i] = static_cast<int32_t>(i);
+        }
+        return winrt::single_threaded_vector(std::move(values));
+    }
+
+    Windows::Foundation::Collections::IVectorView<int32_t> ClassWithMarshalingRoutines::ItemsView(uint32_t count)
+    {
+        return Items(count).GetView();
+    }
+
+    Windows::Foundation::Collections::IMap<hstring, int32_t> ClassWithMarshalingRoutines::StringMap(uint32_t count)
+    {
+        std::map<hstring, int32_t> values;
+        for (uint32_t i = 0; i < count; ++i)
+        {
+            values[winrt::to_hstring(i)] = static_cast<int32_t>(i);
+        }
+        return winrt::single_threaded_map(std::move(values));
+    }
+
+    Windows::Foundation::Collections::IMapView<int32_t, int32_t> ClassWithMarshalingRoutines::MapView(uint32_t count)
+    {
+        std::map<int32_t, int32_t> values;
+        for (uint32_t i = 0; i < count; ++i)
+        {
+            values[static_cast<int32_t>(i)] = static_cast<int32_t>(i);
+        }
+        return winrt::single_threaded_map(std::move(values)).GetView();
+    }
+
+    Windows::Foundation::Collections::IVector<BenchmarkComponent::WrappedClass> ClassWithMarshalingRoutines::ObjectItems(uint32_t count)
+    {
+        std::vector<BenchmarkComponent::WrappedClass> values(count);
+        for (uint32_t i = 0; i < count; ++i)
+        {
+            values[i] = winrt::make<WrappedClass>();
+        }
+        return winrt::single_threaded_vector(std::move(values));
+    }
+
+    Windows::Foundation::Collections::IVectorView<BenchmarkComponent::WrappedClass> ClassWithMarshalingRoutines::ObjectItemsView(uint32_t count)
+    {
+        return ObjectItems(count).GetView();
+    }
+
+    Windows::Foundation::Collections::IMap<hstring, BenchmarkComponent::WrappedClass> ClassWithMarshalingRoutines::ObjectMap(uint32_t count)
+    {
+        std::map<hstring, BenchmarkComponent::WrappedClass> values;
+        for (uint32_t i = 0; i < count; ++i)
+        {
+            values[winrt::to_hstring(i)] = winrt::make<WrappedClass>();
+        }
+        return winrt::single_threaded_map(std::move(values));
+    }
+
+    Windows::Foundation::Collections::IMapView<hstring, BenchmarkComponent::WrappedClass> ClassWithMarshalingRoutines::ObjectMapView(uint32_t count)
+    {
+        std::map<hstring, BenchmarkComponent::WrappedClass> values;
+        for (uint32_t i = 0; i < count; ++i)
+        {
+            values[winrt::to_hstring(i)] = winrt::make<WrappedClass>();
+        }
+        return winrt::single_threaded_map(std::move(values)).GetView();
+    }
+
     Windows::Foundation::IInspectable ClassWithMarshalingRoutines::NewTypeErasedKeyValuePairObject()
     {
         return createKeyValuePairObject();

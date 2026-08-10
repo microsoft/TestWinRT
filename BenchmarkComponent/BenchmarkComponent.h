@@ -137,6 +137,16 @@ namespace winrt::BenchmarkComponent::implementation
 
         Windows::Foundation::Collections::IMap<winrt::hstring, BenchmarkComponent::WrappedClass> ExistingDictionary();
 
+        Windows::Foundation::Collections::IVector<int32_t> Items(uint32_t count);
+        Windows::Foundation::Collections::IVectorView<int32_t> ItemsView(uint32_t count);
+        Windows::Foundation::Collections::IMap<hstring, int32_t> StringMap(uint32_t count);
+        Windows::Foundation::Collections::IMapView<int32_t, int32_t> MapView(uint32_t count);
+
+        Windows::Foundation::Collections::IVector<BenchmarkComponent::WrappedClass> ObjectItems(uint32_t count);
+        Windows::Foundation::Collections::IVectorView<BenchmarkComponent::WrappedClass> ObjectItemsView(uint32_t count);
+        Windows::Foundation::Collections::IMap<hstring, BenchmarkComponent::WrappedClass> ObjectMap(uint32_t count);
+        Windows::Foundation::Collections::IMapView<hstring, BenchmarkComponent::WrappedClass> ObjectMapView(uint32_t count);
+
         Windows::Foundation::IReference<int32_t> NullableInt();
         void NullableInt(Windows::Foundation::IReference<int32_t> const& value);
         Windows::Foundation::IReference<BenchmarkComponent::BlittableStruct> NullableBlittableStruct();
@@ -224,7 +234,7 @@ namespace winrt::BenchmarkComponent::implementation
         int32_t DerivedNonDefaultIntMethod(int32_t value);
     };
 
-    struct NonAgileClassWithMultipleInterfaces : NonAgileClassWithMultipleInterfacesT<NonAgileClassWithMultipleInterfaces>
+    struct NonAgileClassWithMultipleInterfaces : NonAgileClassWithMultipleInterfacesT<NonAgileClassWithMultipleInterfaces, winrt::non_agile>
     {
         NonAgileClassWithMultipleInterfaces() = default;
 
