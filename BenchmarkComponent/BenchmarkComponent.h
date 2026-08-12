@@ -84,6 +84,7 @@ namespace winrt::BenchmarkComponent::implementation
         BenchmarkComponent::ProvideInt _existingHandler = [] { return 4; };
         Windows::Foundation::Uri _uri;
         Windows::UI::Xaml::Interop::TypeName _type;
+        std::vector<int32_t> _getManyBuffer;
     public:
         ClassWithMarshalingRoutines();
         ClassWithMarshalingRoutines(hstring const& value);
@@ -146,6 +147,7 @@ namespace winrt::BenchmarkComponent::implementation
         Windows::Foundation::Collections::IVectorView<BenchmarkComponent::WrappedClass> ObjectItemsView(uint32_t count);
         Windows::Foundation::Collections::IMap<hstring, BenchmarkComponent::WrappedClass> ObjectMap(uint32_t count);
         Windows::Foundation::Collections::IMapView<hstring, BenchmarkComponent::WrappedClass> ObjectMapView(uint32_t count);
+        uint32_t GetManyFromManagedList(Windows::Foundation::Collections::IVector<int32_t> const& values);
 
         Windows::Foundation::IReference<int32_t> NullableInt();
         void NullableInt(Windows::Foundation::IReference<int32_t> const& value);

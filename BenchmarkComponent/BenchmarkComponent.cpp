@@ -277,6 +277,12 @@ namespace winrt::BenchmarkComponent::implementation
         return winrt::single_threaded_map(std::move(values)).GetView();
     }
 
+    uint32_t ClassWithMarshalingRoutines::GetManyFromManagedList(Windows::Foundation::Collections::IVector<int32_t> const& values)
+    {
+        _getManyBuffer.resize(values.Size());
+        return values.GetMany(0, _getManyBuffer);
+    }
+
     Windows::Foundation::IInspectable ClassWithMarshalingRoutines::NewTypeErasedKeyValuePairObject()
     {
         return createKeyValuePairObject();
