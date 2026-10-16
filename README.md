@@ -1,3 +1,15 @@
+## Publishing
+
+Pushes to the default branch build and retain the package without publishing it.
+To publish, run the **Publish** workflow manually from the default branch. A separate
+job downloads that run's package without checking out or building repository code.
+
+Before enabling publication, configure the `nuget-publish` environment with required
+reviewers, prevent self-review, and restrict deployments to the default branch.
+Store `NUGET_KEY` only as an environment secret, removing any repository-level or
+organization-level copy available to this repository. Environment protection rules
+must be configured in repository settings; declaring an environment in YAML does
+not create approval rules. Review the selected commit and package before approving.
 
 ## Contributing
 
